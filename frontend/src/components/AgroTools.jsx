@@ -1,12 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const AgroConnect = () => {
+const AgroTools = () => {
   return (
-    <div style={{ border: '1px solid #ccc', padding: '20px', marginTop: '20px' }}>
+    <div
+      style={{ border: "1px solid #ccc", padding: "20px", marginTop: "20px" }}
+    >
       <h2>Agro Connect</h2>
       <p>Connect with experts...</p>
     </div>
   );
 };
 
-export default AgroConnect;
+export default AgroTools;
