@@ -1,0 +1,42 @@
+.auto-slide {
+    display: flex;
+    overflow: hidden; /* Hide overflow */
+    position: relative; /* Position for absolute children */
+    width: 100%; /* Full width */
+    height: 200px; /* Fixed height for the testimonial container */
+}
+
+.testimonial-card {
+    min-height: 150px;  /* Minimum height to accommodate short content */
+    width: 300px; /* Set a fixed width for uniformity */
+    background: white;
+    border: 1px solid #ccc; /* Add a border for visibility */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 0 10px; /* Space between cards */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center align items */
+    justify-content: center; /* Center vertically */
+    padding: 15px; /* Add padding inside the card */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding effect */
+    overflow: hidden; /* Hide any overflow */
+}
+
+.testimonial-photo {
+    width: 80px; /* Set a consistent size for the photo */
+    height: 80px; /* Ensure height matches width for a square aspect ratio */
+    border-radius: 50%; /* Circular photo */
+    margin-bottom: 10px; /* Space below the photo */
+    object-fit: cover; /* Ensure image covers the area without stretching */
+}
+
+.testimonial-card h3 {
+    font-size: 1.2em; /* Slightly larger font for names */
+    margin: 5px 0; /* Space around the name */
+}
+
+.testimonial-card p {
+    font-size: 1em; /* Normal font size for testimonials */
+    text-align: center; /* Center the text */
+}

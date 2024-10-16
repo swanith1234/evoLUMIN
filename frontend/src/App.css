@@ -1,90 +1,164 @@
 /* src/App.css */
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-}
-
-.header {
-  width: 100vw;
-  height: 500px; /* Adjust height as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-title {
-  color: white;
-  font-size: 2.5rem; /* Adjust font size as needed */
-}
-
-/* Navbar styling */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: transparent; /* Keep it transparent */
-  position: absolute; /* Make it sticky */
-  top: 0;
-  z-index: 1000;
-  width: 90%;
-  background-color: transparent;
-  /* Ensure it stays above other content */
-}
-
-.navbar-links {
-  display: flex;
-  list-style: none;
-}
-
-.navbar-links li {
-  margin: 0 15px; /* Adjust spacing between links */
-}
-
-.navbar .get-started {
-  background-color: yellow; /* Yellow background */
-  color: black; /* Change text color */
-  padding: 10px 20px; /* Adjust padding */
-  border: none;
-  border-radius: 20px; /* Rounded edges */
-  font-size: 1rem; /* Adjust font size */
-  cursor: pointer;
-  display: flex;
-  align-items: center; /* Center content vertically */
-  transition: background-color 0.3s;
-}
-
-.navbar .get-started:hover {
-  background-color: #ffd700; /* Slightly darker yellow on hover */
-}
-
-/* Arrow Icon */
-.get-started::after {
-  content: " ➔"; /* Arrow character */
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    width: 100vw;
+    height: 500px; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://images.unsplash.com/photo-1725911650553-4607c9285537?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; /* Cover the entire header section */
+  }
+  
   .header-title {
-    font-size: 2rem; /* Adjust for smaller screens */
+    color: white;
+    font-size: 3rem; /* Adjust font size for better visibility */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+    text-align: center;
   }
-
-  .get-started {
-    padding: 10px 15px; /* Adjust for smaller screens */
-    font-size: 0.9rem;
+  
+  /* Navbar styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+    width: 90%;
+    background-color: transparent; /* Keep it transparent */
   }
-}
-
-.header {
-  background-image: url("https://images.unsplash.com/photo-1725911650553-4607c9285537?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat;
-}
-/* src/App.css */
-.page-content {
-  padding: 20px;
-  background-color: white; /* Adjust for visibility */
-}
+  
+  .navbar-links {
+    display: flex;
+    list-style: none;
+  }
+  
+  .navbar-links li {
+    margin: 0 20px; /* Increase spacing between links */
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+  
+  .navbar-links a:hover {
+    color: #ffd700; /* Yellow color on hover */
+  }
+  
+  .navbar .get-started {
+    background-color: yellow;
+    color: black;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px; /* Make it more rounded */
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar .get-started:hover {
+    background-color: #ffd700;
+  }
+  
+  .get-started::after {
+    content: " ➔"; /* Arrow icon */
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .header-title {
+      font-size: 2rem; /* Adjust for smaller screens */
+    }
+  
+    .navbar-links {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .navbar-links li {
+      margin: 10px 0;
+    }
+  
+    .get-started {
+      padding: 10px 15px;
+      font-size: 1rem;
+    }
+  }
+  
+  .page-content {
+    padding: 20px;
+    background-color: white; /* Adjust for visibility */
+  }
+  
+  /* Section styling */
+  .section {
+    padding: 50px 20px;
+  }
+  
+  .section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .section-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  
+  .text-left,
+  .text-right {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .video-left,
+  .video-right {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  video {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .section-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .text-left,
+    .text-right,
+    .video-left,
+    .video-right {
+      padding: 10px;
+    }
+  }
+  
