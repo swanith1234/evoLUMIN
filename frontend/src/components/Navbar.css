@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+  }
+  
+  .navbar {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.7); /* Transparent background */
+    backdrop-filter: blur(10px); /* Optional: for a blurred effect */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000; /* Ensure it stays above other content */
+  }
+  
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Even spacing between items */
+  }
+  
+  .navbar-links li {
+    display: inline;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: black; /* Customize color as needed */
+    font-size: 18px;
+    transition: color 0.3s; /* Smooth color transition on hover */
+  }
+  
+  .navbar-links a:hover {
+    color: #555; /* Change color on hover */
+  }
+  
+  .get-started {
+    background-color: yellow; /* Filled yellow button */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth background transition */
+  }
+  
+  .get-started:hover {
+    background-color: #fcd700; /* Darker yellow on hover */
+  }
+  
