@@ -9,7 +9,7 @@ body {
   
   .header {
     width: 100vw;
-    height: 500px; /* Adjust height as needed */
+    height: 500px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,8 +21,8 @@ body {
   
   .header-title {
     color: white;
-    font-size: 3rem; /* Adjust font size for better visibility */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+    font-size: 3rem; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
     text-align: center;
   }
   
@@ -36,7 +36,7 @@ body {
     top: 0;
     z-index: 1000;
     width: 90%;
-    background-color: transparent; /* Keep it transparent */
+    background-color: transparent; 
   }
   
   .navbar-links {
@@ -45,7 +45,7 @@ body {
   }
   
   .navbar-links li {
-    margin: 0 20px; /* Increase spacing between links */
+    margin: 0 20px; 
   }
   
   .navbar-links a {
@@ -56,7 +56,7 @@ body {
   }
   
   .navbar-links a:hover {
-    color: #ffd700; /* Yellow color on hover */
+    color: #ffd700; 
   }
   
   .navbar .get-started {
@@ -64,7 +64,7 @@ body {
     color: black;
     padding: 10px 25px;
     border: none;
-    border-radius: 30px; /* Make it more rounded */
+    border-radius: 30px; 
     font-size: 1.2rem;
     cursor: pointer;
     display: flex;
@@ -83,7 +83,7 @@ body {
   /* Responsive design */
   @media (max-width: 768px) {
     .header-title {
-      font-size: 2rem; /* Adjust for smaller screens */
+      font-size: 2rem; 
     }
   
     .navbar-links {
@@ -103,7 +103,7 @@ body {
   
   .page-content {
     padding: 20px;
-    background-color: white; /* Adjust for visibility */
+    background-color: white; 
   }
   
   /* Section styling */

@@ -1,37 +1,37 @@
 .auto-slide-container {
-    width: 100%; /* Full width of the container */
+    width: 100%; 
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Hide overflow */
+    overflow: hidden; 
     position: relative;
 }
 
 .auto-slide-wrapper {
     display: flex;
-    transition: transform 1s ease-in-out; /* Smooth sliding transition */
+    transition: transform 1s ease-in-out; 
     width: 100%;
 }
 
 .testimonial-card {
-    width: 300px; /* Fixed width */
-    margin: 0 20px; /* Space between cards */
+    width: 300px; 
+    margin: 0 20px; 
     background: white;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0; /* Prevent cards from shrinking */
+    flex-shrink: 0; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: height 0.3s ease; /* Smooth height adjustment */
+    transition: height 0.3s ease; 
     overflow: hidden;
 }
 
 .testimonial-card img {
-    width: 80px; /* Image size */
+    width: 80px; 
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
@@ -70,6 +70,6 @@
     right: 10px;
 }
 .testimonials-section h2 {
-    text-align: center; /* Center the heading horizontally */
-    margin-bottom: 20px; /* Optional: Add some space below the heading */
+    text-align: center; 
+    margin-bottom: 20px; 
 }
