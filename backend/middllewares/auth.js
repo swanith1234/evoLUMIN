@@ -4,9 +4,8 @@ import { User } from "../models/user.js";
 import ErrorHandler from "../middllewares/error.js";
 import jwt from "jsonwebtoken";
 export const isAuthorizedUser = catchAsyncError(async (req, res, next) => {
-
-  const token = req.get("Authorization").split(" ")[1];
-  console.log("auth " + token);
+  const token = req.get("Authorization");
+  console.log("auth " + req.get("Authorization"));
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {

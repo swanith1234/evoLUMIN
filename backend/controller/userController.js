@@ -5,6 +5,7 @@ import { User } from "../models/user.js";
 import { sendTokenuser } from "../utils/jwttoken.js";
 import jwt from "jsonwebtoken";
 import { oauth2client } from "../utils/googleConfig.js";
+import ErrorHandler from "../middllewares/error.js";
 export const userregister = catchAsyncError(async (req, res, next) => {
   const {
     name,
@@ -48,7 +49,7 @@ export const userlogin = catchAsyncError(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("Invalid email or password", 400));
   }
-  const isPasswordMatched = await user.comparepassword(password);
+  const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
     return next(new ErrorHandler("invalid email or password", 400));
   }
