@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import './ToolDetails.css';
 
-const ToolDetails = ({ id }) => {
+const ToolDetails = () => {
     const [toolDetails, setToolDetails] = useState(null);
     const [error, setError] = useState(null);
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchToolDetails = async () => {
             try {
                 console.log('Fetching details for ID:', id);
-                const response = await fetch('../../publi/data/data.json'); 
+                const response = await fetch('/data.json'); 
 
                 console.log('Response:', response); 
                 if (!response.ok) {
@@ -17,13 +20,19 @@ const ToolDetails = ({ id }) => {
 
                 const data = await response.json();
                 console.log('Data:', data); 
-                
-                const tool = data.find(tool => tool.id === id);
+                console.log(typeof id);
+
+                // Corrected find logic: compare id as a number
+                const tool = data.find(tool => {
+                    console.log(typeof tool.id);
+                    return tool.id === id;
+                });
 
                 if (!tool) {
                     throw new Error("Tool not found");
                 }
 
+                console.log(tool);
                 setToolDetails(tool);
             } catch (error) {
                 setError(error.message);
@@ -46,6 +55,7 @@ const ToolDetails = ({ id }) => {
         <div className="tool-details">
             <h1>{toolDetails.name}</h1>
             <p>{toolDetails.description}</p>
+            
             <div className="image-slider">
                 {toolDetails.images && toolDetails.images.length > 0 ? (
                     toolDetails.images.map((image, index) => (
@@ -55,6 +65,7 @@ const ToolDetails = ({ id }) => {
                     <p>No images available.</p>
                 )}
             </div>
+
             <div className="customer-reviews">
                 <h2>Customer Reviews</h2>
                 {toolDetails.reviews && toolDetails.reviews.length > 0 ? (
@@ -68,12 +79,13 @@ const ToolDetails = ({ id }) => {
                 ) : (
                     <p>No reviews available.</p>
                 )}
+
                 <div className="review-bar-graph">
                     <h3>Review Ratings</h3>
                     <div>
-                        <span>Good: {toolDetails.ratings.good}</span>
-                        <span>Bad: {toolDetails.ratings.bad}</span>
-                        <span>Poor: {toolDetails.ratings.poor}</span>
+                        <span>Good: {toolDetails.reviews.good}</span>
+                        <span>Bad: {toolDetails.reviews.bad}</span>
+                        <span>Poor: {toolDetails.reviews.poor}</span>
                     </div>
                 </div>
             </div>
