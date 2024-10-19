@@ -1,20 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; 
-import GetStartedButton from './components/GetStartedButton'; 
-import AutoSlideTestimonials from './components/AutoSlideTestimonials'; 
-import FAQ from './components/FAQ'; 
-
+import { Link } from "react-router-dom";
+import GetStartedButton from "./components/GetStartedButton";
+import AutoSlideTestimonials from "./components/AutoSlideTestimonials";
+import FAQ from "./components/FAQ";
+import { useContext } from "react";
+import { AuthContext } from "./components/authContext";
 export default function Home() {
+  const { token, userInfo } = useContext(AuthContext);
+
   return (
     <div>
       {/* Hero Section */}
       <header className="header">
         <h1 className="header-title">Welcome to AgroNexus</h1>
-        <div className="get-started">
-          <Link to="/auth">
-            <GetStartedButton />
-          </Link>
-        </div>
+
+        {userInfo != null ? (
+          <div
+            className="text-xl text-slate-600"
+            style={{
+              "font-size": "32px",
+              "font-weight": "600",
+              color: "rgb(255, 255, 99)",
+              "margin-left": "12px",
+            }}
+          >
+            {userInfo.user.name}
+          </div>
+        ) : (
+          <div className="get-started">
+            <Link to="/auth">
+              <GetStartedButton />
+            </Link>
+          </div>
+        )}
       </header>
 
       {/* Section 2: Agro Connect */}

@@ -6,6 +6,8 @@ import {
   getOneUser,
   updateUser,
   googleLogin,
+  sendOtp,
+  verifyOtp,
 } from "../controller/userController.js";
 import { isAuthorizedUser } from "../middllewares/auth.js";
 // import { sendEmail } from "../mail/mail.js";
@@ -18,4 +20,6 @@ router.get("/users/logout", isAuthorizedUser, userlogout);
 router.get("/users/login/:id", getOneUser);
 router.patch("/users/login/update/:id", updateUser);
 router.post("/users/auth/google", googleLogin);
+router.post("/users/auth/phone/sendOtp", sendOtp);
+router.post("/users/auth/phone/verify", verifyOtp);
 export default router;

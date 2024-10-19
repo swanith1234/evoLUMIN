@@ -5,7 +5,10 @@ import { User } from "../models/user.js";
 import { sendTokenuser } from "../utils/jwttoken.js";
 import jwt from "jsonwebtoken";
 import { oauth2client } from "../utils/googleConfig.js";
+import dotenv from "dotenv";
+dotenv.config({ path: "../env" });
 import ErrorHandler from "../middllewares/error.js";
+import twilio from "twilio";
 export const userregister = catchAsyncError(async (req, res, next) => {
   const {
     name,
@@ -121,3 +124,76 @@ export const googleLogin = catchAsyncError(async (req, res) => {
   }
   sendTokenuser(user, 200, res, "success");
 });
+const phoneLogin = catchAsyncError(async (req, res, next) => {
+  const { phone } = req.body;
+  const user = await User.findOne({ phone: phone });
+  if (!user) {
+    return new ErrorHandler(
+      "user not found with given number,please Register!!",
+      404
+    );
+  }
+});
+
+const accountSid = process.env.TWILIO_SID; // Twilio Account SID
+const authToken = process.env.TWILIO_AUTH_TOKEN; // Twilio Auth Token
+const client = new twilio(accountSid, authToken);
+
+// Send OTP Function
+export const sendOtp = catchAsyncError(async (req, res, next) => {
+  const { phone } = req.body;
+  console.log(phone);
+  try {
+    // Generate a random 6-digit OTP
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+    // Send the OTP via Twilio
+    await client.messages.create({
+      body: `Your OTP is ${otp}`,
+      from: "+18647148091", // Your Twilio phone number
+      to: `+91 ${phone}`,
+    });
+
+    // Save OTP and expiry to the database (set expiry for 5 minutes)
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes from now
+    await User.findOneAndUpdate(
+      { phone }, // If the phone already exists, update it
+      { phone, otp, otpExpiry },
+      { upsert: true, new: true } // Insert if not exists, otherwise update
+    );
+
+    console.log(`OTP sent to ${phone}`);
+    res.status(200).json({
+      success: true,
+      message: "Otp sent successfully",
+    });
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+  }
+});
+export const verifyOtp = async (req, res, next) => {
+  let { otp, phone } = req.body;
+
+  otp = Number(otp);
+  try {
+    const user = await User.findOne({ phone: phone });
+
+    if (!user) {
+      return { success: false, message: "Phone number not found" };
+    }
+
+    if (user.otp === otp && user.otpExpiry > new Date()) {
+      console.log("OTP verified successfully!");
+      sendTokenuser(user, 200, res, "user logged in successfully");
+    } else if (user.otpExpiry <= new Date()) {
+      console.log("OTP expired");
+      return { success: false, message: "OTP expired" };
+    } else {
+      console.log("Invalid OTP");
+      return { success: false, message: "Invalid OTP" };
+    }
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    return { success: false, message: "Error verifying OTP" };
+  }
+};
