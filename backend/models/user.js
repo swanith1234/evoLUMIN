@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter your email"],
     validate: [validator.isEmail, "Please enter a valid email"],
+    unique: true,
   },
   avatar: {
     type: String,
@@ -21,6 +22,7 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: [true, "Please enter your number"],
+    unique: true,
   },
   password: {
     type: String,
@@ -49,6 +51,12 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+  },
+  otp: {
+    type: Number,
+  },
+  otpExpiry: {
+    type: Date,
   },
   likedPosts: [
     {

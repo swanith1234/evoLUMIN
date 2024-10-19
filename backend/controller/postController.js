@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 export const createPost = async (req, res) => {
   try {
     const { description, media, tag, userId } = req.body;
-
+    console.log(userId);
     // Step 1: Validate the incoming request data
     if (!description || !tag) {
       return res
@@ -13,17 +13,20 @@ export const createPost = async (req, res) => {
         .json({ message: "Description and tag are required!" });
     }
 
-    // Step 2: Analyze the post using Gemini API (run function)
-    const geminiResponse = await run(description);
+    // // Step 2: Analyze the post using Gemini API (run function)
+    // const geminiResponse = await run(description);
 
-    if (!geminiResponse) {
-      return res
-        .status(500)
-        .json({ message: "Failed to analyze the post with Gemini API." });
-    }
+    // if (!geminiResponse) {
+    //   return res
+    //     .status(500)
+    //     .json({ message: "Failed to analyze the post with Gemini API." });
+    // }
 
-    // Step 3: Extract data from the Gemini API response
-    const { isAgriculture, crop, cropType } = geminiResponse;
+    // // Step 3: Extract data from the Gemini API response
+    // const { isAgriculture, crop, cropType } = geminiResponse;
+    const isAgriculture = true;
+    const crop = "paddy";
+    const cropType = "local";
 
     // Step 4: Prepare the post object for saving
     const newPost = new Post({
@@ -33,7 +36,7 @@ export const createPost = async (req, res) => {
       isAgriculture,
       crop: isAgriculture ? crop : null,
       cropType: isAgriculture ? cropType : null,
-      user: new mongoose.Types.ObjectId(userId),
+      userId,
       createdAt: Date.now(),
     });
 
