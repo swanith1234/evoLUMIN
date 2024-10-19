@@ -5,6 +5,7 @@ import AgroConnect from './components/AgroConnect';
 import AgroMarket from './components/AgroMarket';
 import BrowseWebsites from './components/BrowseWebsites';
 import AgroTools from './components/AgroTools';
+import ToolDetails from './components/ToolDetails'; // Import ToolDetails
 import GetStartedButton from './components/GetStartedButton';
 import AuthCard from './components/registration';
 import AutoSlideTestimonials from './components/AutoSlideTestimonials';
@@ -80,6 +81,9 @@ export default function App() {
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
+                                        <div className="agro-tools-link">
+                                            <Link to="/agro-tools" className="view-agro-tools">Explore Agro Tools</Link>
+                                        </div>
                                     </div>
                                 </section>
 
@@ -112,12 +116,14 @@ export default function App() {
                             </>
                         } 
                     />
+                    
                     {/* Other routes */}
                     <Route path="/auth" element={<AuthCard />} />
                     <Route path="/agro-connect" element={<AgroConnect />} />
                     <Route path="/agro-market" element={<AgroMarket />} />
                     <Route path="/browse-websites" element={<BrowseWebsites />} />
-                    <Route path="/agro-tools" element={<AgroTools />} />
+                    <Route path="/agro-tools" element={<AgroTools />} /> {/* AgroTools page */}
+                    <Route path="/tool/:id" element={<ToolDetails />} /> {/* ToolDetails page */}
                 </Routes>
 
                 {/* Footer Section */}
