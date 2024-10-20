@@ -6,7 +6,7 @@ export default function Login() {
     try {
       if (authResult["code"]) {
         const res = await axios.post(
-          `http://localhost:5000/api/v1/users/auth/google?code=${authResult["code"]}`
+          `http://localhost:3000/api/v1/users/auth/google?code=${authResult["code"]}`
         );
         console.log(res.data);
         localStorage.setItem("token", res.data.token);

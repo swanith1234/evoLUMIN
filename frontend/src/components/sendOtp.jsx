@@ -7,7 +7,7 @@ export default function SendOtp() {
   const sendOtp = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/users/auth/phone/sendOtp",
+        "http://localhost:3000/api/v1/users/auth/phone/sendOtp",
         { phone }
       );
       console.log(res);

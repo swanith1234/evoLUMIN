@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUserInfo = async (token) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/users/login/${token}`,
+        `http://localhost:3000/api/v1/users/login/${token}`,
         {
           headers: {
             Authorization: `${token}`,

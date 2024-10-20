@@ -1,0 +1,115 @@
+.profile-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-icon {
+  background-color: #71d585;
+  color: black;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 200px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Avatar styling */
+.profile-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.profile-avatar {
+  background-color: #71d585;
+  color: black;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+/* Profile Info styling */
+.profile-info {
+  padding: 10px;
+  text-align: center;
+  color: black;
+}
+
+.profile-info strong {
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-info p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: #0c0c0c;
+}
+
+/* Dropdown Links */
+.dropdown-links {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style for My Services and View Profile */
+.dropdown-item {
+  display: block;
+  padding: 2px;  /* Increased padding */
+  cursor: pointer;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  color: black !important; /* Default color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Logout Button */
+.logout-button {
+  background-color: #f5f5f5;
+  border: none;
+  width: 100%;
+  padding: 15px;  /* Increased padding */
+  cursor: pointer;
+  color: black;
+}
+
+.logout-button:hover {
+  background-color: #e9ecef;
+}
+
+/* Add some padding to make the links visually appealing */
+.dropdown-item {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

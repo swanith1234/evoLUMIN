@@ -10,7 +10,7 @@ export default function VerifyOtp() {
   const verifyingOtp = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/users/auth/phone/verify",
+        "http://localhost:3000/api/v1/users/auth/phone/verify",
         { otp, phone } // Send both OTP and phone in request body
       );
       console.log(res.data);

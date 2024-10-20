@@ -66,7 +66,7 @@ const AuthCard = () => {
     if (validateEmail(loginDetails.email)) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/v1/users/login",
+          "http://localhost:3000/api/v1/users/login",
           loginDetails
         );
         if (response) {
@@ -89,7 +89,7 @@ const AuthCard = () => {
     if (validateEmail(email) && password === confirmPassword) {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/v1/users/register",
+          "http://localhost:3000/api/v1/users/register",
           signupDetails
         );
         console.log(response.data);
