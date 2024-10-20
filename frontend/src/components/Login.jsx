@@ -1,6 +1,5 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import Cookies from "js-cookie";
 export default function Login() {
   const responseGoogle = async (authResult) => {
     try {

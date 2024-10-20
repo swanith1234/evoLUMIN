@@ -76,6 +76,19 @@ const userSchema = new mongoose.Schema({
       ref: "Post", // Array to store IDs of posts the user saved
     },
   ],
+  bookedTools: [
+    {
+      tool: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tool", // Reference to the Tool model
+        required: true,
+      },
+      serviceTime: {
+        type: Date,
+        required: [true, "Please provide the service time"],
+      },
+    },
+  ],
 });
 
 // Hashing the password before saving the user
@@ -99,3 +112,5 @@ userSchema.methods.getJWTToken = function () {
 };
 
 export const User = mongoose.model("User", userSchema);
+
+

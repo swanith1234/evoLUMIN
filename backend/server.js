@@ -10,6 +10,7 @@ import { run } from "./geminiAiApi.js";
 import promptRouter from "./routes/promptRoute.js";
 import userRouter from "./routes/userrouter.js";
 import postRouter from "./routes/postRoute.js";
+import toolsRouter from "./routes/toolRoute.js";
 const app = express();
 const port = process.env.PORT || 3000;
 import { sendOtp } from "./controller/userController.js";
@@ -38,6 +39,8 @@ app.use(
 app.use("/api/v1", promptRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", postRouter);
+app.use("/api/v1", toolsRouter);
 dbConnection();
+// Example of calling the function with a userId
 
 export default app;

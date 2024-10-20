@@ -9,9 +9,7 @@ import Footer from "./components/Footer";
 import Home from "./home";
 import SendOtp from "./components/sendOtp";
 import VerifyOtp from "./components/verifyOtp";
-
-import "./App.css";
-
+import ToolDetails from "./components/ToolDetails";
 export default function App() {
   return (
     <Router>
@@ -30,8 +28,12 @@ export default function App() {
           <Route path="/agro-market" element={<AgroMarket />} />
           <Route path="/browse-websites" element={<BrowseWebsites />} />
           <Route path="/agro-tools" element={<AgroTools />} />
-          <Route path="/sendOtp" element={<SendOtp />} />
-          <Route path="/verify" element={<VerifyOtp />} />
+          <Route path="/sendOtp" element={<SendOtp></SendOtp>}></Route>
+          <Route path="/verify" element={<VerifyOtp></VerifyOtp>}></Route>
+          <Route
+            path="/tool/:crop/:productionStage/:title"
+            element={<ToolDetails></ToolDetails>}
+          ></Route>
         </Routes>
 
         {/* Footer Section */}
