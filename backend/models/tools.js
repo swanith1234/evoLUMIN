@@ -1,9 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 // Schema for storing tool reviews and ratings
 const reviewSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  userName: { type: "String" },
   rating: { type: Number, required: true, min: 0, max: 5 },
   comment: { type: String },
 });
@@ -14,9 +15,10 @@ const toolSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   detailsAndSpecifications: { type: String, required: true },
-  bookedUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Array of user IDs who booked the service
+  bookedUserIds: [{ type: Schema.Types.ObjectId, ref: "User" }], // Array of user IDs who booked the service
   numberOfUsersBooked: { type: Number, default: 0 },
-  reviews: [reviewSchema], // Array of reviews
+  reviews: [reviewSchema],
+  phone: { type: Number, default: 9347562927 }, // Array of reviews
 });
 
 // Schema for production stages in a crop's lifecycle
@@ -38,6 +40,4 @@ const agricultureSchema = new Schema({
 });
 
 // Create Mongoose models for each schema
-export const Tools = mongoose.model('Tools', agricultureSchema);
-
-
+export const Tools = mongoose.model("Tools", agricultureSchema);

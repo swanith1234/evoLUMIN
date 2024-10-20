@@ -10,7 +10,7 @@ import { run } from "./geminiAiApi.js";
 import promptRouter from "./routes/promptRoute.js";
 import userRouter from "./routes/userrouter.js";
 import postRouter from "./routes/postRoute.js";
-import { getToolsByUserCrop } from "./controller/toolController.js";
+import toolsRouter from "./routes/toolRoute.js";
 const app = express();
 const port = process.env.PORT || 5000;
 import { sendOtp } from "./controller/userController.js";
@@ -39,19 +39,8 @@ app.use(
 app.use("/api/v1", promptRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", postRouter);
+app.use("/api/v1", toolsRouter);
 dbConnection();
 // Example of calling the function with a userId
-const userId = '64e4f3b714ab5c23b121d112'; // Sample user ID
-getToolsByUserCrop(userId)
-  .then((response) => {
-    if (response.success) {
-      console.log("Tools found:", response.tools);
-    } else {
-      console.log("Error:", response.message);
-    }
-  })
-  .catch((error) => {
-    console.log("Error:", error);
-  });
 
 export default app;
