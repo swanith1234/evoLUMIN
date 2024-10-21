@@ -12,7 +12,7 @@ import userRouter from "./routes/userrouter.js";
 import postRouter from "./routes/postRoute.js";
 import toolsRouter from "./routes/toolRoute.js";
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 import { sendOtp } from "./controller/userController.js";
 import { verifyOtp } from "./controller/userController.js";
 app.listen(port, () => {
