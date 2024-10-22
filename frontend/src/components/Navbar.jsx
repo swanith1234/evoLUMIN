@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import "./ProfileDropdown.css";
+
 import { AuthContext } from "./authContext";
 
 const Navbar = () => {
@@ -48,7 +48,7 @@ const Navbar = () => {
           <Link to="/agro-market">Agro Market</Link>
         </li>
         <li>
-          <Link to="/browse-websites">Browse Websites</Link>
+          <Link to="/website-tours">Website Tours</Link> {/* Updated this line */}
         </li>
         <li>
           <Link to="/agro-tools">Agro Tools</Link>

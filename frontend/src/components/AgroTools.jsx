@@ -17,7 +17,7 @@ const AgroTools = () => {
       try {
         console.log("hello", token);
         const response = await axios.get(
-          `http://localhost:5000/api/v1/tools/${token}`
+          `http://localhost:3000/api/v1/tools/${token}`
         );
         console.log(response);
 

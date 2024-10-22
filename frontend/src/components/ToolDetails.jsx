@@ -14,7 +14,7 @@ const ToolDetails = () => {
     const fetchToolDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/tools/${crop}/${productionStage}/${title}`
+          `http://localhost:3000/api/v1/tools/${crop}/${productionStage}/${title}`
         );
         const tool = response.data.tool;
         setToolDetails(tool);

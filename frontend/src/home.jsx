@@ -4,6 +4,7 @@ import AutoSlideTestimonials from "./components/AutoSlideTestimonials";
 import FAQ from "./components/FAQ";
 import { useContext } from "react";
 import { AuthContext } from "./components/authContext";
+
 export default function Home() {
   const { token, userInfo } = useContext(AuthContext);
 
@@ -17,10 +18,10 @@ export default function Home() {
           <div
             className="text-xl text-slate-600"
             style={{
-              "font-size": "32px",
-              "font-weight": "600",
+              fontSize: "32px",
+              fontWeight: "600",
               color: "rgb(255, 255, 99)",
-              "margin-left": "12px",
+              marginLeft: "12px",
             }}
           >
             {userInfo.user.name}
