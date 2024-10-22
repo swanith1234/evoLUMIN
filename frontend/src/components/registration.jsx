@@ -23,15 +23,93 @@ const AuthCard = () => {
     crop: "",
     productionStage: "",
   });
+  const locationInfo = {
+    "Andhra Pradesh": {
+      districts: [
+        "Chittoor",
+        "Kadapa",
+        "Anantapur",
+        "Kurnool" /* add more districts */,
+      ],
+      language: "Telugu",
+    },
+    Karnataka: {
+      districts: ["Bangalore", "Mysore", "Hubli" /* add more districts */],
+      language: "Kannada",
+    },
+    "Tamil Nadu": {
+      districts: ["Chennai", "Coimbatore", "Madurai" /* add more districts */],
+      language: "Tamil",
+    },
+    // Add more states and districts as needed
+  };
+
+  const parseAddress = (address) => {
+    // Example: "Unnamed road, Tirupati, Tirupati - 517500, Andhra Pradesh, India"
+    const addressParts = address.split(",");
+
+    let state = "";
+    let district = "";
+    let mandal = "";
+
+    // Parse the state from the address using Object.prototype.hasOwnProperty
+    for (let part of addressParts) {
+      part = part.trim();
+      if (Object.prototype.hasOwnProperty.call(locationInfo, part)) {
+        state = part;
+        break;
+      }
+    }
+
+    // Parse the district based on known districts in the state
+    if (state) {
+      for (let part of addressParts) {
+        part = part.trim();
+        if (locationInfo[state].districts.includes(part)) {
+          district = part;
+          break;
+        }
+      }
+    }
+
+    // The first part of the address could be the mandal
+    mandal = addressParts[1].trim(); // Assuming the mandal is the second part (you can adjust based on the address format)
+
+    // Fetch the language based on the state
+    const language = state ? locationInfo[state].language : "Unknown";
+
+    return {
+      state,
+      district,
+      mandal,
+      language,
+    };
+  };
+  const getHumanReadableLocation = async (lat, lon) => {
+    try {
+      // Replace with your OpenCage API key
+      const response = await axios.get(
+        `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=b065176c1347425aa244dbe4ae16ef3d`
+      );
+      console.log(response);
+      const location = response.data.results[0].formatted; // Get the formatted address
+      console.log("address", parseAddress(location));
+      return location;
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      return "Unable to retrieve location";
+    }
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
+          const location = await getHumanReadableLocation(latitude, longitude);
           setSignupDetails((prevDetails) => ({
             ...prevDetails,
-            location: `Lat: ${latitude}, Lon: ${longitude}`,
+            location,
           }));
         },
         (error) => {
@@ -71,7 +149,7 @@ const AuthCard = () => {
         );
         if (response) {
           console.log(response.data);
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", response.data.token);
           setSuccessMessage("Login successful!");
           setTimeout(() => setSuccessMessage(""), 3000);
           window.history.back();
@@ -93,7 +171,7 @@ const AuthCard = () => {
           signupDetails
         );
         console.log(response.data);
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", response.data.token);
         setSuccessMessage("Signup successful!");
         setTimeout(() => setSuccessMessage(""), 3000);
       } catch (error) {
