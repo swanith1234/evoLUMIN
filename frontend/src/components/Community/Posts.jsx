@@ -1,135 +1,127 @@
 import React, { useState } from 'react';
 import './Posts.css';
 
-const CreatePost = ({ addPost }) => {
+// Modal for creating a post
+const PostModal = ({ show, onClose, onCreatePost }) => {
   const [content, setContent] = useState('');
-  const [tag, setTag] = useState('General');
-  const [isAgriculture, setIsAgriculture] = useState(false);
-  const [crop, setCrop] = useState('');
-  const [cropType, setCropType] = useState('');
-  const [file, setFile] = useState(null);
+  const [postType, setPostType] = useState('General');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newPost = {
-      user: 'Deeshan Sharma', // Mock user for now
+  if (!show) {
+    return null;
+  }
+
+  const handlePost = () => {
+    onCreatePost({
+      user: 'Afroze Mohammad', // Example user
+      avatar: 'user-avatar.jpg', // Example avatar
       content,
-      date: new Date().toLocaleDateString(),
-      tag,
-      isAgriculture,
-      crop,
-      cropType,
-      file,
-    };
-    addPost(newPost);
-    // Clear form after post
+      postType,
+      createdAt: new Date().toLocaleString(),
+    });
     setContent('');
-    setTag('General');
-    setIsAgriculture(false);
-    setCrop('');
-    setCropType('');
-    setFile(null);
+    setPostType('General');
+    onClose();
   };
 
   return (
-    <div className="create-post">
-      <textarea
-        placeholder="What's on your mind?"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <div className="controls">
-        <label htmlFor="file">Add Media</label>
-        <input
-          id="file"
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <select
-          value={tag}
-          onChange={(e) => setTag(e.target.value)}
-        >
-          <option value="General">General</option>
-          <option value="Problem">Problem</option>
-        </select>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isAgriculture}
-              onChange={(e) => setIsAgriculture(e.target.checked)}
-            />
-            Is Agriculture
-          </label>
+    <div className="modal-background">
+      <div className="modal-container">
+        <h2 className="modal-header">Create a Post</h2>
+        <textarea
+          placeholder="What do you want to talk about?"
+          className="modal-textarea"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        ></textarea>
+        <div className="modal-footer">
+          <button className="modal-button" onClick={handlePost}>
+            Post
+          </button>
+          <select
+            className="post-type-dropdown"
+            value={postType}
+            onChange={(e) => setPostType(e.target.value)}
+          >
+            <option value="General">General</option>
+            <option value="Problem">Problem</option>
+          </select>
+          <button className="modal-cancel-button" onClick={onClose}>
+            Cancel
+          </button>
         </div>
       </div>
-
-      {isAgriculture && (
-        <div className="agriculture-options">
-          <input
-            type="text"
-            placeholder="Crop"
-            value={crop}
-            onChange={(e) => setCrop(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Crop Type"
-            value={cropType}
-            onChange={(e) => setCropType(e.target.value)}
-          />
-        </div>
-      )}
-
-      <button onClick={handleSubmit}>Post</button>
     </div>
   );
 };
 
-const Post = ({ post }) => (
-  <div className="post">
-    <div className="post-header">
-      <div className="user-info">
-        <img src="/profile-picture.jpg" alt="Profile" />
-        <div className="info">
-          <h3>{post.user}</h3>
-          <span className="date">{post.date}</span>
-          <span className="tag">{post.tag}</span>
+// Post component to display individual posts
+const Post = ({ user, avatar, content, postType, createdAt, media }) => {
+  const headerClass = postType === 'Problem' ? 'header-problem' : 'header-general';
+
+  return (
+    <div className="post-container">
+      <div className={`post-header ${headerClass}`}>
+        <img src={avatar} alt="Avatar" className="user-avatar" />
+        <div>
+          <h3>{user}</h3>
+          <span>{createdAt}</span>
         </div>
       </div>
-      <button>Edit</button>
-    </div>
-
-    <p>{post.content}</p>
-    {post.file && <img src={URL.createObjectURL(post.file)} alt="Media" />}
-    {post.isAgriculture && (
-      <div className="agriculture-info">
-        <p>Crop: {post.crop}</p>
-        <p>Crop Type: {post.cropType}</p>
+      <p className="post-content">{content}</p>
+      {media && <img src={media} alt="Media" className="post-media" />}
+      <div className="post-footer">
+        <button className="post-action">Like</button>
+        <button className="post-action">Comment</button>
+        <button className="post-action">Share</button>
       </div>
-    )}
-    <div className="post-actions">
-      <button>Like</button>
-      <button>Comment</button>
-      <button>Share</button>
     </div>
-  </div>
-);
+  );
+};
 
+// Main Posts component to handle state
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [media, setMedia] = useState('');
 
   const addPost = (post) => {
     setPosts([post, ...posts]);
   };
 
+  const handleMediaUpload = (e) => {
+    setMedia(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
-    <div className="container">
-      <CreatePost addPost={addPost} />
-      <div>
+    <div className="posts-page-container">
+      <div className="posts-container">
         {posts.map((post, index) => (
-          <Post key={index} post={post} />
+          <Post key={index} {...post} media={media} />
         ))}
+
+        {/* Sticky input bar at the bottom */}
+        <div className="sticky-bar">
+          <input
+            placeholder="Create a post..."
+            className="sticky-input"
+            onClick={() => setShowModal(true)}
+          />
+          <div className="sticky-buttons">
+            <label htmlFor="media-upload" className="upload-icon">+</label>
+            <input
+              type="file"
+              id="media-upload"
+              style={{ display: 'none' }}
+              onChange={handleMediaUpload}
+            />
+            <button className="sticky-post-button" onClick={() => setShowModal(true)}>
+              Post
+            </button>
+          </div>
+        </div>
+
+        {/* Post creation modal */}
+        <PostModal show={showModal} onClose={() => setShowModal(false)} onCreatePost={addPost} />
       </div>
     </div>
   );
