@@ -17,7 +17,7 @@ export default function Home() {
           <div
             className="text-xl text-slate-600"
             style={{
-              "font-size": "32px",
+              "font-size": "3rem",
               "font-weight": "600",
               color: "rgb(255, 255, 99)",
               "margin-left": "12px",

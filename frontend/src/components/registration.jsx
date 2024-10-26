@@ -154,6 +154,7 @@ const AuthCard = () => {
   const getHumanReadableLocation = async (lat, lon) => {
     console.log(lat, lon);
     try {
+      console.log(lat, lon);
       // Replace with your OpenCage API key
       const response = await axios.get(
         `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=b065176c1347425aa244dbe4ae16ef3d`

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import "./ProfileDropdown.css";
 import { AuthContext } from "./authContext";
-import axios from "axios";
+import AuthCard from "./registration";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
@@ -61,7 +61,8 @@ const Navbar = () => {
           <Link to="/agro-market">Agro Market</Link>
         </li>
         <li>
-          <Link to="/browse-websites">Browse Websites</Link>
+          <Link to="/website-tours">Website Tours</Link>{" "}
+          {/* Updated this line */}
         </li>
         <li>
           <Link to="/agro-tools">Agro Tools</Link>
@@ -107,7 +108,10 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <button className="login-button">Login</button>
+            <Link to="/auth">
+              {" "}
+              <button className="login-button">Login</button>
+            </Link>
           )}
         </li>
       </ul>

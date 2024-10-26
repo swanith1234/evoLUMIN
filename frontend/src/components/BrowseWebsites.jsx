@@ -10,5 +10,3 @@ const BrowseWebsites = () => {
 };
 
 export default BrowseWebsites;
-
-

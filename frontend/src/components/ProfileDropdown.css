@@ -1,8 +1,10 @@
+/* Profile Dropdown Container */
 .profile-dropdown-container {
   position: relative;
   display: inline-block;
 }
 
+/* Profile Icon */
 .profile-icon {
   background-color: #71d585;
   color: black;
@@ -13,11 +15,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  cursor: pointer; /* Add cursor pointer to indicate it's clickable */
 }
 
+/* Dropdown Menu Styling */
 .dropdown-menu {
   position: absolute;
-  top: 40px;
+  top: 60px; /* Adjusted to align with the profile icon */
   right: 0;
   background-color: white;
   border: 1px solid #ddd;
@@ -25,9 +29,10 @@
   width: 200px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  display: none; /* Initially hide the dropdown */
 }
 
-/* Avatar styling */
+/* Profile Avatar Container */
 .profile-avatar-container {
   display: flex;
   justify-content: center;
@@ -37,6 +42,7 @@
   border-bottom: 1px solid #ddd;
 }
 
+/* Profile Avatar */
 .profile-avatar {
   background-color: #71d585;
   color: black;
@@ -49,7 +55,7 @@
   border-radius: 50%;
 }
 
-/* Profile Info styling */
+/* Profile Info Styling */
 .profile-info {
   padding: 10px;
   text-align: center;
@@ -70,28 +76,29 @@
 
 /* Dropdown Links */
 .dropdown-links {
-  padding: 10px;
+  padding: 0 10px; /* Adjust padding to avoid overflow issues */
   text-align: center;
 }
 
-/* Style for My Services and View Profile */
+/* Dropdown Item Styling */
 .dropdown-item {
   display: block;
-  padding: 2px;  /* Increased padding */
+  padding: 10px 15px; /* Corrected padding for consistent spacing */
   cursor: pointer;
   text-align: center;
-  border-top: 1px solid #ddd;
-  color: black !important; /* Default color */
+  color: black !important;
   transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid #ddd; /* Added border to separate items */
 }
 
 .dropdown-item:hover {
-  background-color: #007bff; /* Blue background on hover */
-  color: white; /* White text on hover */
+  background-color: #007bff;
+  color: white;
 }
 
 .dropdown-item:last-child {
-  border-bottom: none;
+  border-bottom: none; /* Remove border from the last item */
+  margin-bottom: 0;
 }
 
 /* Logout Button */
@@ -99,7 +106,7 @@
   background-color: #f5f5f5;
   border: none;
   width: 100%;
-  padding: 15px;  /* Increased padding */
+  padding: 15px;
   cursor: pointer;
   color: black;
 }
@@ -108,8 +115,13 @@
   background-color: #e9ecef;
 }
 
-/* Add some padding to make the links visually appealing */
+/* Dropdown Item with Correct Padding and Margin */
 .dropdown-item {
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px; /* Reduced margin for more uniform spacing */
+}
+
+/* Show Dropdown on Hover */
+.profile-dropdown-container:hover .dropdown-menu {
+  display: block;
 }
