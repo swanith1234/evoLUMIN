@@ -18,83 +18,170 @@ const AuthCard = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    location: "",
+    coordination: "",
+    state: "",
+    district: "",
+    mandal: "",
+    place: "",
     role: "",
     crop: "",
     productionStage: "",
+    language: "",
   });
+  const [districts, setDistricts] = useState([]);
+  const [mandals, setMandals] = useState([]);
+
   const locationInfo = {
     "Andhra Pradesh": {
-      districts: [
-        "Chittoor",
-        "Kadapa",
-        "Anantapur",
-        "Kurnool" /* add more districts */,
-      ],
+      districts: {
+        Chittoor: ["Mandal 1", "Mandal 2"],
+        Kadapa: ["Mandal 3", "Mandal 4"],
+        Anantapur: ["Mandal 5", "Mandal 6"],
+        Kurnool: ["Mandal 7", "Mandal 8"],
+      },
       language: "Telugu",
     },
     Karnataka: {
-      districts: ["Bangalore", "Mysore", "Hubli" /* add more districts */],
+      districts: {
+        Bangalore: ["Mandal 9", "Mandal 10"],
+        Mysore: ["Mandal 11", "Mandal 12"],
+        Hubli: ["Mandal 13", "Mandal 14"],
+      },
       language: "Kannada",
     },
     "Tamil Nadu": {
-      districts: ["Chennai", "Coimbatore", "Madurai" /* add more districts */],
+      districts: {
+        Chennai: ["Mandal 15", "Mandal 16"],
+        Coimbatore: ["Mandal 17", "Mandal 18"],
+        Madurai: ["Mandal 19", "Mandal 20"],
+      },
       language: "Tamil",
     },
+
+    Kerala: {
+      districts: {
+        Alappuzha: [
+          "Ambalappuzha",
+          "Chengannur",
+          "Karthikappally",
+          "Cherthala",
+          "Mavelikkara",
+        ],
+        Ernakulam: [
+          "Aluva",
+          "Kochi",
+          "Kunnathunad",
+          "Kothamangalam",
+          "Muvattupuzha",
+        ],
+        Idukki: ["Devikulam", "Peerumedu", "Thodupuzha", "Udumbanchola"],
+        Kannur: ["Iritty", "Thalassery", "Taliparamba", "Kannur"],
+        Kasaragod: ["Hosdurg", "Manjeshwaram", "Kasaragod", "Vellarikundu"],
+        Kollam: ["Kottarakkara", "Pathanapuram", "Kollam", "Karunagappally"],
+        Kottayam: [
+          "Changanassery",
+          "Kanjirappally",
+          "Kottayam",
+          "Meenachil",
+          "Vaikom",
+        ],
+        Kozhikode: ["Koyilandy", "Kozhikode", "Thamarassery", "Vatakara"],
+        Malappuram: [
+          "Eranad",
+          "Nilambur",
+          "Perinthalmanna",
+          "Tirur",
+          "Ponnani",
+        ],
+        Palakkad: ["Alathur", "Chittur", "Mannarkkad", "Ottapalam", "Palakkad"],
+        Pathanamthitta: ["Adoor", "Kozhenchery", "Ranni", "Tiruvalla"],
+        Thiruvananthapuram: [
+          "Chirayinkeezhu",
+          "Nedumangad",
+          "Neyyattinkara",
+          "Thiruvananthapuram",
+          "Varkala",
+        ],
+        Thrissur: [
+          "Chalakudy",
+          "Kodungallur",
+          "Mukundapuram",
+          "Thalapilly",
+          "Thrissur",
+        ],
+        Wayanad: ["Mananthavady", "Sultan Bathery", "Vythiri"],
+      },
+      language: "Malayalam",
+    },
+
     // Add more states and districts as needed
   };
 
-  const parseAddress = (address) => {
-    // Example: "Unnamed road, Tirupati, Tirupati - 517500, Andhra Pradesh, India"
-    const addressParts = address.split(",");
-
-    let state = "";
-    let district = "";
-    let mandal = "";
-
-    // Parse the state from the address using Object.prototype.hasOwnProperty
-    for (let part of addressParts) {
-      part = part.trim();
-      if (Object.prototype.hasOwnProperty.call(locationInfo, part)) {
-        state = part;
-        break;
-      }
+  const handleStateChange = (e) => {
+    const selectedState = e.target.value;
+    setSignupDetails({
+      ...signupDetails,
+      state: selectedState,
+      district: "",
+      mandal: "",
+    });
+    if (selectedState) {
+      setDistricts(Object.keys(locationInfo[selectedState].districts));
+    } else {
+      setDistricts([]);
+      setMandals([]);
     }
+  };
 
-    // Parse the district based on known districts in the state
-    if (state) {
-      for (let part of addressParts) {
-        part = part.trim();
-        if (locationInfo[state].districts.includes(part)) {
-          district = part;
-          break;
-        }
-      }
+  const handleDistrictChange = (e) => {
+    const selectedDistrict = e.target.value;
+    setSignupDetails({
+      ...signupDetails,
+      district: selectedDistrict,
+      mandal: "",
+    });
+    if (selectedDistrict) {
+      setMandals(locationInfo[signupDetails.state].districts[selectedDistrict]);
+    } else {
+      setMandals([]);
     }
+  };
 
-    // The first part of the address could be the mandal
-    mandal = addressParts[1].trim(); // Assuming the mandal is the second part (you can adjust based on the address format)
-
-    // Fetch the language based on the state
-    const language = state ? locationInfo[state].language : "Unknown";
-
-    return {
-      state,
-      district,
-      mandal,
-      language,
-    };
+  const handleMandalChange = (e) => {
+    const selectedMandal = e.target.value;
+    setSignupDetails({ ...signupDetails, mandal: selectedMandal });
   };
   const getHumanReadableLocation = async (lat, lon) => {
+    console.log(lat, lon);
     try {
       // Replace with your OpenCage API key
       const response = await axios.get(
         `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=b065176c1347425aa244dbe4ae16ef3d`
       );
-      console.log(response);
-      const location = response.data.results[0].formatted; // Get the formatted address
-      console.log("address", parseAddress(location));
-      return location;
+
+      const properties = response.data.features[0].properties;
+
+      // Extracting the required location data
+      const place = properties.suburb;
+      const mandal = properties.county;
+      const district = properties.district;
+      const state = properties.state;
+      const language = locationInfo[state]?.language || "";
+
+      // Updating signupDetails state in one go
+      setSignupDetails((prevDetails) => ({
+        ...prevDetails,
+        place: place || prevDetails.place, // fallback to previous value if unavailable
+        mandal: mandal || prevDetails.mandal,
+        district: district || prevDetails.district,
+        state: state || prevDetails.state,
+        language: language,
+      }));
+
+      console.log("Place:", place);
+      console.log("Mandal:", mandal);
+      console.log("District:", district);
+      console.log("State:", state);
     } catch (error) {
       console.error("Error fetching location:", error);
       return "Unable to retrieve location";
@@ -106,10 +193,13 @@ const AuthCard = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+          console.log(position.coords);
+
           const location = await getHumanReadableLocation(latitude, longitude);
           setSignupDetails((prevDetails) => ({
             ...prevDetails,
             location,
+            coordinates: { type: "Point", coordinates: [longitude, latitude] },
           }));
         },
         (error) => {
@@ -122,7 +212,6 @@ const AuthCard = () => {
       );
     }
   }, []);
-
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleLoginChange = (e) => {
@@ -297,15 +386,76 @@ const AuthCard = () => {
                   required
                 />
               </div>
+
               <div className="form-group">
-                <label htmlFor="signup-location">Location</label>
+                <label htmlFor="signup-state">State</label>
+                <select
+                  id="signup-state"
+                  name="state"
+                  value={signupDetails.state}
+                  onChange={handleStateChange}
+                  required
+                >
+                  <option value={signupDetails.state}>
+                    {signupDetails.state}
+                  </option>
+                  {Object.keys(locationInfo).map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="signup-district">District</label>
+                <select
+                  id="signup-district"
+                  name="district"
+                  value={signupDetails.district}
+                  onChange={handleDistrictChange}
+                  required
+                  disabled={!signupDetails.state}
+                >
+                  <option value="">{signupDetails.district}</option>
+                  {districts.map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="signup-mandal">Mandal</label>
+                <select
+                  id="signup-mandal"
+                  name="mandal"
+                  value={signupDetails.mandal}
+                  onChange={handleMandalChange}
+                  required
+                  disabled={!signupDetails.district}
+                >
+                  <option value="">{signupDetails.mandal}</option>
+                  {mandals.map((mandal) => (
+                    <option key={mandal} value={mandal}>
+                      {mandal}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* Language Field */}
+              <div className="form-group">
+                <label htmlFor="signup-language">Language</label>
                 <input
                   type="text"
-                  id="signup-location"
-                  name="location"
-                  placeholder="Detecting location..."
-                  value={signupDetails.location}
+                  id="signup-language"
+                  name="language"
+                  placeholder="Language"
+                  value={signupDetails.language}
+                  onChange={handleSignupChange}
                   readOnly
+                  required
                 />
               </div>
               <div className="form-group">
@@ -359,7 +509,7 @@ const AuthCard = () => {
                   type="password"
                   id="signup-password"
                   name="password"
-                  placeholder="Create a password"
+                  placeholder="Enter your password"
                   value={signupDetails.password}
                   onChange={handleSignupChange}
                   required
@@ -379,6 +529,7 @@ const AuthCard = () => {
                   required
                 />
               </div>
+
               <button type="submit" className="btn">
                 Sign Up
               </button>

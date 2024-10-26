@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import "./ProfileDropdown.css";
 import { AuthContext } from "./authContext";
-
+import axios from "axios";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
@@ -23,14 +23,27 @@ const Navbar = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("Logout");
+    try {
+      const res = await axios.get("http://localhost:3000/api/v1/users/logout", {
+        headers: {
+          Authorization: token,
+        },
+        withCredentials: true,
+      });
+      if (res) {
+        localStorage.removeItem("token");
+      }
+    } catch (err) {
+      console.log("error in logging out", err);
+    }
     // Add your logout functionality here
   };
 
@@ -60,7 +73,7 @@ const Navbar = () => {
               <div className="profile-icon" onClick={handleDropdownToggle}>
                 {avatarLetter}
               </div>
-              
+
               {/* Dropdown Menu */}
               {isOpen && userInfo && (
                 <div className="dropdown-menu">
@@ -83,7 +96,10 @@ const Navbar = () => {
                     <Link to="/profile" className="dropdown-item">
                       View Profile
                     </Link>
-                    <button className="dropdown-item logout-button" onClick={handleLogout}>
+                    <button
+                      className="dropdown-item logout-button"
+                      onClick={handleLogout}
+                    >
                       Logout
                     </button>
                   </div>

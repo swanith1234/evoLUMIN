@@ -36,10 +36,27 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter your role"],
     enum: ["farmer", "student", "mediator", "expert"],
   },
-  location: {
+  state: {
     type: String,
-    required: [true, "Please enter your location"],
+    required: [true, "Please select your state"],
   },
+  district: {
+    type: String,
+    required: [true, "Please select your district"],
+  },
+  mandal: {
+    type: String,
+    required: [true, "Please select your mandal"],
+  },
+  coordinates: {
+    type: { type: String, enum: ["Point"], default: "Point" },
+    coordinates: { type: [Number], required: true, index: "2dsphere" },
+  },
+  language: {
+    type: String,
+    required: [true, "Please select your language"],
+  },
+
   crop: {
     type: String,
     required: [true, "Please enter your crop"],
@@ -52,6 +69,24 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  // Array to store references to tools booked along with service time
+  bookedTools: [
+    {
+      toolTitle: {
+        type: String,
+      },
+      serviceTime: {
+        type: Date,
+        required: [true, "Please provide the service time"],
+      },
+    },
+  ],
+  bookedToolTitles: [
+    {
+      type: String,
+      // Reference to the Tool model
+    },
+  ],
   otp: {
     type: Number,
   },
@@ -74,19 +109,6 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post", // Array to store IDs of posts the user saved
-    },
-  ],
-  bookedTools: [
-    {
-      tool: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Tool", // Reference to the Tool model
-        required: true,
-      },
-      serviceTime: {
-        type: Date,
-        required: [true, "Please provide the service time"],
-      },
     },
   ],
 });
@@ -112,5 +134,3 @@ userSchema.methods.getJWTToken = function () {
 };
 
 export const User = mongoose.model("User", userSchema);
-
-

@@ -12,9 +12,22 @@ export const createPost = async (req, res) => {
         .status(400)
         .json({ message: "Description and tag are required!" });
     }
-
+    const prompt = ` Please classify the following post. 
+    Return a JSON object with fields: "isAgriculture", "crop", and "cropType". 
+    If it does not belong to agriculture, set "isAgriculture" to false.
+    
+    Post description: "${description}"
+    
+    Your response should be strictly in JSON format without any additional text.
+    Example:
+    {
+      "isAgriculture": true,
+      "crop": "paddy",
+      "cropType": "Hybrid Paddy"
+    }
+   `;
     // // Step 2: Analyze the post using Gemini API (run function)
-    // const geminiResponse = await run(description);
+    // const geminiResponse = await run(prompt);
 
     // if (!geminiResponse) {
     //   return res

@@ -16,12 +16,16 @@ export const userregister = catchAsyncError(async (req, res, next) => {
     phone,
     role,
     password,
-    location,
+    coordinates,
+    state,
+    district,
+    mandal,
+    language,
     crop,
     productionStage,
   } = req.body;
   console.log(name, email, phone, role, password);
-  if (!name || !email || !phone || !role || !password || !location) {
+  if (!name || !email || !phone || !role || !password || !coordinates) {
     return next(new ErrorHandler("please fill full registration form"));
   }
   const isEmail = await User.findOne({ email });
@@ -36,7 +40,11 @@ export const userregister = catchAsyncError(async (req, res, next) => {
     phone,
     role,
     password,
-    location,
+    state,
+    district,
+    mandal,
+    coordinates,
+    language,
     crop,
     productionStage,
   });
@@ -72,6 +80,7 @@ export const userlogout = catchAsyncError(async (req, res, next) => {
       message: "user loggedout successfully",
     });
 });
+
 export const getOneUser = async (req, res) => {
   const token = req.params.id;
   console.log("swanith", token);

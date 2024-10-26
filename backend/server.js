@@ -11,10 +11,13 @@ import promptRouter from "./routes/promptRoute.js";
 import userRouter from "./routes/userrouter.js";
 import postRouter from "./routes/postRoute.js";
 import toolsRouter from "./routes/toolRoute.js";
+import { fetchPlayStoreMedia } from "./controller/digitalController.js";
+
 const app = express();
 const port = process.env.PORT || 3000;
 import { sendOtp } from "./controller/userController.js";
 import { verifyOtp } from "./controller/userController.js";
+import { digitalTool } from "./controller/digitalController.js";
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -42,5 +45,12 @@ app.use("/api/v1", postRouter);
 app.use("/api/v1", toolsRouter);
 dbConnection();
 // Example of calling the function with a userId
+// digitalTool("Soil Health and Fertility", "english");
+// Example usage
+// const appLink =
+//   "https://play.google.com/store/apps/details?id=com.soilscout.app"; // Replace with your app's link
+// fetchPlayStoreMedia(appLink)
+//   .then((media) => console.log(media))
+//   .catch((err) => console.error(err));
 
 export default app;

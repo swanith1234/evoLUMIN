@@ -35,38 +35,38 @@ const generationConfig = {
 //   const result = await chatSession.sendMessage(prompt);
 //   console.log(result.response.text());
 // }
-export async function run(promptText) {
-  const prompt = `
-  Please classify the following post. 
-  Return a JSON object with fields: "isAgriculture", "crop", and "cropType". 
-  If it does not belong to agriculture, set "isAgriculture" to false.
-  
-  Post description: "${promptText}"
-  
-  Your response should be strictly in JSON format without any additional text.
-  Example:
-  {
-    "isAgriculture": true,
-    "crop": "paddy",
-    "cropType": "Hybrid Paddy"
-  }
-  `;
-
+export async function run(prompt) {
   const chatSession = model.startChat({
     generationConfig,
     history: [],
   });
 
   const result = await chatSession.sendMessage(prompt);
-  const response = result.response.text();
+  const response = await result.response.text();
+
+  // Log raw response for debugging
+  console.log("Raw response:", response);
+
+  // Clean the response to extract JSON data
+  const jsonStartIndex = response.indexOf("{");
+  const jsonEndIndex = response.lastIndexOf("}") + 1;
+
+  if (jsonStartIndex === -1 || jsonEndIndex === -1) {
+    console.error("Error: No valid JSON found in the response");
+    return null;
+  }
+
+  const jsonResponseString = response.slice(jsonStartIndex, jsonEndIndex);
 
   // Parsing the response as JSON
   try {
-    const jsonResponse = JSON.parse(response);
+    console.log("JSON Response String:", jsonResponseString); // Log the cleaned response
+    const jsonResponse = JSON.parse(jsonResponseString);
     console.log("Gemini Response:", jsonResponse);
     return jsonResponse;
   } catch (error) {
     console.error("Error parsing Gemini response:", error);
+    console.error("Problematic JSON:", jsonResponseString); // Log the problematic part
     return null;
   }
 }

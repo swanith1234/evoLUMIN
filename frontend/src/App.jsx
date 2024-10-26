@@ -10,6 +10,7 @@ import Home from "./home";
 import SendOtp from "./components/sendOtp";
 import VerifyOtp from "./components/verifyOtp";
 import ToolDetails from "./components/ToolDetails";
+import "./App.css";
 export default function App() {
   return (
     <Router>
@@ -17,9 +18,8 @@ export default function App() {
         {/* Navigation Bar */}
         <div className="navbar-with-profile">
           <Navbar /> {/* Navbar appears on every page */}
- {/* Profile dropdown in the navbar */}
+          {/* Profile dropdown in the navbar */}
         </div>
-
         {/* Routes for different pages */}
         <Routes>
           <Route path="/" element={<Home />} /> {/* Other routes */}
@@ -35,7 +35,6 @@ export default function App() {
             element={<ToolDetails></ToolDetails>}
           ></Route>
         </Routes>
-
         {/* Footer Section */}
         <Footer /> {/* Footer appears on every page */}
       </div>
