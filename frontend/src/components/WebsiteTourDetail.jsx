@@ -37,28 +37,45 @@ const WebsiteTourDetail = () => {
   return (
     <div className="container">
       <h1>{tour.name}</h1>
+      
+      {/* Video Section */}
       <iframe
-        width="560"
-        height="315"
         src={tour.video.replace("watch?v=", "embed/")}
         title={tour.name}
         frameBorder="0"
         allowFullScreen
       ></iframe>
 
+      {/* Clickable Title Below Video */}
+      <h2 className="tool-title">
+        <a href={tour.websiteUrl} target="_blank" rel="noopener noreferrer">
+          {tour.name} Website
+        </a>
+      </h2>
+
+      {/* Tool Description */}
       <p className="description">{tour.description}</p>
 
-      <h2>How to Use the Website:</h2>
+      <h2>Website Tour Images:</h2>
       <div className="steps">
         {tour.instructions.map((step, index) => (
           <div key={index} className="step">
-            <h3>Step {index + 1}: {step.title}</h3>
-            <p>{step.text}</p>
+            {/* Image only in the card */}
             {step.image && (
               <div className="image-container">
                 <img src={step.image} alt={step.title} />
               </div>
             )}
+          </div>
+        ))}
+      </div>
+
+      <h2>How to Use the Website:</h2>
+      <div className="instructions">
+        {tour.instructions.map((step, index) => (
+          <div key={index} className="step-instructions">
+            <h3>Step {index + 1}: {step.title}</h3>
+            <p>{step.text}</p>
           </div>
         ))}
       </div>

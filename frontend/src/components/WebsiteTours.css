@@ -1,4 +1,4 @@
-/* websiteTours.css */
+
 .tours-container {
     padding: 20px;
 }
@@ -10,9 +10,9 @@ h1 {
 }
 
 .tours-grid {
-    display: flex; /* Use flexbox for responsive layout */
-    flex-wrap: wrap; /* Allow cards to wrap onto new lines */
-    justify-content: space-between; /* Space out cards */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* Set gap between cards */
 }
 
 .tour-card {
@@ -21,53 +21,59 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    overflow: hidden; /* Ensure content does not overflow */
-    width: calc(50% - 20px); /* Set width to 50% minus margin for two per row */
-    height: auto; /* Let height adjust based on content */
-    margin: 10px; /* Space between cards */
-    padding: 10px; /* Padding around content */
-    transition: transform 0.3s; /* Smooth hover effect */
+    overflow: hidden;
+    width: calc(33.333% - 0.5rem); /* Three cards per row */
+    margin: 0; /* Remove margin since we are using gap */
+    padding: 10px;
+    transition: transform 0.3s;
 }
 
 .tour-card:hover {
-    transform: scale(1.02); /* Slight zoom effect on hover */
+    transform: scale(1.02);
 }
 
 .tour-image {
-    width: 100%; /* Ensure the image fits the card */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 150px; /* Limit the height to maintain card size */
+    width: 100%;
+    height: auto;
+    max-height: 150px;
     border-radius: 4px;
-    margin-bottom: 5px; /* Margin for spacing */
+    margin-bottom: 5px;
 }
 
 h2 {
-    font-size: 1.2rem; /* Adjusted font size for card titles */
-    margin-bottom: 5px; /* Add space below the title */
+    font-size: 1.2rem;
+    margin-bottom: 5px;
 }
 
 .star-rating {
-    display: flex; /* Use flexbox to align stars horizontally */
-    justify-content: flex-start; /* Align stars to the left */
-    margin-top: 5px; /* Space between the stars and the title */
+    display: flex;
+    justify-content: center; /* Align stars in the center */
+    margin-top: 5px;
 }
 
 .star {
-    font-size: 1.5rem; /* Size of the stars */
-    color: #ccc; /* Default star color */
+    font-size: 1.5rem;
+    color: #ccc;
 }
 
 .star.filled {
-    color: #ff9800; /* Color for filled stars */
+    color: #ff9800;
 }
 
-p {
-    font-size: 0.9rem; /* Smaller font size for text */
-}
-
-/* Additional styling for error messages */
 .error {
     color: red;
     text-align: center;
     font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .tour-card {
+        width: calc(50% - 0.5rem); /* Two cards per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .tour-card {
+        width: calc(100% - 0.5rem); /* One card per row on very small screens */
+    }
 }

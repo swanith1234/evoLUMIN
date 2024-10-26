@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-
+import "./ProfileDropdown.css";
 import { AuthContext } from "./authContext";
 
 const Navbar = () => {
