@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import "./ProfileDropdown.css";
 import { AuthContext } from "./authContext";
-
+import AuthCard from "./registration";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
@@ -91,7 +91,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <button className="login-button">Login</button>
+        <Link to='/auth'>    <button className="login-button">Login</button></Link>
           )}
         </li>
       </ul>
