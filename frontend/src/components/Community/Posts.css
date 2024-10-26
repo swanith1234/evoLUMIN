@@ -57,12 +57,58 @@
   justify-content: space-between;
   align-items: center;
 }
+.upload-icon {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.upload-icon:hover {
+  background-color: #0056b3;
+}
+
+.upload-icon.active {
+  background-color: #28a745; /* Change color on media upload */
+  color: white;
+}
+ 
+/* <div className="sticky-buttons">
+            <label htmlFor="media-upload" className="upload-icon">+</label>
+            <input
+              type="file"
+              id="media-upload"
+              style={{ display: 'none' }}
+            /> */
 
 .post-type-dropdown {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.upload-icon {
+  background-color: #007bff;
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-icon:hover {
+  background-color: #0056b3;
+}
+
 
 .modal-button {
   background-color: #007bff;

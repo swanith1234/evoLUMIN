@@ -1,3 +1,5 @@
+ 
+
 import React, { useState } from 'react';
 import './Posts.css';
 
@@ -5,22 +7,30 @@ import './Posts.css';
 const PostModal = ({ show, onClose, onCreatePost }) => {
   const [content, setContent] = useState('');
   const [postType, setPostType] = useState('General');
+  const [media, setMedia] = useState('');
 
   if (!show) {
     return null;
   }
 
   const handlePost = () => {
+    if (!content && !media) return; // Prevent empty posts
     onCreatePost({
       user: 'Afroze Mohammad', // Example user
       avatar: 'user-avatar.jpg', // Example avatar
       content,
       postType,
       createdAt: new Date().toLocaleString(),
+      media,
     });
     setContent('');
     setPostType('General');
+    setMedia('');
     onClose();
+  };
+
+  const handleMediaUpload = (e) => {
+    setMedia(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -33,10 +43,20 @@ const PostModal = ({ show, onClose, onCreatePost }) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
+        
+        {/* Media upload styled as + icon */}
+        <label htmlFor="media-upload" className="upload-icon">+</label>
+        <input
+          type="file"
+          id="media-upload"
+          style={{ display: 'none' }}
+          onChange={handleMediaUpload}
+        />
         <div className="modal-footer">
-          <button className="modal-button" onClick={handlePost}>
-            Post
+        <button className="modal-cancel-button" onClick={onClose}>
+            Cancel
           </button>
+         
           <select
             className="post-type-dropdown"
             value={postType}
@@ -45,8 +65,8 @@ const PostModal = ({ show, onClose, onCreatePost }) => {
             <option value="General">General</option>
             <option value="Problem">Problem</option>
           </select>
-          <button className="modal-cancel-button" onClick={onClose}>
-            Cancel
+          <button className="modal-button" onClick={handlePost}>
+            Post
           </button>
         </div>
       </div>
@@ -72,7 +92,7 @@ const Post = ({ user, avatar, content, postType, createdAt, media }) => {
       <div className="post-footer">
         <button className="post-action">Like</button>
         <button className="post-action">Comment</button>
-        <button className="post-action">Share</button>
+        <button className="post-action">Save</button>
       </div>
     </div>
   );
@@ -82,42 +102,25 @@ const Post = ({ user, avatar, content, postType, createdAt, media }) => {
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [media, setMedia] = useState('');
 
   const addPost = (post) => {
     setPosts([post, ...posts]);
-  };
-
-  const handleMediaUpload = (e) => {
-    setMedia(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
     <div className="posts-page-container">
       <div className="posts-container">
         {posts.map((post, index) => (
-          <Post key={index} {...post} media={media} />
+          <Post key={index} {...post} />
         ))}
 
-        {/* Sticky input bar at the bottom */}
+        {/* Sticky input bar without media upload button and Post button */}
         <div className="sticky-bar">
           <input
             placeholder="Create a post..."
             className="sticky-input"
             onClick={() => setShowModal(true)}
           />
-          <div className="sticky-buttons">
-            <label htmlFor="media-upload" className="upload-icon">+</label>
-            <input
-              type="file"
-              id="media-upload"
-              style={{ display: 'none' }}
-              onChange={handleMediaUpload}
-            />
-            <button className="sticky-post-button" onClick={() => setShowModal(true)}>
-              Post
-            </button>
-          </div>
         </div>
 
         {/* Post creation modal */}
@@ -128,3 +131,4 @@ const Posts = () => {
 };
 
 export default Posts;
+
