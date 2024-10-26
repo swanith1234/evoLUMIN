@@ -3,8 +3,6 @@ import Navbar from "./components/Navbar";
 import AgroConnect from "./components/Community/AgroConnect";
 import AgroMarket from "./components/AgroMarket";  // AgroMarket component
 import AgroMarkets from "./components/AgroMarkets";  // AgroMarkets component for AgroMarket1
-
-
 import BrowseWebsites from "./components/BrowseWebsites";
 import AgroTools from "./components/AgroTools";
 import AuthCard from "./components/registration";
@@ -21,9 +19,10 @@ import './App.css';
 import './index.css';
 import './components/AgroMarkets.css';
 
-  function App() {
+function App() {
+  const location = useLocation(); // Use useLocation to get current path
 
-return (
+  return (
     <div className="app-container">
       {/* Conditionally render Navbar - Hide on the AgroConnect page */}
       {location.pathname !== "/agro-connect" && (
@@ -32,23 +31,20 @@ return (
         </div>
       )}
 
-<Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<AuthCard />} />
-          <Route path="/agro-connect" element={<AgroConnect />} />
-          <Route path="/agro-market" element={<AgroMarkets />} /> {/* Main AgroMarket page */}
-          <Route path="/agro-market1" element={<AgroMarkets />} /> {/* Additional AgroMarket1 page */}
-          <Route path="/agro-tools" element={<AgroTools />} />
-          <Route path="/sendOtp" element={<SendOtp />} />
-          <Route path="/verify" element={<VerifyOtp />} />
-          <Route path="/tool/:crop/:productionStage/:title" element={<ToolDetails />} />
-          <Route path="/website-tours" element={<WebsiteTours />} />
-          <Route path="/website-tour/:id" element={<WebsiteTourDetail />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-
-        <Footer />
-
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<AuthCard />} />
+        <Route path="/agro-connect" element={<AgroConnect />} />
+        <Route path="/agro-market" element={<AgroMarkets />} /> {/* Main AgroMarket page */}
+        <Route path="/agro-market1" element={<AgroMarkets />} /> {/* Additional AgroMarket1 page */}
+        <Route path="/agro-tools" element={<AgroTools />} />
+        <Route path="/sendOtp" element={<SendOtp />} />
+        <Route path="/verify" element={<VerifyOtp />} />
+        <Route path="/tool/:crop/:productionStage/:title" element={<ToolDetails />} />
+        <Route path="/website-tours" element={<WebsiteTours />} />
+        <Route path="/website-tour/:id" element={<WebsiteTourDetail />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
 
       {/* Conditionally render Footer - Hide on the AgroConnect page */}
       {location.pathname !== "/agro-connect" && <Footer />}
