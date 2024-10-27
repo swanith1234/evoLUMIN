@@ -43,7 +43,7 @@ Used for providing access to modern farming tools and advice.
 Gemini API Documentation
 API Key Setup: Sign up at Gemini to obtain an API key.
 Demo Video
-AgroNexus Demo Video on YouTube
+AgroNexus Demo Video on YouTube:https://youtu.be/l_KwCjEBcVg
 
 Installation and Setup
 To set up AgroNexus locally, follow these steps:
@@ -52,7 +52,7 @@ Clone the Repository
 
 bash
 Copy code
-git clone https://github.com/your-username/agro-nexus.git
+git clone [https://github.com/your-username/agro-nexus.git](https://github.com/swanith1234/evoLUMIN)
 cd agro-nexus
 Install Dependencies
 
