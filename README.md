@@ -52,7 +52,7 @@ Clone the Repository
 
 bash
 Copy code
-git clone [https://github.com/your-username/agro-nexus.git](https://github.com/swanith1234/evoLUMIN)
+git clone (https://github.com/swanith1234/evoLUMIN)
 cd agro-nexus
 Install Dependencies
 
