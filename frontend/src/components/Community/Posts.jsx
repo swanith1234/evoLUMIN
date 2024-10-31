@@ -1,107 +1,73 @@
- 
+import React, { useState, useEffect, useContext } from "react";
+import "./Posts.css?v=1.0.1";
+import PostModal from "./PostModal";
+import { AuthContext } from "../authContext";
+import axios from "axios";
 
-import React, { useState } from 'react';
-import './Posts.css';
-
-// Modal for creating a post
-const PostModal = ({ show, onClose, onCreatePost }) => {
-  const [content, setContent] = useState('');
-  const [postType, setPostType] = useState('General');
-  const [media, setMedia] = useState('');
-
-  if (!show) {
-    return null;
-  }
-
-  const handlePost = () => {
-    if (!content && !media) return; // Prevent empty posts
-    onCreatePost({
-      user: 'Afroze Mohammad', // Example user
-      avatar: 'user-avatar.jpg', // Example avatar
-      content,
-      postType,
-      createdAt: new Date().toLocaleString(),
-      media,
-    });
-    setContent('');
-    setPostType('General');
-    setMedia('');
-    onClose();
-  };
-
-  const handleMediaUpload = (e) => {
-    setMedia(URL.createObjectURL(e.target.files[0]));
-  };
-
+// Define the Post component to display detailed information about each post
+const Post = ({
+  description,
+  media,
+  crop,
+  cropType,
+  createdAt,
+  numberOfLikes,
+  numberOfComments,
+  author,
+  likes,
+  comments,
+}) => {
   return (
-    <div className="modal-background">
-      <div className="modal-container">
-        <h2 className="modal-header">Create a Post</h2>
-        <textarea
-          placeholder="What do you want to talk about?"
-          className="modal-textarea"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-        
-        {/* Media upload styled as + icon */}
-        <label htmlFor="media-upload" className="upload-icon">+</label>
-        <input
-          type="file"
-          id="media-upload"
-          style={{ display: 'none' }}
-          onChange={handleMediaUpload}
-        />
-        <div className="modal-footer">
-        <button className="modal-cancel-button" onClick={onClose}>
-            Cancel
-          </button>
-         
-          <select
-            className="post-type-dropdown"
-            value={postType}
-            onChange={(e) => setPostType(e.target.value)}
-          >
-            <option value="General">General</option>
-            <option value="Problem">Problem</option>
-          </select>
-          <button className="modal-button" onClick={handlePost}>
-            Post
-          </button>
+    <div className="post">
+      <h3>{cropType ? `Crop Type: ${cropType}` : "General Post"}</h3>
+      <p>{description}</p>
+      {media && (
+        <div className="post-media">
+          <img src={media} alt="Post media" />
         </div>
+      )}
+      <p>
+        <strong>Crop:</strong> {crop || "N/A"}
+      </p>
+      <p>
+        <em>By {author?.name || "Unknown"}</em> |{" "}
+        <em>{new Date(createdAt).toLocaleDateString()}</em>
+      </p>
+      <p>
+        <strong>Likes:</strong> {numberOfLikes}
+      </p>
+      <p>
+        <strong>Comments:</strong> {numberOfComments}
+      </p>
+      <div className="post-interactions">
+        <button className="post-like-button">Like ({likes.length})</button>
+        <button className="post-comment-button">
+          Comments ({comments.length})
+        </button>
       </div>
     </div>
   );
 };
 
-// Post component to display individual posts
-const Post = ({ user, avatar, content, postType, createdAt, media }) => {
-  const headerClass = postType === 'Problem' ? 'header-problem' : 'header-general';
-
-  return (
-    <div className="post-container">
-      <div className={`post-header ${headerClass}`}>
-        <img src={avatar} alt="Avatar" className="user-avatar" />
-        <div>
-          <h3>{user}</h3>
-          <span>{createdAt}</span>
-        </div>
-      </div>
-      <p className="post-content">{content}</p>
-      {media && <img src={media} alt="Media" className="post-media" />}
-      <div className="post-footer">
-        <button className="post-action">Like</button>
-        <button className="post-action">Comment</button>
-        <button className="post-action">Save</button>
-      </div>
-    </div>
-  );
-};
-
-// Main Posts component to handle state
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const { token, userInfo } = useContext(AuthContext);
+
+  // Fetch posts from the backend
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/user/${token}/posts`
+        );
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchPosts();
+  }, [token]);
 
   const addPost = (post) => {
     setPosts([post, ...posts]);
@@ -109,12 +75,23 @@ const Posts = () => {
 
   return (
     <div className="posts-page-container">
-      <div className="posts-container">
+      <div className="posts-container" style={{ position: "relative" }}>
         {posts.map((post, index) => (
-          <Post key={index} {...post} />
+          <Post
+            key={post._id || index}
+            description={post.description}
+            media={post.media}
+            crop={post.crop}
+            cropType={post.cropType}
+            createdAt={post.createdAt}
+            numberOfLikes={post.numberOfLikes}
+            numberOfComments={post.numberOfComments}
+            author={post.userId} // assuming userId contains author details
+            likes={post.likes || []}
+            comments={post.comments || []}
+          />
         ))}
 
-        {/* Sticky input bar without media upload button and Post button */}
         <div className="sticky-bar">
           <input
             placeholder="Create a post..."
@@ -123,12 +100,23 @@ const Posts = () => {
           />
         </div>
 
-        {/* Post creation modal */}
-        <PostModal show={showModal} onClose={() => setShowModal(false)} onCreatePost={addPost} />
+        <PostModal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          onCreatePost={addPost}
+        />
+      </div>
+
+      <div className="Profile-Right">
+        <p className="post-tagline">
+          Growing Together: Your Agricultural Community Hub
+        </p>
+        <div className="post-media-container">
+          {/* Image will be added as a background in CSS */}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Posts;
-

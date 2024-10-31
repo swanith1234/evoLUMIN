@@ -1,134 +1,128 @@
-// Import necessary hooks and modules
-import React, { useState } from "react";
+// frontend/src/components/AgroMarkets.js
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./AgroMarkets.css";
+import { uploadFile } from "../upload";
 
 const AgroMarkets = () => {
-  // State variables for form visibility, form data, and posts
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    location: "",
     crop: "",
     quantity: "",
-    images: [],
-    video: null,
+    images: "",
   });
   const [posts, setPosts] = useState([]);
 
-  // Toggle form visibility
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
+  const toggleForm = () => setShowForm(!showForm);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle image upload
-  const handleImageChange = (e) => {
-    setFormData({ ...formData, images: [...e.target.files] });
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    const uploadphoto = await uploadFile(file);
+    console.log("Uploaded Image:", uploadphoto);
+    setFormData({ ...formData, images: uploadphoto.secure_url });
   };
 
-  // Handle video upload
-  const handleVideoChange = (e) => {
-    setFormData({ ...formData, video: e.target.files[0] });
-  };
+  // const handleVideoChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   const uploadphoto = await uploadFile(file);
+  //   console.log("Uploaded Video:", uploadphoto);
+  //   setFormData({ ...formData, video: uploadphoto.playback_url });
+  // };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setPosts([...posts, formData]);
-    setFormData({
-      name: "",
-      location: "",
-      crop: "",
-      quantity: "",
-      images: [],
-      video: null,
-    });
-    console.log("form", formData);
-    setShowForm(false);
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/v1/postCrop/${localStorage.getItem(
+          "token"
+        )}`,
+        formData
+      );
+      setPosts([...posts, response.data.cropDetails]);
+      setFormData({ crop: "", quantity: "", images: "" });
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error uploading crop details:", error);
+    }
   };
+
+  useEffect(() => {
+    const fetchCropData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/getCropDetails/${token}`
+        );
+        setPosts(response.data.cropDetails ? [response.data.cropDetails] : []);
+      } catch (error) {
+        console.error("Error fetching crop details:", error);
+      }
+    };
+
+    fetchCropData();
+  }, []);
 
   return (
     <div className="agro-market-container">
       <h1>Agro Market</h1>
+      <p>
+        A farmer can list crop details such as type, quantity, and price.
+        Interested retailers can view listings and directly contact the farmer
+        to discuss purchasing options.
+      </p>
       <button onClick={toggleForm} className="new-post-btn">
         New Post
       </button>
 
-      {/* Display form when showForm is true */}
       {showForm && (
-        <form onSubmit={handleSubmit} className="post-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={formData.location}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="crop"
-            placeholder="Crop"
-            value={formData.crop}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="quantity"
-            placeholder="Quantity"
-            value={formData.quantity}
-            onChange={handleInputChange}
-            required
-          />
-          <label>Upload Images</label>
-          <input type="file" multiple onChange={handleImageChange} required />
-          <label>Upload Video</label>
-          <input
-            type="file"
-            onChange={handleVideoChange}
-            accept="video/*"
-            required
-          />
-          <button type="submit" className="submit-btn">
-            Submit
-          </button>
-        </form>
+        <div className="modal-overlay" onClick={toggleForm}>
+          <form
+            onClick={(e) => e.stopPropagation()}
+            onSubmit={handleSubmit}
+            className="post-form"
+          >
+            <input
+              type="text"
+              name="crop"
+              placeholder="Crop Type"
+              value={formData.crop}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="quantity"
+              placeholder="Quantity"
+              value={formData.quantity}
+              onChange={handleInputChange}
+              required
+            />
+            <label>Upload Image</label>
+            <input type="file" onChange={handleImageChange} required />
+            <label>Upload Video</label>
+            {/* <input type="file" onChange={handleVideoChange} accept="video/*" /> */}
+            <button type="submit" className="submit-btn">
+              Submit
+            </button>
+          </form>
+        </div>
       )}
 
-      {/* Display submitted posts */}
       <div className="posts-container">
         {posts.map((post, index) => (
           <div key={index} className="post-card">
-            <div className="collage">
-              {post.images.map((image, idx) => (
-                <img key={idx} src={URL.createObjectURL(image)} alt="Crop" />
-              ))}
-            </div>
+            <img src={post.cropImage} alt="Crop" className="crop-image" />
             <div className="post-details">
-              <h3>{post.name}</h3>
-              <p>Location: {post.location}</p>
-              <p>Crop: {post.crop}</p>
-              <p>Quantity: {post.quantity}</p>
-              <button
-                onClick={() => window.open(URL.createObjectURL(post.video))}
-                className="video-btn"
-              >
-                Watch Video
-              </button>
+              <h3>{post.crop}</h3>
+              <p>Quantity: {post.cropQuantityForSale}</p>
+              {/* {post.cropVideo && (
+                <video src={post.cropVideo} controls className="video-player" />
+              )} */}
             </div>
           </div>
         ))}

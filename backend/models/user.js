@@ -65,6 +65,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter your crop production stage"],
   },
+  cropQuantityForSale: {
+    type: Number,
+    required: [true, "Please enter the quantity of crop being sold"],
+  },
+  cropImage: {
+    type: String,
+  },
+  cropVideo: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

@@ -240,6 +240,7 @@ const AuthCard = () => {
         if (response) {
           console.log(response.data);
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", response.data.user);
           setSuccessMessage("Login successful!");
           setTimeout(() => setSuccessMessage(""), 3000);
           window.history.back();
@@ -262,6 +263,7 @@ const AuthCard = () => {
         );
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user);
         setSuccessMessage("Signup successful!");
         setTimeout(() => setSuccessMessage(""), 3000);
       } catch (error) {

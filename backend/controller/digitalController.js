@@ -7,11 +7,15 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 const cache = new Map();
 
-export const digitalTool = async (problem, language) => {
+export const digitalTool = async (req, res) => {
+  console.log(req.params);
+  const { name, language } = req.params;
+
+  console.log(name, language);
   let prompt = `Imagine yourself as a farm and crop assistant for a farmer
    Please recommend the best app that solves the following problem faced by a farmer:
   
-  Problem: "${problem}"
+  Problem: "${name}"
     Please provide detailed, step-by-step instructions on how to use the  app:
     The response should be written in the ${language} language.
     
@@ -34,13 +38,9 @@ export const digitalTool = async (problem, language) => {
     5. "link": The link to the app in the Play Store.
  The response should be in strict JSON format with  fields {name,description,steps,rating,link} 
    If no rating is available, set "rating" to "N/A". The link provided must lead to the Google Play Store.
-   the name of the app should not be in english language`;
+   the name of the app should  be in english language`;
 
   let geminiResponse = await run(prompt);
-  console.log(
-    "Gemini API Response (Step-by-Step Instructions):",
-    geminiResponse
-  );
 
   // Fetch media (screenshots, videos) from Play Store
   let appLink;
@@ -55,7 +55,6 @@ export const digitalTool = async (problem, language) => {
       console.log("No apps found.");
       return;
     }
-    console.log("App Link:", appLink);
   } catch (err) {
     console.log("Error fetching app link:", err);
     return; // Stop execution if the app link couldn't be retrieved
@@ -68,15 +67,17 @@ export const digitalTool = async (problem, language) => {
     description: geminiResponse.description,
     instructions: geminiResponse.steps,
     rating: geminiResponse.rating,
-    link: geminiResponse.link,
+    link: appLink,
     screenshots: media.screenshots,
     videos: media.videos,
+    youtube: media.youtubeVideo,
   };
 
   // Compare the new app with existing apps in the database
-  const bestApp = await compareWithExistingApps(newApp);
-  console.log(bestApp);
-  return bestApp;
+  // const bestApp = await compareWithExistingApps(newApp);
+  // console.log(bestApp);
+  console.log(newApp);
+  return res.status(200).json(newApp);
 };
 
 // Function to fetch Play Store media
@@ -197,11 +198,11 @@ const fetchYouTubeVideo = async (page, appName) => {
     // Search for app feature explanation video
     await page.type("input#search", `${appName} app features`, { delay: 100 });
     await page.keyboard.press("Enter");
-    await page.waitForSelector("#video-title", { timeout: 10000 });
+    await page.waitForSelector("#video-title", { timeout: 100000 });
 
     // Convert appName to lowercase for comparison
     const lowerCaseAppName = appName.toLowerCase();
-
+    console.log("extracting youtube video");
     // Extract the first video link where the title includes the app name
     const videoLink = await page.evaluate((lowerCaseAppName) => {
       const videos = document.querySelectorAll("#video-title");

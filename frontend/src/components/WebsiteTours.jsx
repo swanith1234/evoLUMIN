@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./WebsiteTours.css";
-
+import logo from "../assets/logo.png";
 const WebsiteTours = () => {
   const [tours, setTours] = useState([]);
   const [error, setError] = useState(null);
@@ -47,12 +47,8 @@ const WebsiteTours = () => {
       <div className="tours-grid">
         {tours.map((tour) => (
           <div className="tour-card" key={tour.id}>
-            <Link to={`/website-tour/${tour.id}`}>
-              <img
-                src={`https://via.placeholder.com/150`}
-                alt={tour.name}
-                className="tour-image"
-              />
+            <Link to={`/browse-website/${tour.name}`}>
+              <img src={logo} alt={tour.name} className="tour-image" />
               <h2>{tour.name}</h2>
             </Link>
             {renderStars(tour.rating)} {/* Render stars instead of numbers */}

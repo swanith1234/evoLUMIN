@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "AgroNexus Website Tour",
+    "name": "Insurance for farmers",
     "video": "https://www.youtube.com/watch?v=examplevideo",
     "description": "AgroNexus is an advanced platform for farmers, agro-scientists, and students to connect, share knowledge, and improve farming practices. This tour will guide you through the website features.",
     "rating": 4.8,
@@ -23,222 +23,197 @@
       }
     ]
   },
-  
-    {
-      "id": 2,
-      "name": "Agro Connect Guide",
-      "video": "https://www.youtube.com/watch?v=agroconnectvideo",
-      "description": "Agro Connect enables farmers to directly interact with agro-scientists for expert advice. This guide will walk you through how to use Agro Connect effectively.",
-      "rating": 4.7,
-      "instructions": [
-        {
-          "title": "Search for Experts",
-          "text": "Use the search bar to find agro-scientists in your area or field of interest.",
-          "image": "/images/search-experts.png"
-        },
-        {
-          "title": "Connect via Chat",
-          "text": "Send a message or book a consultation through the chat feature.",
-          "image": "/images/connect-chat.png"
-        },
-        {
-          "title": "Make a Video Call",
-          "text": "Start a video call to discuss complex issues face-to-face.",
-          "image": "/images/video-call.png"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Agro Market Tutorial",
-      "video": "https://www.youtube.com/watch?v=agromarketvideo",
-      "description": "This tutorial shows how farmers can sell and buy products on the Agro Market, allowing them to get the best prices.",
-      "rating": 4.6,
-      "instructions": [
-        {
-          "title": "Listing a Product",
-          "text": "Add your product by providing details like name, price, and quantity.",
-          "image": "/images/add-product.png"
-        },
-        {
-          "title": "Browsing Market",
-          "text": "Explore the market to find the best deals on agricultural products.",
-          "image": "/images/browse-market.png"
-        },
-        {
-          "title": "Make a Purchase",
-          "text": "Click on 'Buy Now' to purchase a product directly from a farmer.",
-          "image": "/images/buy-product.png"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Weather Dashboard Walkthrough",
-      "video": "https://www.youtube.com/watch?v=weatherdashboardvideo",
-      "description": "Stay updated with real-time weather forecasts. This walkthrough helps you navigate the weather dashboard effectively.",
-      "rating": 4.9,
-      "instructions": [
-        {
-          "title": "Access the Weather Dashboard",
-          "text": "Find the weather dashboard on the homepage to view current conditions.",
-          "image": "/images/weather-dashboard.png"
-        },
-        {
-          "title": "Set Location Alerts",
-          "text": "Set your location to receive weather alerts specific to your region.",
-          "image": "/images/location-alert.png"
-        },
-        {
-          "title": "Check Forecasts",
-          "text": "View weekly and monthly forecasts to plan farming activities.",
-          "image": "/images/weather-forecast.png"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "Profile Customization Guide",
-      "video": "https://www.youtube.com/watch?v=profilecustomizationvideo",
-      "description": "Learn how to personalize your AgroNexus profile for better connections and networking.",
-      "rating": 4.8,
-      "instructions": [
-        {
-          "title": "Edit Profile",
-          "text": "Go to the profile section to update your personal information.",
-          "image": "/images/edit-profile.png"
-        },
-        {
-          "title": "Set Preferences",
-          "text": "Choose your interests and preferences to receive customized suggestions.",
-          "image": "/images/preferences.png"
-        },
-        {
-          "title": "Upload Profile Picture",
-          "text": "Upload a clear picture to improve your visibility among peers.",
-          "image": "/images/profile-picture.png"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "name": "Notifications Setup",
-      "video": "https://www.youtube.com/watch?v=notificationsetupvideo",
-      "description": "This guide helps you set up notifications to stay informed about important updates, market trends, and expert advice.",
-      "rating": 4.7,
-      "instructions": [
-        {
-          "title": "Enable Notifications",
-          "text": "Go to the settings page and toggle on notifications for alerts.",
-          "image": "/images/enable-notifications.png"
-        },
-        {
-          "title": "Choose Notification Types",
-          "text": "Select which types of notifications you wish to receive: weather, market updates, or messages from experts.",
-          "image": "/images/notification-types.png"
-        },
-        {
-          "title": "Set Delivery Preferences",
-          "text": "Choose how you'd like to receive notifications: via email, SMS, or in-app alerts.",
-          "image": "/images/delivery-preferences.png"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "name": "Booking Agro Tools Guide",
-      "video": "https://www.youtube.com/watch?v=agrotoolsbookingvideo",
-      "description": "This guide will show you how to book agricultural tools for your farm directly through the platform.",
-      "rating": 4.8,
-      "instructions": [
-        {
-          "title": "Browse Tools",
-          "text": "Explore the wide range of tools available for rental or purchase.",
-          "image": "/images/browse-tools.png"
-        },
-        {
-          "title": "View Tool Details",
-          "text": "Click on a tool to see its specifications, user reviews, and availability.",
-          "image": "/images/tool-details.png"
-        },
-        {
-          "title": "Book a Tool",
-          "text": "Select the rental duration and confirm your booking.",
-          "image": "/images/book-tool.png"
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "name": "Help & Support Guide",
-      "video": "https://www.youtube.com/watch?v=helpsupportvideo",
-      "description": "This guide explains how to contact support, resolve issues, and access our help resources.",
-      "rating": 4.5,
-      "instructions": [
-        {
-          "title": "Access Help Center",
-          "text": "Navigate to the 'Help & Support' section from the homepage footer.",
-          "image": "/images/help-center.png"
-        },
-        {
-          "title": "Submit a Query",
-          "text": "Fill out the query form with your question or issue.",
-          "image": "/images/submit-query.png"
-        },
-        {
-          "title": "Contact Support",
-          "text": "Use the chat or call option to get in touch with our customer support team.",
-          "image": "/images/contact-support.png"
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "name": "LinkedIn for Farmers Tutorial",
-      "video": "https://www.youtube.com/watch?v=linkedinfortutorial",
-      "description": "This tutorial shows how farmers can use the LinkedIn-like feature to connect, post, and engage with the community.",
-      "rating": 4.6,
-      "instructions": [
-        {
-          "title": "Create a Post",
-          "text": "Share your experiences, ask questions, or post updates to engage with the community.",
-          "image": "/images/create-post.png"
-        },
-        {
-          "title": "Tag and Categorize",
-          "text": "Tag your posts for better visibility and categorize them under relevant topics.",
-          "image": "/images/tag-category.png"
-        },
-        {
-          "title": "Comment and Like",
-          "text": "Engage with other farmers and experts by commenting on or liking their posts.",
-          "image": "/images/comment-like.png"
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "name": "Farm Reels Walkthrough",
-      "video": "https://www.youtube.com/watch?v=farmreelstutorial",
-      "description": "Farm Reels allows farmers to create and share short videos about their practices. This walkthrough will guide you through creating and viewing reels.",
-      "rating": 4.8,
-      "instructions": [
-        {
-          "title": "Create a Reel",
-          "text": "Record a short video showcasing your farming techniques or innovations.",
-          "image": "/images/create-reel.png"
-        },
-        {
-          "title": "Edit and Upload",
-          "text": "Edit your reel by adding text or filters, and then upload it to the platform.",
-          "image": "/images/upload-reel.png"
-        },
-        {
-          "title": "View Popular Reels",
-          "text": "Browse trending farm reels to get inspired by other farmers' practices.",
-          "image": "/images/view-reels.png"
-        }
-      ]
-    }
-  ]
-  
+
+  {
+    "id": 2,
+    "name": "Livestock Management",
+    "video": "https://www.youtube.com/watch?v=agroconnectvideo",
+    "description": "Agro Connect enables farmers to directly interact with agro-scientists for expert advice. This guide will walk you through how to use Agro Connect effectively.",
+    "rating": 4.7,
+    "instructions": [
+      {
+        "title": "Search for Experts",
+        "text": "Use the search bar to find agro-scientists in your area or field of interest.",
+        "image": "/images/search-experts.png"
+      },
+      {
+        "title": "Connect via Chat",
+        "text": "Send a message or book a consultation through the chat feature.",
+        "image": "/images/connect-chat.png"
+      },
+      {
+        "title": "Make a Video Call",
+        "text": "Start a video call to discuss complex issues face-to-face.",
+        "image": "/images/video-call.png"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Organic certification and tracebility",
+    "video": "https://www.youtube.com/watch?v=agromarketvideo",
+    "description": "This tutorial shows how farmers can sell and buy products on the Agro Market, allowing them to get the best prices.",
+    "rating": 4.6,
+    "instructions": [
+      {
+        "title": "Listing a Product",
+        "text": "Add your product by providing details like name, price, and quantity.",
+        "image": "/images/add-product.png"
+      },
+      {
+        "title": "Browsing Market",
+        "text": "Explore the market to find the best deals on agricultural products.",
+        "image": "/images/browse-market.png"
+      },
+      {
+        "title": "Make a Purchase",
+        "text": "Click on 'Buy Now' to purchase a product directly from a farmer.",
+        "image": "/images/buy-product.png"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Logistics and transportation",
+    "video": "https://www.youtube.com/watch?v=weatherdashboardvideo",
+    "description": "Stay updated with real-time weather forecasts. This walkthrough helps you navigate the weather dashboard effectively.",
+    "rating": 4.9,
+    "instructions": [
+      {
+        "title": "Access the Weather Dashboard",
+        "text": "Find the weather dashboard on the homepage to view current conditions.",
+        "image": "/images/weather-dashboard.png"
+      },
+      {
+        "title": "Set Location Alerts",
+        "text": "Set your location to receive weather alerts specific to your region.",
+        "image": "/images/location-alert.png"
+      },
+      {
+        "title": "Check Forecasts",
+        "text": "View weekly and monthly forecasts to plan farming activities.",
+        "image": "/images/weather-forecast.png"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Soil Health and Fertility",
+    "video": "https://www.youtube.com/watch?v=profilecustomizationvideo",
+    "description": "Learn how to personalize your AgroNexus profile for better connections and networking.",
+    "rating": 4.8,
+    "instructions": [
+      {
+        "title": "Edit Profile",
+        "text": "Go to the profile section to update your personal information.",
+        "image": "/images/edit-profile.png"
+      },
+      {
+        "title": "Set Preferences",
+        "text": "Choose your interests and preferences to receive customized suggestions.",
+        "image": "/images/preferences.png"
+      },
+      {
+        "title": "Upload Profile Picture",
+        "text": "Upload a clear picture to improve your visibility among peers.",
+        "image": "/images/profile-picture.png"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Irrigation Management",
+    "video": "https://www.youtube.com/watch?v=notificationsetupvideo",
+    "description": "This guide helps you set up notifications to stay informed about important updates, market trends, and expert advice.",
+    "rating": 4.7,
+    "instructions": [
+      {
+        "title": "Enable Notifications",
+        "text": "Go to the settings page and toggle on notifications for alerts.",
+        "image": "/images/enable-notifications.png"
+      },
+      {
+        "title": "Choose Notification Types",
+        "text": "Select which types of notifications you wish to receive: weather, market updates, or messages from experts.",
+        "image": "/images/notification-types.png"
+      },
+      {
+        "title": "Set Delivery Preferences",
+        "text": "Choose how you'd like to receive notifications: via email, SMS, or in-app alerts.",
+        "image": "/images/delivery-preferences.png"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Financial Management and Subsidies",
+    "video": "https://www.youtube.com/watch?v=agrotoolsbookingvideo",
+    "description": "This guide will show you how to book agricultural tools for your farm directly through the platform.",
+    "rating": 4.8,
+    "instructions": [
+      {
+        "title": "Browse Tools",
+        "text": "Explore the wide range of tools available for rental or purchase.",
+        "image": "/images/browse-tools.png"
+      },
+      {
+        "title": "View Tool Details",
+        "text": "Click on a tool to see its specifications, user reviews, and availability.",
+        "image": "/images/tool-details.png"
+      },
+      {
+        "title": "Book a Tool",
+        "text": "Select the rental duration and confirm your booking.",
+        "image": "/images/book-tool.png"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Training and Education",
+    "video": "https://www.youtube.com/watch?v=helpsupportvideo",
+    "description": "This guide explains how to contact support, resolve issues, and access our help resources.",
+    "rating": 4.5,
+    "instructions": [
+      {
+        "title": "Access Help Center",
+        "text": "Navigate to the 'Help & Support' section from the homepage footer.",
+        "image": "/images/help-center.png"
+      },
+      {
+        "title": "Submit a Query",
+        "text": "Fill out the query form with your question or issue.",
+        "image": "/images/submit-query.png"
+      },
+      {
+        "title": "Contact Support",
+        "text": "Use the chat or call option to get in touch with our customer support team.",
+        "image": "/images/contact-support.png"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Pest and Disease Management",
+    "video": "https://www.youtube.com/watch?v=linkedinfortutorial",
+    "description": "This tutorial shows how farmers can use the LinkedIn-like feature to connect, post, and engage with the community.",
+    "rating": 4.6,
+    "instructions": [
+      {
+        "title": "Create a Post",
+        "text": "Share your experiences, ask questions, or post updates to engage with the community.",
+        "image": "/images/create-post.png"
+      },
+      {
+        "title": "Tag and Categorize",
+        "text": "Tag your posts for better visibility and categorize them under relevant topics.",
+        "image": "/images/tag-category.png"
+      },
+      {
+        "title": "Comment and Like",
+        "text": "Engage with other farmers and experts by commenting on or liking their posts.",
+        "image": "/images/comment-like.png"
+      }
+    ]
+  }
+]

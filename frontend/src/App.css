@@ -1,165 +1,287 @@
-/* src/App.css */
-
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-  }
-  
-  .header {
-    width: 100vw;
-    height: 500px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("https://images.unsplash.com/photo-1725911650553-4607c9285537?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; /* Cover the entire header section */
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  background-color: #e5e7eb;
+  background-image: url(./assets/bgHero.png);
+  object-fit: cover;
+}
+
+/* CSS for centering and styling the h1 element */
+.sections h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #0d8f13; /* Dark green color */
+  font-size: 2.5rem; /* Larger font size for the h1 */
+  font-weight: bold; /* Bold text style */
+  font-family: "Arial Black", Gadget, sans-serif; /* Different font style */
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Optionally, add a subtle shadow for effect */
+.sections h1 {
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}
+
+.sections p {
+  color: #0d8f13;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styling for h1 */
+.header-title {
+  padding: 2rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #0d8f13;
+  margin-top: 3rem;
+}
+
+/* Styling for h2 */
+.header-subtitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #004d00;
+  margin-top: 1rem;
+}
+
+/* Styling for p */
+.header-description {
+  font-size: 1rem;
+  color: #004d00;
+  margin-top: 1rem;
+  max-width: 600px; /* Ensures the paragraph breaks into two lines */
+  line-height: 1.5;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+  width: 90%;
+  background-color: transparent;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+}
+
+.navbar-links li {
+  margin: 0 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #ffd700;
+}
+
+.navbar .get-started {
+  background-color: yellow;
+  color: black;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.navbar .get-started:hover {
+  background-color: #ffd700;
+}
+
+@media (max-width: 768px) {
   .header-title {
-    color: white;
-    font-size: 3rem; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
-    text-align: center;
-    width: fit-content;
+    font-size: 2rem;
   }
-  
-  /* Navbar styling */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: absolute;
-    top: 0;
-    z-index: 1000;
-    width: 90%;
-    background-color: transparent; 
-  }
-  
+
   .navbar-links {
-    display: flex;
-    list-style: none;
+    flex-direction: column;
+    align-items: center;
   }
-  
+
   .navbar-links li {
-    margin: 0 20px; 
+    margin: 10px 0;
   }
-  
-  .navbar-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2rem;
-    transition: color 0.3s;
+
+  .get-started {
+    padding: 10px 15px;
+    font-size: 1rem;
   }
-  
-  .navbar-links a:hover {
-    color: #ffd700; 
-  }
-  
-  .navbar .get-started {
-    background-color: yellow;
-    color: black;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 30px; 
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s;
-  }
-  
-  .navbar .get-started:hover {
-    background-color: #ffd700;
-  }
-  
-  .get-started::after {
-    content: " ➔"; /* Arrow icon */
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .header-title {
-      font-size: 2rem; 
-    }
-  
-    .navbar-links {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .navbar-links li {
-      margin: 10px 0;
-    }
-  
-    .get-started {
-      padding: 10px 15px;
-      font-size: 1rem;
-    }
-  }
-  
-  .page-content {
-    padding: 20px;
-    background-color: white; 
-  }
-  
-  /* Section styling */
-  .section {
-    padding: 50px 20px;
-  }
-  
-  .section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .section p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-  
+}
+
+.page-content {
+  padding: 20px;
+  background-color: white;
+}
+
+/* Section styling */
+/* General Section Styling */
+.section {
+  padding: 60px 30px;
+  /* Light background for contrast */
+  /* border-radius: 12px;   */
+
+  background-image: url(./assets/bgHero.png);
+  object-fit: cover;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+}
+
+.section:hover {
+  transform: translateY(-5px);
+}
+
+/* Heading Styling */
+.section h2 {
+  font-size: 2.5rem;
+  color: #0d8f13; /* Bold green color for agricultural feel */
+  margin-bottom: 15px;
+  font-family: "Arial Black", sans-serif; /* Strong font for the header */
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: color 0.3s ease;
+}
+
+.section h2:hover {
+  color: #084d0a; /* Darker shade on hover */
+}
+
+/* Paragraph Text Styling */
+.section p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Georgia", serif;
+  transition: color 0.3s ease;
+}
+
+.section p:hover {
+  color: #555; /* Slightly darker shade for emphasis */
+}
+
+/* Content Layout */
+.section-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px; /* Space between text and video */
+}
+
+/* Text Containers */
+.text-left,
+.text-right {
+  flex: 1;
+  padding: 20px;
+  /* White background for contrast */
+  border-radius: 8px;
+
+  transition: box-shadow 0.3s ease;
+}
+
+/* Video Containers */
+.video-left,
+.video-right {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Video Styling */
+video {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  transition: transform 0.3s ease;
+}
+
+video:hover {
+  transform: scale(1.08); /* Slight zoom on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .section-content {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
   }
-  
+
   .text-left,
-  .text-right {
-    flex: 1;
-    padding: 20px;
-  }
-  
+  .text-right,
   .video-left,
   .video-right {
-    flex: 1;
-    padding: 20px;
+    max-width: 100%;
+    padding: 10px;
   }
-  
-  video {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 10px;
+
+  .section h2 {
+    font-size: 2rem;
   }
-  
-  @media (max-width: 768px) {
-    .section-content {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .text-left,
-    .text-right,
-    .video-left,
-    .video-right {
-      padding: 10px;
-    }
+
+  .section p {
+    font-size: 1rem;
   }
-  
+}
+
+.testimonials-section h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #0d8f13; /* Dark green color */
+  font-size: 2.5rem; /* Larger font size for the h1 */
+  font-weight: bold; /* Bold text style */
+  font-family: "Arial Black", Gadget, sans-serif; /* Different font style */
+  margin-top: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .section-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .text-left,
+  .text-right,
+  .video-left,
+  .video-right {
+    padding: 10px;
+  }
+}

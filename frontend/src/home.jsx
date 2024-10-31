@@ -3,24 +3,26 @@ import GetStartedButton from "./components/GetStartedButton";
 import AutoSlideTestimonials from "./components/AutoSlideTestimonials";
 import FAQ from "./components/FAQ";
 import { useContext } from "react";
+import "./App.css";
+import hero from "../src/assets/hero.png";
+
 import { AuthContext } from "./components/authContext";
 export default function Home() {
   const { token, userInfo } = useContext(AuthContext);
 
   return (
     <div>
-      {/* Hero Section */}
       <header className="header">
         <h1 className="header-title">Welcome to AgroNexus</h1>
 
         {userInfo != null ? (
           <div
-            className="text-xl text-slate-600"
+            className="user-info"
             style={{
-              "font-size": "3rem",
-              "font-weight": "600",
-              color: "rgb(255, 255, 99)",
-              "margin-left": "12px",
+              fontSize: "3rem",
+              fontWeight: "600",
+              color: "#684a8b",
+              marginLeft: "12px",
             }}
           >
             {userInfo.user.name}
@@ -32,7 +34,25 @@ export default function Home() {
             </Link>
           </div>
         )}
+
+        <h2 className="header-subtitle">Revolutionizing Agriculture</h2>
+        <p className="header-description">
+          Explore AI-powered solutions tailored to enhance farming practices.
+          From crop prediction to soil analysis, discover tools designed to
+          optimize agricultural productivity.
+        </p>
       </header>
+
+      <section className="hero-section">
+        <img src={hero} alt="" />
+      </section>
+
+      <section className="sections">
+        <h1>About AgroNexus</h1>
+        <p>
+          Connecting Farmers, Innovating Agriculture, Empowering Communities
+        </p>
+      </section>
 
       {/* Section 2: Agro Connect */}
       <section className="section agro-connect">
@@ -92,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* Section 5: Agri Market */}
-      <section className="section agri-market">
+      <section className="section agro-market">
         <div className="section-content">
           <div className="video-left">
             <video controls>

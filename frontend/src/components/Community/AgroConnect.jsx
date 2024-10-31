@@ -1,34 +1,41 @@
-import React from 'react';
-import Header from './Header';
-import LeftProfile from './LeftProfile';
-import Chats from './Chats';
-import Posts from './Posts';
+import React from "react";
+import Navbar from "../Navbar";
+import LeftProfile from "./LeftProfile";
+import Chats from "./Chats";
+import Posts from "./Posts";
 
 const AgroConnect = () => {
   const containerStyle = {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    display: 'flex',
-    marginTop: '1.5rem',
-    gap: '1rem',
+     
+    margin: "0 auto",
+    display: "flex",
+    marginTop: "1.5rem",
+    gap: "1rem",
+    fontFamily: "Arial, sans-serif",
+    boxSizing: "border-box",
+    backgroundColor: "#e5e7eb",
+    backgroundImage: "url('../../assets/bgHero.png')",  // Added quotes
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    minHeight: "100vh",
   };
 
+  
   return (
-    <div style={{ backgroundColor: '#f7fafc', minHeight: '100vh' }}>
-      <Header />
+    <div style={{ backgroundColor: "#f7fafc", minHeight: "100vh" }}>
+      <Navbar />
       <div style={containerStyle}>
-        <aside style={{ width: '25%' }}>
+        <aside style={{ width: "25%" }}>
           <LeftProfile />
         </aside>
-        <main style={{ width: '50%' }}>
+        <main style={{ width: "75%" }}>
           <Posts />
         </main>
-        <aside style={{ width: '25%' }}>
-          <Chats />
-        </aside>
       </div>
     </div>
   );
 };
 
 export default AgroConnect;
+
