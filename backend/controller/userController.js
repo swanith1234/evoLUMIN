@@ -85,6 +85,7 @@ export const getOneUser = async (req, res) => {
   const token = req.params.id;
   console.log("swanith", token);
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  console.log(decoded, "decoded");
   const userId = decoded.id;
   const user = await User.findById(userId);
   res.status(200).json({
