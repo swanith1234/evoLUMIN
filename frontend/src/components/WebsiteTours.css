@@ -1,0 +1,91 @@
+.tours-container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.tours-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* Set gap between cards */
+}
+
+.tour-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+  width: calc(33.333% - 0.5rem); /* Three cards per row */
+  margin: 0; /* Remove margin since we are using gap */
+  padding: 10px;
+  transition: transform 0.3s;
+}
+
+.tour-card:hover {
+  transform: scale(1.02);
+}
+
+.tour-image {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center; /* Align stars in the center */
+  margin-top: 5px;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #ccc;
+}
+
+.star.filled {
+  color: #ff9800;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .tour-card {
+    width: calc(50% - 0.5rem); /* Two cards per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .tour-card {
+    width: calc(100% - 0.5rem); /* One card per row on very small screens */
+  }
+}
+.tours-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px; /* Adjust based on navbar height */
+  text-align: center;
+}
+.tours-container h1 {
+  font-size: 2.5rem; /* Larger font size for the h1 */
+  font-weight: bold; /* Bold text style */
+  font-family: "Arial Black", sans-serif;
+  color: #0d8f13;
+}

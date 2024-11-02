@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Plough",
+    "description": "A tool used to plow the field.",
+    "price": "₹5000",
+    "image": "https://plus.unsplash.com/premium_photo-1661808606874-1fdc96c1a265?q=80&w=3008&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "bookedUsers": 120,
+    "ratings": 4.5,
+    "reviews": ["Great tool!", "Very efficient for plowing."]
+  },
+  {
+    "id": 2,
+    "name": "Seeder",
+    "description": "Used for planting seeds at regular intervals.",
+    "price": "₹3500",
+    "image": "https://media.istockphoto.com/id/114447731/photo/sowing-of-beet.webp?a=1&b=1&s=612x612&w=0&k=20&c=CJmbu5FVQ5b1zltX1qkX1nsX3IU1LPZyjTVwzZQu4X0=",
+    "bookedUsers": 90,
+    "ratings": 4.2,
+    "reviews": ["Highly recommend!", "Made my farming easier."]
+  },
+  {
+    "id": 3,
+    "name": "Harvester",
+    "description": "A machine used for harvesting crops.",
+    "price": "₹150000",
+    "image": "https://plus.unsplash.com/premium_photo-1661853326380-1ee081207e56?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "bookedUsers": 60,
+    "ratings": 4.8,
+    "reviews": ["A game changer for my farm!", "Very efficient and saves time."]
+  },
+  {
+    "id": 4,
+    "name": "Cultivator",
+    "description": "A tool for tilling and aerating the soil.",
+    "price": "₹8000",
+    "image": "https://plus.unsplash.com/premium_photo-1661810831439-19a04761075d?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "bookedUsers": 70,
+    "ratings": 4.3,
+    "reviews": ["Great for soil preparation.", "Makes my work easier."]
+  },
+  {
+    "id": 5,
+    "name": "Sprayer",
+    "description": "Used for applying fertilizers and pesticides.",
+    "price": "₹2500",
+    "image": "https://plus.unsplash.com/premium_photo-1661840504596-4d361efa5c09?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "bookedUsers": 110,
+    "ratings": 4.6,
+    "reviews": ["Perfect for my garden!", "Very effective."]
+  },
+  {
+    "id": 6,
+    "name": "Tiller",
+    "description": "Used for breaking up soil and preparing the land for planting.",
+    "price": "₹12000",
+    "image": "https://plus.unsplash.com/premium_photo-1663047504135-9fa32a33ad01?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "bookedUsers": 45,
+    "ratings": 4.4,
+    "reviews": ["Easy to use and very helpful.", "Strong and reliable."]
+  },
+  {
+    "id": 7,
+    "name": "Irrigation Pump",
+    "description": "Pump used to deliver water to crops efficiently.",
+    "price": "₹18000",
+    "image": "https://media.istockphoto.com/id/157444265/photo/tiller.jpg?s=2048x2048&w=is&k=20&c=mxjGM-Ur1wmTxLrpEAiGMP7voGUX5OBG2Mw0fmAil9k=",
+    "bookedUsers": 85,
+    "ratings": 4.7,
+    "reviews": ["Saved a lot of water!", "Highly efficient pump."]
+  },
+  {
+    "id": 8,
+    "name": "Rotavator",
+    "description": "A rotary tillage tool for soil preparation.",
+    "price": "₹55000",
+    "image": "https://media.istockphoto.com/id/157444265/photo/tiller.jpg?s=2048x2048&w=is&k=20&c=mxjGM-Ur1wmTxLrpEAiGMP7voGUX5OBG2Mw0fmAil9k=",
+    "bookedUsers": 55,
+    "ratings": 4.5,
+    "reviews": ["Great for soil mixing.", "Perfect for deep tillage."]
+  },
+  {
+    "id": 9,
+    "name": "Threshing Machine",
+    "description": "Used for separating grains from crops.",
+    "price": "₹60000",
+    "image": "https://media.istockphoto.com/id/164458970/photo/harvest.jpg?s=2048x2048&w=is&k=20&c=fHEepsG_yBi-xyrZ-M0ue_Bm0Qr2RHcauP4-tsddV8s=",
+    "bookedUsers": 75,
+    "ratings": 4.6,
+    "reviews": ["Very efficient for large farms.", "Saves a lot of manual effort."]
+  }
+]

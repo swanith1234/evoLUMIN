@@ -1,3 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+ /* src/index.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.website-tour {
+    text-align: center;
+}
+
+.website-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.website-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+}
+
+.website-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.website-detail {
+    text-align: center;
+}
+
+.website-detail iframe {
+    margin-top: 20px;
+}

@@ -1,0 +1,138 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  padding: 20px;
+  margin: 20px auto;
+}
+
+.card-header {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab-link {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: darkgrey;
+}
+
+.tab-link.active {
+  background-color: white;
+  border-bottom: 2px solid #eceef0;
+  color: black;
+}
+
+.tab-link:hover {
+  background-color: white;
+  color: darkgrey;
+}
+
+.tab-content {
+  padding: 16px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid grey;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: darkgrey;
+  outline: none;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center; /* Aligns checkbox and label vertically */
+  margin-top: 10px; /* Adjust spacing above the checkbox */
+}
+
+.remember-me input {
+  margin-right: 5px; /* Space between checkbox and label */
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0b0c0c;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #333;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.success {
+  color: green;
+  margin-top: 12px;
+  text-align: center;
+}
+.other-login {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .loginWithPhone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 3rem;
+    padding: 5% 20%;
+
+    i {
+      font-size: 1.5rem;
+      color: rgb(78, 224, 78);
+    }
+  }
+}

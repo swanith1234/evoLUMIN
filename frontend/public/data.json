@@ -1,0 +1,264 @@
+[
+    {
+      "id": "1",
+      "name": "Tractor",
+      "description": "A high-powered tractor for heavy-duty farming tasks.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Tractor+Image+1",
+        "https://via.placeholder.com/300x200?text=Tractor+Image+2",
+        "https://via.placeholder.com/300x200?text=Tractor+Image+3",
+        "https://via.placeholder.com/300x200?text=Tractor+Image+4",
+        "https://via.placeholder.com/300x200?text=Tractor+Image+5"
+      ],
+      "reviews": {
+        "good": 80,
+        "bad": 15,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "John Doe",
+          "review": "This tractor has transformed my farming efficiency!",
+          "rating": 5
+        },
+        {
+          "name": "Jane Smith",
+          "review": "Great performance but a bit pricey.",
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Plow Machine",
+      "description": "A versatile machine used for plowing fields efficiently.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Plow+Machine+Image+1",
+        "https://via.placeholder.com/300x200?text=Plow+Machine+Image+2",
+        "https://via.placeholder.com/300x200?text=Plow+Machine+Image+3",
+        "https://via.placeholder.com/300x200?text=Plow+Machine+Image+4",
+        "https://via.placeholder.com/300x200?text=Plow+Machine+Image+5"
+      ],
+      "reviews": {
+        "good": 70,
+        "bad": 20,
+        "poor": 10
+      },
+      "customerReviews": [
+        {
+          "name": "Alice Johnson",
+          "review": "Works great for my small farm!",
+          "rating": 5
+        },
+        {
+          "name": "Bob Brown",
+          "review": "Could use better instructions.",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Seed Drill",
+      "description": "An essential tool for planting seeds at the correct depth.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Seed+Drill+Image+1",
+        "https://via.placeholder.com/300x200?text=Seed+Drill+Image+2",
+        "https://via.placeholder.com/300x200?text=Seed+Drill+Image+3",
+        "https://via.placeholder.com/300x200?text=Seed+Drill+Image+4",
+        "https://via.placeholder.com/300x200?text=Seed+Drill+Image+5"
+      ],
+      "reviews": {
+        "good": 75,
+        "bad": 10,
+        "poor": 15
+      },
+      "customerReviews": [
+        {
+          "name": "Mary Wilson",
+          "review": "It saves a lot of time!",
+          "rating": 4
+        },
+        {
+          "name": "Steve Rogers",
+          "review": "Very effective, highly recommended.",
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Cultivator",
+      "description": "Used for mixing and aerating soil before planting.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Cultivator+Image+1",
+        "https://via.placeholder.com/300x200?text=Cultivator+Image+2",
+        "https://via.placeholder.com/300x200?text=Cultivator+Image+3",
+        "https://via.placeholder.com/300x200?text=Cultivator+Image+4",
+        "https://via.placeholder.com/300x200?text=Cultivator+Image+5"
+      ],
+      "reviews": {
+        "good": 85,
+        "bad": 10,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "Daniel Lee",
+          "review": "Best cultivator I've ever used!",
+          "rating": 5
+        },
+        {
+          "name": "Linda Green",
+          "review": "Does the job well.",
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Fertilizer Spreader",
+      "description": "Ensures even distribution of fertilizers over crops.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Fertilizer+Spreader+Image+1",
+        "https://via.placeholder.com/300x200?text=Fertilizer+Spreader+Image+2",
+        "https://via.placeholder.com/300x200?text=Fertilizer+Spreader+Image+3",
+        "https://via.placeholder.com/300x200?text=Fertilizer+Spreader+Image+4",
+        "https://via.placeholder.com/300x200?text=Fertilizer+Spreader+Image+5"
+      ],
+      "reviews": {
+        "good": 90,
+        "bad": 5,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "Oscar Black",
+          "review": "Great performance and build quality.",
+          "rating": 5
+        },
+        {
+          "name": "Ella White",
+          "review": "A bit hard to clean.",
+          "rating": 3
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Irrigation System",
+      "description": "An efficient system to ensure proper watering of crops.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Irrigation+System+Image+1",
+        "https://via.placeholder.com/300x200?text=Irrigation+System+Image+2",
+        "https://via.placeholder.com/300x200?text=Irrigation+System+Image+3",
+        "https://via.placeholder.com/300x200?text=Irrigation+System+Image+4",
+        "https://via.placeholder.com/300x200?text=Irrigation+System+Image+5"
+      ],
+      "reviews": {
+        "good": 70,
+        "bad": 20,
+        "poor": 10
+      },
+      "customerReviews": [
+        {
+          "name": "Paul Adams",
+          "review": "Easy to install and use.",
+          "rating": 4
+        },
+        {
+          "name": "Samantha Blue",
+          "review": "Watering has never been easier.",
+          "rating": 5
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Harrow",
+      "description": "Used for breaking up and smoothing out the surface of the soil.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Harrow+Image+1",
+        "https://via.placeholder.com/300x200?text=Harrow+Image+2",
+        "https://via.placeholder.com/300x200?text=Harrow+Image+3",
+        "https://via.placeholder.com/300x200?text=Harrow+Image+4",
+        "https://via.placeholder.com/300x200?text=Harrow+Image+5"
+      ],
+      "reviews": {
+        "good": 80,
+        "bad": 15,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "Jessica Lee",
+          "review": "Fantastic tool for preparing the land.",
+          "rating": 5
+        },
+        {
+          "name": "Michael Brown",
+          "review": "Effective but requires some strength.",
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Harvesting Machine",
+      "description": "Automates the process of harvesting crops efficiently.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Harvesting+Machine+Image+1",
+        "https://via.placeholder.com/300x200?text=Harvesting+Machine+Image+2",
+        "https://via.placeholder.com/300x200?text=Harvesting+Machine+Image+3",
+        "https://via.placeholder.com/300x200?text=Harvesting+Machine+Image+4",
+        "https://via.placeholder.com/300x200?text=Harvesting+Machine+Image+5"
+      ],
+      "reviews": {
+        "good": 90,
+        "bad": 5,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "Angela White",
+          "review": "A game changer for our farm!",
+          "rating": 5
+        },
+        {
+          "name": "Chris Black",
+          "review": "Works well but needs maintenance.",
+          "rating": 4
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Weed Cutter",
+      "description": "Helps in controlling weed growth in fields.",
+      "images": [
+        "https://via.placeholder.com/300x200?text=Weed+Cutter+Image+1",
+        "https://via.placeholder.com/300x200?text=Weed+Cutter+Image+2",
+        "https://via.placeholder.com/300x200?text=Weed+Cutter+Image+3",
+        "https://via.placeholder.com/300x200?text=Weed+Cutter+Image+4",
+        "https://via.placeholder.com/300x200?text=Weed+Cutter+Image+5"
+      ],
+      "reviews": {
+        "good": 85,
+        "bad": 10,
+        "poor": 5
+      },
+      "customerReviews": [
+        {
+          "name": "Liam Gray",
+          "review": "Very effective for managing weeds.",
+          "rating": 5
+        },
+        {
+          "name": "Olivia Green",
+          "review": "Could be sharper.",
+          "rating": 3
+        }
+      ]
+    }
+  ]
+  
