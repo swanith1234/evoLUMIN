@@ -1,77 +1,93 @@
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import dotenv from "dotenv";
-dotenv.config({ path: "./config/config.env" });
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { dbConnection } from "./databases/dbConnection.js";
 import fileUpload from "express-fileupload";
-import bodyParser from "body-parser";
-import { run } from "./geminiAiApi.js";
+import { dbConnection } from "./databases/dbConnection.js";
 import promptRouter from "./routes/promptRoute.js";
 import digitalRouter from "./routes/digital.js";
 import userRouter from "./routes/userrouter.js";
 import postRouter from "./routes/postRoute.js";
 import toolsRouter from "./routes/toolRoute.js";
-import { fetchPlayStoreMedia } from "./controller/digitalController.js";
-import { loadUserPostsByCropType } from "./controller/postController.js";
 import marketRouter from "./routes/market.js";
+
+// Load environment variables
+dotenv.config({ path: "./config/config.env" });
+
 const app = express();
-const port = process.env.PORT || 3000;
-import { sendOtp } from "./controller/userController.js";
-import { verifyOtp } from "./controller/userController.js";
-import { digitalTool } from "./controller/digitalController.js";
-import {
-  addComment,
-  getCommentsForPost,
-  getPostsWithUserComments,
-  getProblemPostsByUser,
-  getSavedPosts,
-  likePost,
-  savePost,
-} from "./controller/postController.js";
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173", // Frontend URL
+    credentials: true,
+  },
 });
 
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Allow requests from this origin
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-  })
-);
+const port = process.env.PORT || 3000;
 
-app.use(cookieParser()); //used for parsing the cookies which hrlps in the authirization of user
-app.use(express.json()); //used to parse the JSON type content that is being sent from the client to server
-
-app.use(express.urlencoded({ extended: true })); //it parses the information present in the url
+// Middleware
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp",
   })
 );
+
+// Routes
 app.use("/api/v1", promptRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", postRouter);
 app.use("/api/v1", toolsRouter);
 app.use("/api/v1", digitalRouter);
 app.use("/api/v1", marketRouter);
-dbConnection();
-// Example of calling the function with a userId
-// digitalTool("Soil Health and Fertility", "english");
-// Example usage
-// const appLink =
-//   "https://play.google.com/store/apps/details?id=com.soilscout.app"; // Replace with your app's link
-// fetchPlayStoreMedia(appLink)
-//   .then((media) => console.log(media))
-//   .catch((err) => console.error(err));
 
-// loadUserPostsByCropType("671baf70753da0069a7f73c1")
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+// Database connection
+dbConnection();
+
+// In-memory storage for all connected users' latest locations
+const userLocations = {};
+
+// Socket.io connection
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  // Send the current list of all user locations to the newly connected client
+  socket.emit("existingLocations", userLocations);
+
+  // Listen for location updates from clients
+  socket.on("sendLocation", (locationData) => {
+    const { socketId, coordinates, speed, timestamp } = locationData;
+
+    // Update or add the user's location data
+    userLocations[socketId] = {
+      coordinates,
+      speed,
+      timestamp,
+    };
+
+    // Broadcast the updated list of all user locations to all clients
+    io.emit("locationUpdate", userLocations);
+  });
+
+  // Handle user disconnects
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+    delete userLocations[socket.id]; // Remove the user's location on disconnect
+
+    // Broadcast the updated list of all user locations to all clients
+    io.emit("locationUpdate", userLocations);
+  });
+});
+
+// Start server
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 export default app;

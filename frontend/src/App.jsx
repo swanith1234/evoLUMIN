@@ -23,7 +23,7 @@ import WebsiteTours from "./components/WebsiteTours";
 import WebsiteTourDetail from "./components/WebsiteTourDetail";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
-
+import LocationTracker from "./components/locationTracker";
 import "./App.css";
 import "./index.css";
 import "./components/AgroMarkets.css";
@@ -87,7 +87,7 @@ function App() {
 
       {/* Include Voice Navigator */}
       <VoiceNavigator />
-
+      <LocationTracker></LocationTracker>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<AuthCard />} />

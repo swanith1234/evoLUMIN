@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel styles
-import "./ToolDetails.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "leaflet/dist/leaflet.css";
 import axios from "axios";
+import { io } from "socket.io-client";
+import socket from "./socket";
+import "./ToolDetails.css";
 
 const ToolDetails = () => {
   const [toolDetails, setToolDetails] = useState(null);
+  const [locations, setLocations] = useState({});
+  const [locationDetails, setLocationDetails] = useState(null);
   const [error, setError] = useState(null);
   const { crop, productionStage, title } = useParams();
 
@@ -22,14 +29,39 @@ const ToolDetails = () => {
         setError(error.message);
       }
     };
-
     fetchToolDetails();
-  }, [title]);
+  }, [crop, productionStage, title]);
+
+  useEffect(() => {
+    // Handle existing locations when a new user connects
+    socket.on("existingLocations", (existingLocations) => {
+      console.log("Existing locations:", existingLocations);
+      setLocations(existingLocations);
+    });
+
+    // Listen for location updates from other clients
+    socket.on("locationUpdate", (locationData) => {
+      const { coordinates, socketId, speed, timestamp } = locationData;
+      console.log(locationData);
+      if (socketId && coordinates) {
+        setLocations((prevLocations) => ({
+          ...prevLocations,
+          [socketId]: { coordinates, speed, timestamp },
+        }));
+        setLocationDetails({
+          speed,
+          timestamp: new Date(timestamp).toLocaleString(),
+        });
+      }
+    });
+
+    return () => socket.disconnect(); // Cleanup on component unmount
+  }, []);
 
   const calculateAverageRating = (reviews) => {
     if (!reviews || reviews.length === 0) return 0;
     const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return (total / reviews.length).toFixed(1); // Average rating with one decimal
+    return (total / reviews.length).toFixed(1);
   };
 
   const getRatingDistribution = (reviews) => {
@@ -40,29 +72,30 @@ const ToolDetails = () => {
     return distribution;
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const addRandomOffset = (coordinates) => {
+    const offset = 0.0001; // Offset value for separation
+    return {
+      lat: coordinates.lat + (Math.random() - 0.5) * offset,
+      lng: coordinates.lng + (Math.random() - 0.5) * offset,
+    };
+  };
 
-  if (!toolDetails) {
-    return <div>Loading...</div>;
-  }
+  if (error) return <div>Error: {error}</div>;
+  if (!toolDetails) return <div>Loading...</div>;
 
   const averageRating = calculateAverageRating(toolDetails.reviews);
   const ratingDistribution = getRatingDistribution(toolDetails.reviews);
+  const icon = new L.Icon({
+    iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
 
   return (
     <div className="tool-details">
-      {/* Image Carousel */}
       <div className="product-image">
-        {toolDetails.images && toolDetails.images.length > 0 ? (
-          <Carousel
-            showArrows={true}
-            autoPlay={true}
-            infiniteLoop={true}
-            showThumbs={false}
-            showStatus={false}
-          >
+        {toolDetails.images ? (
+          <Carousel showArrows autoPlay infiniteLoop>
             {toolDetails.images.map((image, index) => (
               <div key={index}>
                 <img src={image} alt={`Slide ${index + 1}`} />
@@ -76,26 +109,20 @@ const ToolDetails = () => {
 
       <div className="product-rating flex justify-between">
         <div>
-          {" "}
           <h1 className="text-2xl font-semibold text-slate-500">
             {toolDetails.title}
           </h1>
           <p>{toolDetails.description}</p>
         </div>
         <div className="star-rating">
-          {[...Array(5)].map((star, index) => {
-            const ratingValue = index + 1;
-            return (
-              <span
-                key={index}
-                className={
-                  ratingValue <= averageRating ? "filled-star" : "empty-star"
-                }
-              >
-                ★
-              </span>
-            );
-          })}
+          {[...Array(5)].map((star, index) => (
+            <span
+              key={index}
+              className={index < averageRating ? "filled-star" : "empty-star"}
+            >
+              ★
+            </span>
+          ))}
         </div>
       </div>
 
@@ -144,6 +171,44 @@ const ToolDetails = () => {
           </ul>
         ) : (
           <p>No reviews available.</p>
+        )}
+      </div>
+
+      <div className="map-container">
+        <h2>Real-Time Location Tracking</h2>
+        {Object.keys(locations).length > 0 ? (
+          <MapContainer
+            center={Object.values(locations)[0].coordinates}
+            zoom={13}
+            style={{ height: "400px" }}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+            />
+            {Object.keys(locations).map((socketId) => {
+              const { coordinates } = locations[socketId];
+              const offsetCoordinates = addRandomOffset(coordinates);
+              return (
+                <Marker key={socketId} position={offsetCoordinates} icon={icon}>
+                  <Popup>Socket ID: {socketId}</Popup>
+                </Marker>
+              );
+            })}
+          </MapContainer>
+        ) : (
+          <p>Loading locations...</p>
+        )}
+        {locationDetails && (
+          <div className="location-details">
+            <p>
+              <strong>Speed:</strong>{" "}
+              {locationDetails.speed ? `${locationDetails.speed} km/h` : "N/A"}
+            </p>
+            <p>
+              <strong>Timestamp:</strong> {locationDetails.timestamp}
+            </p>
+          </div>
         )}
       </div>
     </div>
