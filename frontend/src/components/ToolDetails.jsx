@@ -33,30 +33,28 @@ const ToolDetails = () => {
   }, [crop, productionStage, title]);
 
   useEffect(() => {
-    // Handle existing locations when a new user connects
+    // Fetch existing locations when the component mounts
     socket.on("existingLocations", (existingLocations) => {
-      console.log("Existing locations:", existingLocations);
+      console.log("Existing locations received:", existingLocations);
       setLocations(existingLocations);
     });
-
+  
     // Listen for location updates from other clients
     socket.on("locationUpdate", (locationData) => {
-      const { coordinates, socketId, speed, timestamp } = locationData;
-      console.log(locationData);
-      if (socketId && coordinates) {
-        setLocations((prevLocations) => ({
-          ...prevLocations,
-          [socketId]: { coordinates, speed, timestamp },
-        }));
-        setLocationDetails({
-          speed,
-          timestamp: new Date(timestamp).toLocaleString(),
-        });
-      }
+      console.log("Location update received:", locationData);
+      setLocations((prevLocations) => ({
+        ...prevLocations,
+        ...locationData, // Merge new data with previous locations
+      }));
     });
-
-    return () => socket.disconnect(); // Cleanup on component unmount
+  
+    // Cleanup on component unmount
+    return () => {
+      socket.off("existingLocations");
+      socket.off("locationUpdate");
+    };
   }, []);
+  
 
   const calculateAverageRating = (reviews) => {
     if (!reviews || reviews.length === 0) return 0;
