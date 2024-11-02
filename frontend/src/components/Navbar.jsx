@@ -58,7 +58,7 @@ const Navbar = () => {
     };
 
     // Listen for page changes
-    window.addEventListener("popstate", restartRecognition);
+    window.addEventListener("popstates", restartRecognition);
 
     // Cleanup
     return () => {
