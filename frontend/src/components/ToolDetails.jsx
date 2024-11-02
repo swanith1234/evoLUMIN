@@ -103,7 +103,9 @@ const ToolDetails = () => {
             ))}
           </Carousel>
         ) : (
-          <p>No images available.</p>
+
+          <p>No images available to show.</p>
+
         )}
       </div>
 
