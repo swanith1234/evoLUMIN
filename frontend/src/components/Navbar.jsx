@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import "./ProfileDropdown.css";
-import { AuthContext } from "./authContext";
+import { AuthContext } from "../components/authContext";
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
@@ -58,7 +58,7 @@ const Navbar = () => {
     };
 
     // Listen for page changes
-    window.addEventListener("popstate", restartRecognition);
+    window.addEventListener("popstates", restartRecognition);
 
     // Cleanup
     return () => {

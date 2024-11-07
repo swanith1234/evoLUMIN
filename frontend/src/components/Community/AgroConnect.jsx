@@ -1,7 +1,8 @@
 import React from "react";
 import Navbar from "../Navbar";
 import LeftProfile from "./LeftProfile";
-import Chats from "./Chats";
+import SuggestionProfiles from "./SuggestionProfiles";
+ 
 import Posts from "./Posts";
 
 const AgroConnect = () => {
@@ -14,7 +15,7 @@ const AgroConnect = () => {
     fontFamily: "Arial, sans-serif",
     boxSizing: "border-box",
     backgroundColor: "#e5e7eb",
-    backgroundImage: "url('../../assets/bgHero.png')",  // Added quotes
+    backgroundImage: "url('../../assets/bgHero.png')",  
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -29,9 +30,13 @@ const AgroConnect = () => {
         <aside style={{ width: "25%" }}>
           <LeftProfile />
         </aside>
-        <main style={{ width: "75%" }}>
+        <main style={{ width: "50%" }}>
           <Posts />
         </main>
+        <aside style={{width: "25%"}}>
+         <SuggestionProfiles/> 
+        </aside>
+        
       </div>
     </div>
   );
