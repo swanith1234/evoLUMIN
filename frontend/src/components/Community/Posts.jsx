@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./Posts.css?v=1.0.1";
+import "./Posts.css";
 import PostModal from "./postModal";
 import { AuthContext } from "../authContext";
 import axios from "axios";
 
- 
 const Post = ({
   description,
   media,
@@ -53,12 +52,12 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
- 
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/user/${token}/posts`
+          ` http://localhost:3000/api/v1/user/${token}/posts`
         );
         setPosts(response.data);
       } catch (error) {
@@ -85,7 +84,7 @@ const Posts = () => {
             createdAt={post.createdAt}
             numberOfLikes={post.numberOfLikes}
             numberOfComments={post.numberOfComments}
-            author={post.userId} // assuming userId contains author details
+            author={post.userId}
             likes={post.likes || []}
             comments={post.comments || []}
           />
@@ -105,11 +104,8 @@ const Posts = () => {
           onCreatePost={addPost}
         />
       </div>
-
     </div>
   );
 };
 
 export default Posts;
-
- 
