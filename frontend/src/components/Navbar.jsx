@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import "./ProfileDropdown.css";
-import { AuthContext } from "./authContext";
+import { AuthContext } from "../components/authContext";
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
