@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Posts.css?v=1.0.1";
-import PostModal from "./PostModal";
+import PostModal from "./postModal";
 import { AuthContext } from "../authContext";
 import axios from "axios";
 
-// Define the Post component to display detailed information about each post
+ 
 const Post = ({
   description,
   media,
@@ -53,8 +53,7 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
-
-  // Fetch posts from the backend
+ 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -107,16 +106,10 @@ const Posts = () => {
         />
       </div>
 
-      <div className="Profile-Right">
-        <p className="post-tagline">
-          Growing Together: Your Agricultural Community Hub
-        </p>
-        <div className="post-media-container">
-          {/* Image will be added as a background in CSS */}
-        </div>
-      </div>
     </div>
   );
 };
 
 export default Posts;
+
+ 
