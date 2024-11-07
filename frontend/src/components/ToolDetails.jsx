@@ -42,7 +42,7 @@ const ToolDetails = () => {
     // Listen for location updates from other clients
     socket.on("locationUpdate", (locationData) => {
       const { coordinates, socketId, speed, timestamp } = locationData;
-      console.log(locationData);
+      console.log("location", locationData);
       if (socketId && coordinates) {
         setLocations((prevLocations) => ({
           ...prevLocations,
@@ -73,6 +73,7 @@ const ToolDetails = () => {
   };
 
   const addRandomOffset = (coordinates) => {
+    console.log("ssss", Math.random());
     const offset = 0.0001; // Offset value for separation
     return {
       lat: coordinates.lat + (Math.random() - 0.5) * offset,
@@ -89,131 +90,146 @@ const ToolDetails = () => {
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
     iconSize: [25, 41],
     iconAnchor: [12, 41],
+    color: "#222",
   });
 
   return (
-    <div className="tool-details">
-      <div className="product-image">
-        {toolDetails.images ? (
-          <Carousel showArrows autoPlay infiniteLoop>
-            {toolDetails.images.map((image, index) => (
-              <div key={index}>
-                <img src={image} alt={`Slide ${index + 1}`} />
-              </div>
-            ))}
-          </Carousel>
-        ) : (
-
-          <p>No images available to show.</p>
-
-        )}
-      </div>
-
-      <div className="product-rating flex justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-slate-500">
-            {toolDetails.title}
-          </h1>
-          <p>{toolDetails.description}</p>
+    <>
+      {console.log("body", locations)}
+      <div className="tool-details">
+        <div className="product-image">
+          {toolDetails.images ? (
+            <Carousel showArrows autoPlay infiniteLoop>
+              {toolDetails.images.map((image, index) => (
+                <div key={index}>
+                  <img src={image} alt={`Slide ${index + 1}`} />
+                </div>
+              ))}
+            </Carousel>
+          ) : (
+            <p>No images available to show.</p>
+          )}
         </div>
-        <div className="star-rating">
-          {[...Array(5)].map((star, index) => (
-            <span
-              key={index}
-              className={index < averageRating ? "filled-star" : "empty-star"}
-            >
-              ★
-            </span>
+
+        <div className="product-rating flex justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-slate-500">
+              {toolDetails.title}
+            </h1>
+            <p>{toolDetails.description}</p>
+          </div>
+          <div className="star-rating">
+            {[...Array(5)].map((star, index) => (
+              <span
+                key={index}
+                className={index < averageRating ? "filled-star" : "empty-star"}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="rating-distribution">
+          <h3>Rating Distribution</h3>
+          {Object.keys(ratingDistribution).map((rating) => (
+            <div key={rating} className="rating-row">
+              <span>{rating} star</span>
+              <div className="progress-bar">
+                <div
+                  className="filled-bar"
+                  style={{
+                    width: `${
+                      (ratingDistribution[rating] /
+                        toolDetails.reviews.length) *
+                      100
+                    }%`,
+                  }}
+                ></div>
+              </div>
+              <span>{ratingDistribution[rating]}</span>
+            </div>
           ))}
         </div>
-      </div>
 
-      <div className="rating-distribution">
-        <h3>Rating Distribution</h3>
-        {Object.keys(ratingDistribution).map((rating) => (
-          <div key={rating} className="rating-row">
-            <span>{rating} star</span>
-            <div className="progress-bar">
-              <div
-                className="filled-bar"
-                style={{
-                  width: `${
-                    (ratingDistribution[rating] / toolDetails.reviews.length) *
-                    100
-                  }%`,
-                }}
-              ></div>
-            </div>
-            <span>{ratingDistribution[rating]}</span>
-          </div>
-        ))}
-      </div>
+        <div className="customer-reviews">
+          <h2>Customer Reviews</h2>
+          {toolDetails.reviews && toolDetails.reviews.length > 0 ? (
+            <ul>
+              {toolDetails.reviews.map((review, index) => (
+                <li key={index}>
+                  <strong>User {review.userId}:</strong> {review.comment}
+                  <div className="review-rating">
+                    {[...Array(5)].map((star, starIndex) => (
+                      <span
+                        key={starIndex}
+                        className={
+                          starIndex < review.rating
+                            ? "filled-star"
+                            : "empty-star"
+                        }
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No reviews available.</p>
+          )}
+        </div>
 
-      <div className="customer-reviews">
-        <h2>Customer Reviews</h2>
-        {toolDetails.reviews && toolDetails.reviews.length > 0 ? (
-          <ul>
-            {toolDetails.reviews.map((review, index) => (
-              <li key={index}>
-                <strong>User {review.userId}:</strong> {review.comment}
-                <div className="review-rating">
-                  {[...Array(5)].map((star, starIndex) => (
-                    <span
-                      key={starIndex}
-                      className={
-                        starIndex < review.rating ? "filled-star" : "empty-star"
-                      }
+        <div className="map-container">
+          <h2>Real-Time Location Tracking</h2>
+          {Object.keys(locations).length > 0 ? (
+            <MapContainer
+              center={Object.values(locations)[0].coordinates}
+              zoom={13}
+              style={{ height: "400px" }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+              />
+              {Object.keys(locations).map((socketId) => {
+                const { coordinates } = locations[socketId];
+                const offsetCoordinates = addRandomOffset(coordinates);
+                return (
+                  <>
+                    {console.log("swanith", document.querySelector("Marker"))}
+
+                    <Marker
+                      key={socketId}
+                      position={offsetCoordinates}
+                      icon={icon}
                     >
-                      ★
-                    </span>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No reviews available.</p>
-        )}
+                      <Popup>Socket ID: {socketId}</Popup>
+                    </Marker>
+                  </>
+                );
+              })}
+            </MapContainer>
+          ) : (
+            <p>Loading locations...</p>
+          )}
+          {locationDetails && (
+            <div className="location-details">
+              <p>
+                <strong>Speed:</strong>{" "}
+                {locationDetails.speed
+                  ? `${locationDetails.speed} km/h`
+                  : "N/A"}
+              </p>
+              <p>
+                <strong>Timestamp:</strong> {locationDetails.timestamp}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-
-      <div className="map-container">
-        <h2>Real-Time Location Tracking</h2>
-        {Object.keys(locations).length > 0 ? (
-          <MapContainer
-            center={Object.values(locations)[0].coordinates}
-            zoom={13}
-            style={{ height: "400px" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
-            />
-            {Object.keys(locations).map((socketId) => {
-              const { coordinates } = locations[socketId];
-              const offsetCoordinates = addRandomOffset(coordinates);
-              return (
-                <Marker key={socketId} position={offsetCoordinates} icon={icon}>
-                  <Popup>Socket ID: {socketId}</Popup>
-                </Marker>
-              );
-            })}
-          </MapContainer>
-        ) : (
-          <p>Loading locations...</p>
-        )}
-        {locationDetails && (
-          <div className="location-details">
-            <p>
-              <strong>Speed:</strong>{" "}
-              {locationDetails.speed ? `${locationDetails.speed} km/h` : "N/A"}
-            </p>
-            <p>
-              <strong>Timestamp:</strong> {locationDetails.timestamp}
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 
