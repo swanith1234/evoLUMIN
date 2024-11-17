@@ -1,0 +1,52 @@
+/* Comment Button Styles */
+.comment-button {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 12px;
+  border-radius: 8px;
+  /* Light gray background */
+
+  transition: background-color 0.3s ease;
+}
+.icon-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.comment-button:hover {
+  background-color: #e8e8e8; /* Slightly darker on hover */
+}
+
+.comment-icon {
+  fill: #505050; /* Gray color for the icon */
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+  transition: fill 0.3s ease;
+}
+
+.comment-text {
+  color: #333; /* Darker gray for text */
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-right: 8px;
+  transition: color 0.3s ease;
+}
+
+.comment-count {
+  color: #717070; /* Slightly lighter gray */
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.comment-button:hover .comment-icon {
+  fill: #0078d7; /* Blue highlight for the icon on hover */
+}
+
+.comment-button:hover .comment-text {
+  color: #0078d7; /* Blue highlight for text on hover */
+}

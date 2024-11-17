@@ -28,19 +28,19 @@ export const createPost = async (req, res) => {
     }
    `;
     // // Step 2: Analyze the post using Gemini API (run function)
-    // const geminiResponse = await run(prompt);
+    const geminiResponse = await run(prompt);
 
-    // if (!geminiResponse) {
-    //   return res
-    //     .status(500)
-    //     .json({ message: "Failed to analyze the post with Gemini API." });
-    // }
+    if (!geminiResponse) {
+      return res
+        .status(500)
+        .json({ message: "Failed to analyze the post with Gemini API." });
+    }
 
-    // // Step 3: Extract data from the Gemini API response
-    // const { isAgriculture, crop, cropType } = geminiResponse;
-    const isAgriculture = true;
-    const crop = "paddy";
-    const cropType = "local";
+    // Step 3: Extract data from the Gemini API response
+    const { isAgriculture, crop, cropType } = geminiResponse;
+    // const isAgriculture = true;
+    // const crop = "paddy";
+    // const cropType = "local";
 
     // Step 4: Prepare the post object for saving
     const newPost = new Post({
@@ -73,9 +73,9 @@ export const createPost = async (req, res) => {
 };
 
 // Controller function to handle saving a post to the user's savedPosts array
-export const savePost = async (userId, postId) => {
+export const savePost = async (req, res) => {
   try {
-    // const { userId, postId } = req.body;
+    const { userId, postId } = req.body;
 
     // Step 1: Validate the incoming request data
     if (!userId || !postId) {
@@ -93,7 +93,7 @@ export const savePost = async (userId, postId) => {
     // Step 3: Check if the post already exists in savedPosts to avoid duplicates
     if (user.savedPosts.includes(postId)) {
       console.log("post ALREADY SAVED");
-      // return res.status(400).json({ message: "Post already saved!" });
+      return res.status(400).json({ message: "Post already saved!" });
     }
 
     // Step 4: Add the post ID to the user's savedPosts array
@@ -101,31 +101,33 @@ export const savePost = async (userId, postId) => {
     await user.save();
     console.log("success");
     // Step 5: Return a success response
-    // return res.status(200).json({
-    //   message: "Post saved successfully!",
-    //   savedPosts: user.savedPosts,
-    // });
+    return res.status(200).json({
+      message: "Post saved successfully!",
+      savedPosts: user.savedPosts,
+    });
   } catch (error) {
     // Error handling
     console.error("Error saving post:", error);
-    // return res.status(500).json({
-    //   message: "An error occurred while saving the post.",
-    //   error: error.message,
-    // });
+    return res.status(500).json({
+      message: "An error occurred while saving the post.",
+      error: error.message,
+    });
   }
 };
 
-export const addComment = async (userId, postId, message, isSolution) => {
+export const addComment = async (req, res) => {
   try {
+    const { userId, postId, message, isSolution, commentMedia } = req.body;
     // Step 1: Create and save the comment
     const newComment = {
       userId: userId,
       postId,
       message,
       isSolution,
+      commentMedia,
       createdAt: new Date(),
     };
-
+    console.log(newComment);
     // Step 2: Find the post and user and add the comment
     const post = await Post.findById(postId);
     const user = await User.findById(userId);
@@ -251,83 +253,120 @@ export const getSavedPosts = async (userId) => {
   }
 };
 
-export const getCommentsForPost = async (postId) => {
+export const getCommentsForPost = async (req, res) => {
   try {
-    // const { postId } = req.params;
-
-    // Find the post by ID and retrieve its comments, sorted as required
+    const { postId } = req.params;
+    console.log("getCommentsForPost", postId);
+    // Find the post by ID and retrieve its comments with populated user details
     const post = await Post.findById(postId).populate({
       path: "comments.userId",
-      select: "name avatar", // select only necessary fields from user for each comment
+      select: "name role avatar", // Include name, role, and avatar fields from the user
     });
 
     if (!post) {
-      console.log("post not found");
-      // return res.status(404).json({ success: false, message: "Post not found" });
+      console.log("Post not found");
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
     }
 
+    // Map through the comments to format the required details
+    const formattedComments = post.comments.map((comment) => ({
+      user: {
+        name: comment.userId.name,
+        role: comment.userId.role,
+        avatar: comment.userId.avatar,
+      },
+      isSolution: comment.isSolution,
+      createdAt: comment.createdAt,
+      text: comment.message,
+      commentMedia: comment.commentMedia, // assuming comment has a 'text' field for the comment content
+    }));
+
     // Separate solution comments from normal comments
-    const solutionComments = post.comments.filter(
+    const solutionComments = formattedComments.filter(
       (comment) => comment.isSolution
     );
-    const normalComments = post.comments.filter(
+    const normalComments = formattedComments.filter(
       (comment) => !comment.isSolution
     );
 
     // Combine solution comments first, followed by normal comments
     const sortedComments = [...solutionComments, ...normalComments];
-    console.log("comments", sortedComments);
+
+    console.log("Comments:", sortedComments);
+
     // Send response with sorted comments
-    // res.status(200).json({
-    //   success: true,
-    //   comments: sortedComments,
-    // });
+    res.status(200).json({
+      success: true,
+      comments: sortedComments,
+    });
   } catch (error) {
-    console.log(error);
-    // res.status(500).json({ success: false, message: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
 // postController.js
 
 // Function to like a post
-export const likePost = async (userId, postId) => {
+export const likePost = async (req, res) => {
   try {
-    // const { postId } = req.body; // Get postId from request body
-    // const userId = req.user.id; // Get user ID from the authenticated user
-
+    const { postId, userId } = req.body;
+    console.log("likePost", postId, userId);
     // Find the post by ID
     const post = await Post.findById(postId);
-    console.log("post", post);
     if (!post) {
-      console.log("post not found");
-      // return res.status(404).json({ message: 'Post not found' });
+      return res.status(404).json({ message: "Post not found" });
     }
 
-    // Check if the user has already liked the post
-    if (post.likes != null && post.likes.includes(userId)) {
-      console.log("already liked");
-      // return res.status(400).json({ message: 'You have already liked this post' });
-    }
-
-    // Add the user ID to the post's likes array
-    post.likes.push(userId);
-    post.numberOfLikes += 1; // Increment the number of likes
-
-    // Save the post
-    await post.save();
-
-    // Now, find the user and add the post ID to the likedPosts array
+    // Find the user by ID
     const user = await User.findById(userId);
-    user.likedPosts.push(postId); // Add the post ID to the likedPosts array
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log("rupee");
+    // Check if the user has already liked the post
+    const userLikedIndex = post.likes ? post.likes.indexOf(userId) : -1;
 
-    // Save the user
-    await user.save();
-    console.log("liked done");
-    // return res.status(200).json({ message: 'Post liked successfully', post });
+    if (userLikedIndex !== -1) {
+      // User has already liked the post, so we unlike it
+      post.likes.splice(userLikedIndex, 1); // Remove user ID from likes array
+      post.numberOfLikes -= 1; // Decrement the number of likes
+
+      // Remove post ID from user's likedPosts array
+      const likedPostIndex = user.likedPosts.indexOf(postId);
+      if (likedPostIndex !== -1) {
+        user.likedPosts.splice(likedPostIndex, 1);
+      }
+      await Post.findByIdAndUpdate(postId, {
+        likes: post.likes,
+        numberOfLikes: post.numberOfLikes,
+      });
+
+      await User.findByIdAndUpdate(userId, {
+        likedPosts: user.likedPosts,
+      });
+
+      return res
+        .status(200)
+        .json({ message: "Post unliked successfully", post });
+    } else {
+      // User has not liked the post yet, so we like it
+      post.likes.push(userId);
+      post.numberOfLikes += 1;
+
+      // Add post ID to user's likedPosts array
+      user.likedPosts.push(postId);
+
+      await post.save();
+      await user.save();
+
+      return res.status(200).json({ message: "Post liked successfully", post });
+    }
   } catch (error) {
-    console.log("liked error: " + error);
-    // return res.status(500).json({ message: 'Server error', error });
+    console.log("Error occurred: " + error);
+    return res.status(500).json({ message: "Server error", error });
   }
 };
 
@@ -343,7 +382,7 @@ export async function loadUserPostsByCropType(userId) {
     if (!user) {
       throw new Error("User not found");
     }
-    console.log("ert", user);
+
     // Step 2: Prepare a map to count interactions by crop type
     const interactionCount = {};
 
@@ -356,22 +395,24 @@ export async function loadUserPostsByCropType(userId) {
       interactionCount[cropType][interactionType]++;
     };
 
-    // Step 3: Count interactions for liked posts
-    for (const post of user.likedPosts) {
-      incrementCounts(post, "liked");
-    }
+    // Step 3: Count interactions for liked, saved, and commented posts
+    for (const post of user.likedPosts) incrementCounts(post, "liked");
+    for (const post of user.savedPosts) incrementCounts(post, "saved");
+    for (const post of user.commentedPosts) incrementCounts(post, "commented");
 
-    // Step 4: Count interactions for saved posts
-    for (const post of user.savedPosts) {
-      incrementCounts(post, "saved");
-    }
+    // Step 4: Determine the crop type with the most interactions
+    const mostInteractedCropType = Object.keys(interactionCount).reduce(
+      (max, cropType) => {
+        const score =
+          (interactionCount[cropType].liked || 0) * 3 +
+          (interactionCount[cropType].saved || 0) * 2 +
+          (interactionCount[cropType].commented || 0);
+        return score > max.score ? { cropType, score } : max;
+      },
+      { cropType: "unknown", score: 0 }
+    ).cropType;
 
-    // Step 5: Count interactions for commented posts
-    for (const post of user.commentedPosts) {
-      incrementCounts(post, "commented");
-    }
-
-    // Step 6: Prepare a list of unique post IDs
+    // Step 5: Prepare a list of unique post IDs
     const postIds = [
       ...new Set([
         ...user.likedPosts,
@@ -380,11 +421,25 @@ export async function loadUserPostsByCropType(userId) {
       ]),
     ];
 
-    // Step 7: Fetch all unique posts from the database
-    const posts = await Post.find({ _id: { $in: postIds } }).populate("userId");
+    // Step 6: Fetch all unique posts the user has interacted with
+    const interactedPosts = await Post.find({ _id: { $in: postIds } }).populate(
+      "userId"
+    );
 
-    // Step 8: Sort posts based on interaction counts
-    const sortedPosts = posts.sort((a, b) => {
+    // Step 7: Fetch posts not interacted with by the user but matching the most interacted crop type
+    const nonInteractedPosts = await Post.find({
+      _id: { $nin: postIds }, // Exclude already interacted posts
+      cropType: mostInteractedCropType,
+    }).populate("userId");
+
+    // Step 8: Fetch all remaining posts with other crop types
+    const remainingPosts = await Post.find({
+      _id: { $nin: postIds }, // Exclude already interacted posts
+      cropType: { $ne: mostInteractedCropType }, // Exclude most interacted crop type
+    }).populate("userId");
+
+    // Step 9: Sort interacted posts based on interaction counts
+    const sortedInteractedPosts = interactedPosts.sort((a, b) => {
       const aCropType = a.cropType || "unknown";
       const bCropType = b.cropType || "unknown";
 
@@ -400,11 +455,45 @@ export async function loadUserPostsByCropType(userId) {
 
       return bScore - aScore; // Higher score comes first
     });
-    console.log(sortedPosts);
-    return sortedPosts; // Return the sorted posts
+
+    // Step 10: Combine the posts in order of priority
+    const allPosts = [
+      ...nonInteractedPosts,
+      ...remainingPosts,
+      ...sortedInteractedPosts,
+    ];
+
+    return allPosts; // Return the combined posts list
   } catch (error) {
     console.error("Error loading posts:", error);
     throw new Error("Could not load posts");
+  }
+}
+export async function getPostById(req, res) {
+  try {
+    const { postId } = req.params;
+    console.log("postId", postId);
+
+    const post = await Post.findById(postId);
+    if (post) {
+      console.log("post", post);
+      return res.json({
+        success: true,
+        message: "Saved Post details fetched successfully.",
+        post,
+      });
+    }
+
+    return res.json({
+      success: false,
+      message: "Post not found.",
+    });
+  } catch (err) {
+    console.log("Error getting post", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while fetching post details.",
+    });
   }
 }
 

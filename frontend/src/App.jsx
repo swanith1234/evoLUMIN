@@ -9,7 +9,7 @@ import {
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Navbar from "./components/Navbar";
 import AgroConnect from "./components/Community/AgroConnect";
-import AgroMarket from "./components/AgroMarket";
+
 import AgroMarkets from "./components/AgroMarkets";
 import BrowseWebsites from "./components/BrowseWebsites";
 import AgroTools from "./components/AgroTools";
@@ -67,7 +67,7 @@ const VoiceNavigator = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: "none", height: "0" }}>
       <button onClick={startListening}>Navigate by Voice</button>
     </div>
   );
@@ -91,7 +91,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<AuthCard />} />
-        <Route path="/agro-connect" element={<AgroConnect />} />
+        <Route path="/agro-connect/*" element={<AgroConnect />} />
         <Route path="/agro-market" element={<AgroMarkets />} />
         <Route path="/agro-market1" element={<AgroMarkets />} />
         <Route path="/agro-tools" element={<AgroTools />} />

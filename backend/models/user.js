@@ -6,13 +6,13 @@ import jwt from "jsonwebtoken";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your name"],
+
     minLength: [3, "Name must contain at least 3 characters!"],
     maxLength: [30, "Name cannot exceed 30 characters!"],
   },
   email: {
     type: String,
-    required: [true, "Please enter your email"],
+
     validate: [validator.isEmail, "Please enter a valid email"],
     unique: true,
   },
@@ -21,53 +21,46 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: [true, "Please enter your number"],
+
     unique: true,
   },
   password: {
     type: String,
-    required: [true, "Please enter your password"],
+
     minLength: [3, "Password must contain at least 3 characters!"],
     maxLength: [30, "Password cannot exceed 30 characters!"],
     select: false,
   },
   role: {
     type: String,
-    required: [true, "Please enter your role"],
+
     enum: ["farmer", "student", "mediator", "expert"],
   },
   state: {
     type: String,
-    required: [true, "Please select your state"],
   },
   district: {
     type: String,
-    required: [true, "Please select your district"],
   },
   mandal: {
     type: String,
-    required: [true, "Please select your mandal"],
   },
   coordinates: {
     type: { type: String, enum: ["Point"], default: "Point" },
-    coordinates: { type: [Number], required: true, index: "2dsphere" },
+    coordinates: { type: [Number], index: "2dsphere" },
   },
   language: {
     type: String,
-    required: [true, "Please select your language"],
   },
 
   crop: {
     type: String,
-    required: [true, "Please enter your crop"],
   },
   productionStage: {
     type: String,
-    required: [true, "Please enter your crop production stage"],
   },
   cropQuantityForSale: {
     type: Number,
-    required: [true, "Please enter the quantity of crop being sold"],
   },
   cropImage: {
     type: String,
@@ -87,7 +80,6 @@ const userSchema = new mongoose.Schema({
       },
       serviceTime: {
         type: Date,
-        required: [true, "Please provide the service time"],
       },
     },
   ],
