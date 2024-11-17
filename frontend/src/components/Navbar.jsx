@@ -77,9 +77,7 @@ const Navbar = () => {
         <img src={logo} alt="AgroNexus Logo" className="navbar-logo" />
         <div className="navbar-brand">AgroNexus</div>
       </div>
-      <button className="mobile-menu-icon" onClick={handleMobileMenuToggle}>
-        ☰ {/* Hamburger icon for mobile */}
-      </button>
+
       <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
         <li>
           <Link to="/agro-connect">Agro Connect</Link>

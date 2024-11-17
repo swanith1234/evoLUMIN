@@ -24,7 +24,7 @@ const AgroMarkets = () => {
     const file = e.target.files[0];
     const uploadphoto = await uploadFile(file);
     console.log("Uploaded Image:", uploadphoto);
-    setFormData({ ...formData, images: uploadphoto.secure_url });
+    setFormData({ ...formData, images: uploadphoto.url });
   };
 
   // const handleVideoChange = async (e) => {
