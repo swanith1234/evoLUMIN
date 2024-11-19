@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./Posts.css?v=1.0.1";
+import './Posts.css'
 import PostModal from "./postModal";
 import { AuthContext } from "../authContext";
 import axios from "axios";
+import profiles from  '../../../public/profiles.json'; 
 
- 
+
 const Post = ({
   description,
   media,
@@ -19,6 +20,8 @@ const Post = ({
 }) => {
   return (
     <div className="post">
+     
+
       <h3>{cropType ? `Crop Type: ${cropType}` : "General Post"}</h3>
       <p>{description}</p>
       {media && (
@@ -85,7 +88,7 @@ const Posts = () => {
             createdAt={post.createdAt}
             numberOfLikes={post.numberOfLikes}
             numberOfComments={post.numberOfComments}
-            author={post.userId} // assuming userId contains author details
+            author={post.userId}  
             likes={post.likes || []}
             comments={post.comments || []}
           />
@@ -111,5 +114,3 @@ const Posts = () => {
 };
 
 export default Posts;
-
- 
