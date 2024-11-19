@@ -20,8 +20,8 @@ const Post = ({
   author,
   likes,
   comments,
+  tag,
 }) => {
-  console.log("postId: " + comments);
   const { userInfo } = useContext(AuthContext);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -30,7 +30,7 @@ const Post = ({
   const [currentLikes, setCurrentLikes] = useState(numberOfLikes || 0);
   const [showCommentTypeModal, setShowCommentTypeModal] = useState(false);
   const [commentMedia, setCommentMedia] = useState("");
-  console.log(likes, comments);
+
   function timeAgo(dateString) {
     const postDate = new Date(dateString);
     const now = new Date();
@@ -73,7 +73,7 @@ const Post = ({
       const res = await axios.get(
         `http://localhost:3000/api/v1/post/comments/${postId}`
       );
-      console.log("comments", res.data.comments);
+
       setPostComments(res.data.comments);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -97,7 +97,6 @@ const Post = ({
 
   // Handle comment submission with selected type
   const submitComment = async (isSolution) => {
-    console.log("sol", isSolution);
     setShowCommentTypeModal(false);
     try {
       const response = await fetch(
@@ -145,7 +144,7 @@ const Post = ({
     const uploadedMedia = await Promise.all(
       files.map(async (file) => {
         const uploadedFile = await uploadFile(file);
-        console.log(uploadedFile);
+        console.log("upload", uploadedFile);
         return uploadedFile.url; // Extract the URL for each uploaded file
       })
     );
@@ -155,14 +154,9 @@ const Post = ({
   const [isLiked, setIsLiked] = useState(
     likes.some((like) => like._id === userInfo.user._id)
   );
-  console.log("isLiked", isLiked);
-  console.log("likeId", likes[0]);
-  console.log("userId", userInfo.user._id);
 
   // Check if the current user has liked the post
   useEffect(() => {
-    console.log("likes", likes);
-
     // Check if the user ID exists in the likes array
     const userHasLiked = likes.some((like) => like === userInfo.user._id);
 
@@ -177,7 +171,6 @@ const Post = ({
         postId: postId,
         userId: userInfo.user._id,
       });
-      console.log("res", res);
 
       // Update the state and reflect changes in UI
       if (res.data.message.includes("unliked")) {
@@ -201,14 +194,18 @@ const Post = ({
         postId: postId,
         userId: userInfo.user._id,
       });
-      console.log("res", res);
     } catch (err) {
       console.log("Error saving post", err);
     }
   };
 
   return (
-    <div className="post">
+    <div
+      className="post"
+      style={{
+        backgroundColor: tag === "normal" ? "#B0EBB4" : "#FA7070",
+      }}
+    >
       <div className="post-author">
         <div className="avtar">
           <Avatar width={50} height={50} name={userInfo.user.name} />
@@ -317,7 +314,6 @@ const Post = ({
           </div>
           {postComments.map((comment, index) => (
             <>
-              {console.log("comment", comment)}
               <div className="comment" key={index}>
                 <div className="comment-author">
                   <div className="comment-user-info">
@@ -410,7 +406,7 @@ const Posts = () => {
         const response = await axios.get(
           `  http://localhost:3000/api/v1/user/${token}/posts`
         );
-
+        console.log("res", response.data);
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -440,6 +436,7 @@ const Posts = () => {
             author={post.userId}
             likes={post.likes || []}
             comments={post.comments || []}
+            tag={post.tag || ""}
           />
         ))}
 
