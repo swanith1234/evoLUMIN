@@ -73,7 +73,18 @@ const Navbar = () => {
   const isFarmer = userInfo?.user?.role === "farmer";
   const isMediator = userInfo?.user?.role === "mediator";
  
-
+const handleUserLogout=async()=>{
+try{
+  const res=axios.get('http://localhost:3000/api/v1/users/logout');
+  console.log(res)
+  if(res.sucess==true){
+    window.location.href('/auth')
+  }
+}
+catch(err){
+  console.log(err)
+}
+}
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -125,7 +136,7 @@ const Navbar = () => {
                   </Link>
                   <button
                     className="dropdown-item logout-button"
-                    onClick={() => console.log("Logout")}
+                 onClick={handleUserLogout}
                   >
                     Logout
                   </button>

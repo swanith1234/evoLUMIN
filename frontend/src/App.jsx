@@ -27,6 +27,8 @@ import LocationTracker from "./components/locationTracker";
 import "./App.css";
 import "./index.css";
 import "./components/AgroMarkets.css";
+import Retailer from "./components/Retailer"
+ 
 
 // Voice navigation component
 const VoiceNavigator = () => {
@@ -73,8 +75,19 @@ const VoiceNavigator = () => {
   );
 };
 
+const handleLogin = async () => {
+  const response = await api.post('/login', { email, password });
+  if (response.data.success) {
+    const { role } = response.data.user;
+    localStorage.setItem('userRole', role); // Store role locally
+    navigateBasedOnRole(role); // Navigate to the appropriate route
+  }
+};
+
+
 function App() {
   const location = useLocation();
+  const role = localStorage.getItem('userRole');
 
   return (
     <div className="app-container">
@@ -89,10 +102,12 @@ function App() {
       <VoiceNavigator />
       <LocationTracker></LocationTracker>
       <Routes>
+        
         <Route path="/" element={<Home />} />
+        {role==='Retailer' && <Route path="/retailer" element={<Retailer/>} /> }
         <Route path="/auth" element={<AuthCard />} />
         <Route path="/agro-connect/*" element={<AgroConnect />} />
-        <Route path="/agro-market" element={<AgroMarkets />} />
+        <Route path="/agro-market" element={<Retailer />} />
         <Route path="/agro-market1" element={<AgroMarkets />} />
         <Route path="/agro-tools" element={<AgroTools />} />
         <Route path="/sendOtp" element={<SendOtp />} />
@@ -112,6 +127,9 @@ function App() {
             </GoogleOAuthProvider>
           }
         />
+    
+
+      
       </Routes>
 
       {/* Conditionally render Footer - Hide on the AgroConnect page */}

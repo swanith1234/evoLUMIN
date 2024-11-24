@@ -1,9 +1,20 @@
-.body {
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .agro-market-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   padding: 20px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .new-post-btn,
@@ -11,136 +22,285 @@
 .video-btn {
   background-color: #4caf50;
   color: white;
-  padding: 10px 15px;
-  margin: 10px 0;
+  padding: 8px 12px;
+  margin: 5px 0; /* Reduced margin */
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 22px; /* Slightly smaller font size */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other elements */
 }
 
 .post-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 20px auto;
-  width: 300px;
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+  max-width: 90%;
+  max-height: 90%; /* Ensures the form fits within the viewport */
+  overflow-y: auto; /* Allows scrolling if content overflows */
 }
-
 .posts-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.post-card {
-  width: 250px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-}
-
-.collage {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5px;
-}
-
-.collage img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.post-details h3 {
   margin: 10px 0;
-}
-
-.video-btn {
-  margin-top: 10px;
-}
-/* AgroMarkets.css */
-.agro-market-container {
-  text-align: center;
-  margin: 20px;
-}
-
-.new-post-btn {
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.posts-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.post-card {
-  width: 300px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-}
-
-.crop-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.post-details h3 {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #333;
-}
-
-.post-details p {
-  font-size: 16px;
-  color: #555;
-}
-
-.video-player {
-  width: 100%;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-.agro-market-container {
-  padding: 50px;
-  text-align: center;
-
-  position: relative;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px; /* Add spacing between post cards */
+}
+
+.set-1 {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.set-2 {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.set-2 p {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 800;
+  font-size: 1.5 rem;
+}
+
+.location {
+  font-weight: 400;
+  position: absolute;
+  top: 50px;
+  margin-top: 2rem;
+}
+
+/* .crops{
+ position: absolute ;
+ bottom: 80px;
+ gap:80px;
+
+ 
+}
+.crop-detail{
+ 
+}
+
+.crop-quatity{
+  
+} */
+.crops {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px; /* Spacing between crop-detail and crop-quantity */
+  position: absolute;
+  bottom: 80px;
+}
+
+.crop-detail,
+.crop-quantity {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 15px 25px;
+  border: 2px solid #4caf50; /* Green border for emphasis */
+  border-radius: 10px; /* Rounded edges */
+  background-color: #e8f5e9; /* Light green background for subtlety */
+  font-size: 18px; /* Clear, readable font size */
+  font-family: "Roboto", sans-serif; /* Modern font */
+  font-weight: bold; /* Emphasize the text */
+  color: #2e7d32; /* Dark green text for clarity */
+  transition: all 0.3s ease; /* Smooth hover transition */
+  cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+.crop-detail:hover,
+.crop-quantity:hover {
+  background-color: #4caf50; /* Darker green on hover */
+  color: #ffffff; /* White text for contrast */
+  transform: scale(1.05); /* Slight enlargement for feedback */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+}
+
+.crop-detail p,
+.crop-quantity p {
+  margin: 0; /* Remove default margins */
+  text-align: center; /* Center-align text */
+  font-size: 1.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Circular avatar */
+  object-fit: cover; /* Crop images neatly */
+  border: 1px solid #ccc; /* Add subtle border */
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 26px;
+  color: #333;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 600;
+}
+
+.media-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between media items */
+}
+
+.image-wrapper {
+  max-width: 300px; /* Set a fixed width for the image wrapper */
+  overflow: hidden; /* Ensures overflow is hidden if the image is too large */
+  margin: 0 auto; /* Centers the image wrapper */
+}
+.crop-image {
+  max-width: 50%;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+  max-height: 200px; /* Limit height */
+}
+
+.video-player {
+  max-width: 100%;
+  border-radius: 5px;
+  object-fit: contain; /* Ensure video is proportionate */
+}
+
+.Description {
+  font-size: 14px;
+  color: #555; /* Softer text color for descriptions */
+  padding: 10px;
+  background-color: #f5f5f5; /* Light gray background for description */
+  border-radius: 5px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex p {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.LocationOn {
+  font-size: 16px;
+  color: #007bff; /* Add a primary color for location icon */
+}
+
+.posts-container {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.post-card {
+  width: 90%; /* Set a fixed percentage width */
+  background-color: #f9f9f9; /* Add a light background */
+  border: 1px solid #e0e0e0; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+  display: flex;
+  justify-content: space-between;
+  padding: 20px; /* Add internal spacing */
+  gap: 10px; /* Space between sections */
+}
+
+textarea {
+  width: 100%; /* Make it responsive and aligned with other form elements */
+  padding: 10px; /* Add spacing inside the box */
+  font-size: 18px; /* Consistent font size with input fields */
+  border: 1px solid #ccc; /* Border similar to other input fields */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding in width calculation */
+  resize: none; /* Disable manual resizing for a consistent layout */
+  background-color: #f9f9f9; /* Subtle background color */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+textarea:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #007bff; /* Highlight border on focus */
+  box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5); /* Add a focus glow */
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px; /* Reduced padding */
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.initials {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  color: #0d8f13;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 .agro-market-container h1 {
   color: #0d8f13;
-  font-size: 2.5rem;
+  font-size: 1.8rem; /* Reduced font size */
   font-weight: bold;
   font-family: "Arial Black", Gadget, sans-serif;
-  /* padding: 1rem; */
   background-color: #e5e7eb; /* Semi-transparent white for readability */
   border-radius: 8px;
+  padding: 10px; /* Added padding for spacing inside the title */
+  margin-bottom: 15px; /* Added spacing below the title */
   width: fit-content;
   text-align: center;
+  overflow: scroll;
 }
+/* @media (max-width: 768px) {
+  .post-form {
+    padding: 15px;   
+  }
+
+  .post-card {
+    width: 180px;  
+  }
+} */

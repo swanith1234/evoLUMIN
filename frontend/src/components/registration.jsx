@@ -474,7 +474,7 @@ const AuthCard = () => {
                   <option value="farmer">Farmer</option>
                   <option value="expert">Expert</option>
                   <option value="student">Student</option>
-                  <option value="mediator">Retailer</option>
+                  <option value="Retailer">Retailer</option>
                 </select>
               </div>
               {signupDetails.role == "farmer" && (

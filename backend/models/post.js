@@ -55,7 +55,7 @@ const postSchema = new mongoose.Schema({
   ],
   tag: {
     type: String,
-    enum: ["Problem", "normal"],
+    enum: ["problem", "normal"],
     required: true,
   },
   isAgriculture: {

@@ -22,4 +22,7 @@ router.patch("/users/login/update/:id", updateUser);
 router.post("/users/auth/google", googleLogin);
 router.post("/users/auth/phone/sendOtp", sendOtp);
 router.post("/users/auth/phone/verify", verifyOtp);
+ 
+
+
 export default router;

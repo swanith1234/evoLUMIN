@@ -2,17 +2,14 @@ import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-
     minLength: [3, "Name must contain at least 3 characters!"],
     maxLength: [30, "Name cannot exceed 30 characters!"],
   },
   email: {
     type: String,
-
     validate: [validator.isEmail, "Please enter a valid email"],
     unique: true,
   },
@@ -21,19 +18,16 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-
     unique: true,
   },
   password: {
     type: String,
-
     minLength: [3, "Password must contain at least 3 characters!"],
     maxLength: [30, "Password cannot exceed 30 characters!"],
     select: false,
   },
   role: {
     type: String,
-
     enum: ["farmer", "student", "mediator", "expert"],
   },
   state: {
@@ -52,27 +46,25 @@ const userSchema = new mongoose.Schema({
   language: {
     type: String,
   },
-
   crop: {
     type: String,
   },
   productionStage: {
     type: String,
   },
-  cropQuantityForSale: {
-    type: Number,
-  },
-  cropImage: {
-    type: String,
-  },
-  cropVideo: {
-    type: String,
-  },
+  // cropQuantityForSale: {
+  //   type: Number,
+  // },
+  // cropImage: {
+  //   type: String,
+  // },
+  // cropVideo: {
+  //   type: String,
+  // },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-  // Array to store references to tools booked along with service time
   bookedTools: [
     {
       toolTitle: {
@@ -86,7 +78,6 @@ const userSchema = new mongoose.Schema({
   bookedToolTitles: [
     {
       type: String,
-      // Reference to the Tool model
     },
   ],
   otp: {
@@ -98,19 +89,44 @@ const userSchema = new mongoose.Schema({
   likedPosts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post", // Array to store IDs of posts the user liked
+      ref: "Post",
     },
   ],
   commentedPosts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post", // Array to store IDs of posts the user commented on
+      ref: "Post",
     },
   ],
   savedPosts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post", // Array to store IDs of posts the user saved
+      ref: "Post",
+    },
+  ],
+  cropsForSale: [
+    {
+      title: {
+        type: String,
+        required: [true, "Crop title is required"],
+      },
+      description: {
+        type: String,
+        required: [true, "Crop description is required"],
+      },
+      quantity: {
+        type: Number,
+        required: [true, "Crop quantity is required"],
+        min: [1, "Quantity must be at least 1"],
+      },
+      images: [
+        {
+          type: String, // URL or file path to the image
+        },
+      ],
+      video: {
+        type: String, // URL or file path to the video
+      },
     },
   ],
 });

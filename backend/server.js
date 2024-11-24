@@ -89,5 +89,6 @@ io.on("connection", (socket) => {
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+// Example usage
 
 export default app;

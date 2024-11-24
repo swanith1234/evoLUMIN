@@ -79,6 +79,7 @@ export const userlogout = catchAsyncError(async (req, res, next) => {
       sucess: true,
       message: "user loggedout successfully",
     });
+ 
 });
 
 export const getOneUser = async (req, res) => {
