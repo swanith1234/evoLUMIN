@@ -1,0 +1,83 @@
+aside {
+  width: 25% !important;
+}
+main {
+  width: 50%;
+}
+.agroConnect-body {
+  height: 100vh;
+  overflow: hidden; /* Prevent scrolling for the whole body */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fixed heights for the main layout sections */
+.agroConnect-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  height: 100%;
+}
+.suggestion-profiles {
+  height: 100%;
+  overflow: scroll;
+}
+.posts-page-container {
+  height: 90%;
+  overflow: scroll;
+}
+.posts-page-container::-webkit-scrollbar,
+.suggestion-profiles::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .suggestion-profiles {
+    display: none;
+  }
+  .mobile-menu-button {
+    border: 1px solid;
+    margin: 5px;
+    border-radius: 50%;
+    padding: 3px 9px;
+    background-color: #c6c6f7;
+    color: #473535;
+    font-size: 1.3rem;
+    position: relative;
+    /* top: -43px; */
+    left: 8px;
+    z-index: 2;
+  }
+  .agroConnect-container {
+    margin-top: 100px !important;
+  }
+  aside {
+    width: 50% !important;
+    position: absolute;
+    height: 90vh;
+    overflow: hidden;
+  }
+  main {
+    width: 100%;
+  }
+  .sticky-bar {
+    width: 90%;
+  }
+  .side-bar-open {
+    transform: translateX(0);
+    z-index: 5; /* Ensures it stays above posts */
+    position: relative;
+    transition: transform 0.3s ease-in-out; /* Smooth slide-in effect */
+  }
+
+  .side-bar-close {
+    transform: translateX(-500px);
+    z-index: 5; /* Keeps the sidebar above posts even when closed */
+    position: relative;
+    transition: transform 0.3s ease-in-out; /* Smooth slide-out effect */
+  }
+}

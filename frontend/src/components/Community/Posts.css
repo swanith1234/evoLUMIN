@@ -1,107 +1,217 @@
 .posts-page-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f3f4f6;
-  }
-  
-  .posts-container {
-    
-    width: 100%;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
- 
-  }
-  
-  .post {
-    background-color: #f1f1f1; /* Light gray for the background */
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  
-  .post-media {
-    position: relative;
-    height: 300px;
-    background-color: #218838; /* Green background similar to the image */
+.posts-container {
+  width: 100%;
+  padding: 10px;
+}
+
+.post {
+  background-color: white; /* Light gray for the background */
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  width: 100%;
+}
+.post-author {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+
+  .user-info {
     display: flex;
+    flex-wrap: wrap;
+
     align-items: center;
-    justify-content: center;
+    .avtar {
+    }
+    .name {
+      margin-right: 0.3rem;
+      height: fit-content !important;
+      padding: 0;
+      margin-bottom: 0;
+      font-weight: 600;
+      color: #333;
+      font-size: 1.5rem;
+    }
+    .role {
+      height: fit-content;
+    }
+    .time {
+      flex-basis: 100%;
+      font-size: 1rem;
+      color: gray;
+      opacity: 0.6;
+    }
   }
-  
-  .post-image {
-    max-height: 100%;
-    width: auto;
-    border-radius: 10px;
+}
+.post-media {
+  position: relative;
+  width: 100%;
+  padding: 1.2rem;
+  display: flex;
+  overflow-x: scroll;
+  max-height: 500px;
+  scroll-behavior: smooth;
+
+  /* Hide the scrollbar for a cleaner look */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.post-media::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.post-media .media-item {
+  min-width: 100%; /* Ensure only one item is shown at a time */
+  max-width: 100%;
+  flex-shrink: 0;
+  margin-right: 1.2rem; /* Optional: spacing between media items */
+  border-radius: 8px;
+}
+
+.post-media::-webkit-scrollbar {
+  display: none;
+}
+/* .post-image {
+  max-height: 100%;
+  width: auto;
+  border-radius: 10px;
+} */
+
+.post-info {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  margin-top: -40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.post-interactions {
+  display: flex;
+  justify-content: space-around;
+  i {
+    font-size: 1.5rem;
   }
-  
-  .post-info {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    margin-top: -40px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  i:hover {
+    color: green;
   }
-  
-  .post h3 {
-    font-size: 1.4em;
-    color: #218838; /* Green color for titles */
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .post p {
-    color: #333;
-    margin: 8px 0;
-    font-size: 1em;
-  }
-  
-  .post-interactions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-  }
-  
-  .post-like-button, .post-comment-button {
-    padding: 8px 15px;
-    border: none;
-    background-color: #218838;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-  }
-  
-  .post-like-button:hover, .post-comment-button:hover {
-    background-color: #1e7a34;
-  }
-  
-  .sticky-bar {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
-  }
-  
-  .sticky-input {
-    width: 100%;
-    padding: 10px;
+}
+.comments-section {
+  .add-comment {
     border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
+    margin: 3% 6%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1rem;
+    padding: 2% 4%;
+    input {
+      width: 100%;
+      outline: none;
+    }
+
+    .comment-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      i {
+        cursor: pointer;
+      }
+      .send-comment {
+        border-radius: 50%;
+        padding: 5px 8px;
+      }
+    }
   }
-  
-  .sticky-input:focus {
-    border-color: #218838;
-    box-shadow: 0 0 4px rgba(33, 136, 56, 0.4);
+}
+/* Style for the label */
+.comment-options label#label {
+  display: inline-block;
+  padding: 10px 12px;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Default background color */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.comment-options label#label:hover {
+  background-color: #a0d89f; /* Hover background color */
+  transform: scale(1.1); /* Slight zoom-in effect */
+}
+
+/* Style for the send-comment button */
+.send-comment {
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: #007bff; /* Default background color */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.send-comment:disabled {
+  background-color: #cccccc; /* Disabled state background */
+  cursor: not-allowed; /* Show not-allowed cursor */
+}
+
+.send-comment:not(:disabled):hover {
+  background-color: #0056b3; /* Hover background color */
+  transform: scale(1.1); /* Slight zoom-in effect */
+}
+
+.comment {
+  width: 100%;
+  padding: 3% 5%;
+
+  .comment-author {
+    display: flex;
+    justify-content: space-between;
+    .comment-user-info {
+      display: flex;
+      gap: 0.5rem;
+      font-weight: 550;
+      flex-wrap: wrap;
+    }
+    .comment-time {
+      color: gray;
+
+      font-weight: 300;
+    }
   }
+  .comment-body {
+    padding-left: 10%;
+  }
+}
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.sticky-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.sticky-input:focus {
+  border-color: #218838;
+  box-shadow: 0 0 4px rgba(33, 136, 56, 0.4);
+}
+
+.liked-icon {
+  color: rgb(84, 251, 115); /* Change icon color when liked */
+}

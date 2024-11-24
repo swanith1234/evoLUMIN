@@ -70,16 +70,25 @@ const Navbar = () => {
   // Dropdown and mobile menu functions
   const handleDropdownToggle = () => setIsOpen(!isOpen);
   const handleMobileMenuToggle = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-
+const handleUserLogout=async()=>{
+try{
+  const res=axios.get('http://localhost:3000/api/v1/users/logout');
+  console.log(res)
+  if(res.sucess==true){
+    window.location.href('/auth')
+  }
+}
+catch(err){
+  console.log(err)
+}
+}
   return (
     <nav className="navbar">
       <div className="navbar-left">
         <img src={logo} alt="AgroNexus Logo" className="navbar-logo" />
         <div className="navbar-brand">AgroNexus</div>
       </div>
-      <button className="mobile-menu-icon" onClick={handleMobileMenuToggle}>
-        ☰ {/* Hamburger icon for mobile */}
-      </button>
+
       <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
         <li>
           <Link to="/agro-connect">Agro Connect</Link>
@@ -118,7 +127,7 @@ const Navbar = () => {
                   </Link>
                   <button
                     className="dropdown-item logout-button"
-                    onClick={() => console.log("Logout")}
+                 onClick={handleUserLogout}
                   >
                     Logout
                   </button>

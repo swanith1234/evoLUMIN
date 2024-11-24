@@ -1,33 +1,69 @@
-import React, { useState } from "react";
-import "./Posts.css";
-
+import React, { useState, useContext } from "react";
+import "./PostModal.css";
+import { uploadFile } from "../../upload";
+import { AuthContext } from "../authContext";
 const PostModal = ({ show, onClose }) => {
   const [content, setContent] = useState("");
-  const [postType, setPostType] = useState("General");
+  const [postType, setPostType] = useState("normal");
   const [media, setMedia] = useState("");
-
+  const [showTypeModal, setShowTypeModal] = useState(false);
+  const { token, userInfo } = useContext(AuthContext);
   if (!show) return null;
+  const handleMediaChange = async (e) => {
+    const files = Array.from(e.target.files); // Convert FileList to array
+    const uploadedMedia = await Promise.all(
+      files.map(async (file) => {
+        const uploadedFile = await uploadFile(file);
+        console.log(uploadedFile);
+        return uploadedFile.url; // Extract the URL for each uploaded file
+      })
+    );
 
-  const handlePost = () => {
-    if (!content && !media) return;
-
-    const newPost = {
-      user: "Afroze Mohammad",
-      avatar: "user-avatar.jpg",
-      content,
-      postType,
-      createdAt: new Date().toLocaleString(),
-      media,
-    };
-
-    onClose(newPost);
-    setContent("");
-    setPostType("General");
-    setMedia("");
+    setMedia((prevMedia) => [...prevMedia, ...uploadedMedia]); // Append new uploads to the existing media array
   };
 
-  const handleMediaUpload = (e) => {
-    setMedia(URL.createObjectURL(e.target.files[0]));
+  const handlePost = async () => {
+    if (!content && !media) return;
+
+    // Replace this with the actual user ID or get it from context
+    const userId = userInfo.user._id;
+
+    // Define the post data
+    const postData = {
+      description: content,
+      media, // This should ideally be handled with a file upload API or converted to a base64 string
+      tag: postType,
+      userId,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/post", {
+        // Adjust URL to your backend endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Post created:", data);
+
+        // Reset form fields and close the modal
+        setContent("");
+        setPostType("normal");
+        setMedia("");
+        setShowTypeModal(false);
+
+        // Notify parent component of the new post
+        onClose(data.post);
+      } else {
+        console.error("Failed to create post:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
@@ -40,6 +76,7 @@ const PostModal = ({ show, onClose }) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
+        {media && <img src={media} alt="Uploaded" className="media-preview" />}
         <label htmlFor="media-upload" className="upload-icon">
           +
         </label>
@@ -47,25 +84,39 @@ const PostModal = ({ show, onClose }) => {
           type="file"
           id="media-upload"
           style={{ display: "none" }}
-          onChange={handleMediaUpload}
+          onChange={handleMediaChange}
         />
         <div className="modal-footer">
-          <button className="modal-cancel-button" onClick={onClose}>
+          <button className="modal-cancel-button" onClick={() => onClose()}>
             Cancel
           </button>
-          <select
-            className="post-type-dropdown"
-            value={postType}
-            onChange={(e) => setPostType(e.target.value)}
+          <button
+            className="modal-button"
+            onClick={() => setShowTypeModal(true)}
           >
-            <option value="General">General</option>
-            <option value="Problem">Problem</option>
-          </select>
-          <button className="modal-button" onClick={handlePost}>
             Post
           </button>
         </div>
       </div>
+
+      {showTypeModal && (
+        <div className="modal-background">
+          <div className="submodal-container">
+            <h2 className="submodal-header">Select Post Type</h2>
+            <select
+              className="post-type-dropdown"
+              value={postType}
+              onChange={(e) => setPostType(e.target.value)}
+            >
+              <option value="normal">General</option>
+              <option value="Problem">Problem</option>
+            </select>
+            <button className="submodal-confirm-button" onClick={handlePost}>
+              Confirm
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

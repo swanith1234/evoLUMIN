@@ -1,15 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import Avatar from "../Avatar";
 import { AuthContext } from "../authContext";
 import "./Posts.css";
 import axios from "axios";
-import PostModal from "./PostModal";
-import { uploadFile } from "../../upload";
-import CommentTypeModal from "./commentModal";
-import LikeButton from "./LikeButton";
-import CommentButton from "./CommentButton";
 
-const Post = ({
+import CommentTypeModal from "./commentModal";
+const SavedPost = ({
   postId,
   description,
   media,
@@ -22,7 +18,7 @@ const Post = ({
   likes,
   comments,
 }) => {
-  console.log("postId: " + comments);
+  console.log("postId: " + postId);
   const { userInfo } = useContext(AuthContext);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -30,7 +26,6 @@ const Post = ({
   const [userLikedPosts, setUserLikedPosts] = useState();
   const [currentLikes, setCurrentLikes] = useState(numberOfLikes || 0);
   const [showCommentTypeModal, setShowCommentTypeModal] = useState(false);
-  const [commentMedia, setCommentMedia] = useState("");
   console.log(likes, comments);
   function timeAgo(dateString) {
     const postDate = new Date(dateString);
@@ -74,7 +69,6 @@ const Post = ({
       const res = await axios.get(
         `http://localhost:3000/api/v1/post/comments/${postId}`
       );
-      console.log("comments", res.data.comments);
       setPostComments(res.data.comments);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -101,6 +95,7 @@ const Post = ({
     console.log("sol", isSolution);
     setShowCommentTypeModal(false);
     try {
+      console.log("result");
       const response = await fetch(
         "http://localhost:3000/api/v1/post/comment",
         {
@@ -112,25 +107,16 @@ const Post = ({
             userId: userInfo.user._id,
             postId: postId,
             message: newComment,
-            isSolution: isSolution,
-            commentMedia: commentMedia,
+            isSolution: isSolution, // Pass the selected comment type
           }),
         }
       );
+      console.log("res");
       const result = await response.json();
+      console.log("result", result);
       if (result.success) {
-        // Create a new comment object
-        const newCommentObj = {
-          user: userInfo.user,
-          text: newComment,
-          createdAt: new Date().toISOString(),
-          isSolution: isSolution,
-          commentMedia: commentMedia,
-        };
-
-        // Update the postComments state with the new comment
-        setPostComments((prevComments) => [newCommentObj, ...prevComments]);
         setNewComment(""); // Clear the input field
+        fetchComments(); // Fetch updated comments
       } else {
         console.error("Failed to add comment:", result.message);
       }
@@ -141,18 +127,6 @@ const Post = ({
     }
   };
 
-  const handleMediaChange = async (e) => {
-    const files = Array.from(e.target.files); // Convert FileList to array
-    const uploadedMedia = await Promise.all(
-      files.map(async (file) => {
-        const uploadedFile = await uploadFile(file);
-        console.log(uploadedFile);
-        return uploadedFile.url; // Extract the URL for each uploaded file
-      })
-    );
-
-    setCommentMedia((prevMedia) => [...prevMedia, ...uploadedMedia]); // Append new uploads to the existing media array
-  };
   const [isLiked, setIsLiked] = useState(
     likes.some((like) => like._id === userInfo.user._id)
   );
@@ -236,44 +210,33 @@ const Post = ({
         </div>
       </div>
       <p>{description}</p>
-      {media && media.length > 0 && (
+      {media && (
         <div className="post-media">
-          {media.map((url, index) =>
-            url.endsWith(".mp4") || url.endsWith(".webm") ? (
-              <video key={index} controls className="media-item">
-                <source src={url} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              <img
-                key={index}
-                src={url}
-                alt={`Post media ${index + 1}`}
-                className="media-item"
-              />
-            )
-          )}
+          <img src={media} alt="Post media" />
         </div>
       )}
 
       <div className="post-interactions">
-        <LikeButton
-          isLiked={isLiked}
-          likeCount={currentLikes}
-          onLike={handleLike}
-          id={postId}
-        />
+        <button
+          className={`post-like-button post-button ${isLiked ? "liked" : ""}`}
+          onClick={handleLike}
+        >
+          <i
+            className={`${
+              isLiked
+                ? "fa-solid fa-thumbs-up liked-icon"
+                : "fa-regular fa-thumbs-up "
+            }`}
+          ></i>
+          <div className="text"> Like ({currentLikes})</div>
+        </button>
+
         <button
           className="post-comment-button post-button"
           onClick={toggleComments}
         >
-          {/* <i className="fa-regular fa-comment"></i>
-          <div className="text"> Comments ({comments.length})</div> */}
-          <CommentButton
-            commentCount={comments.length}
-            toggleComment={toggleComments}
-            id={postId}
-          ></CommentButton>
+          <i className="fa-regular fa-comment"></i>
+          <div className="text"> Comments ({comments.length})</div>
         </button>
         <button className="post-save-button post-button" onClick={handleSave}>
           <i className="fa-regular fa-bookmark"></i>
@@ -281,7 +244,6 @@ const Post = ({
         </button>
       </div>
 
-      {/* Comments Section */}
       {commentsVisible && (
         <div className="comments-section">
           <div className="add-comment">
@@ -291,102 +253,51 @@ const Post = ({
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
-
-            {/* Media upload for comments */}
-            <input
-              type="file"
-              accept="image/*,video/*"
-              onChange={handleMediaChange}
-              id="comment-media-upload"
-              style={{ display: "none" }}
-            />
-            <div className="flex comment-options">
-              <label htmlFor="comment-media-upload" id="label">
-                <i class="fa-solid fa-plus"></i>
-              </label>
-
-              {/* Show Submit button only when there is a comment */}
-              <button
-                onClick={handleAddComment}
-                className="send-comment"
-                id="send-button"
-                disabled={!newComment.trim()}
-              >
-                <i className="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
+            <button onClick={handleAddComment} className="send-comment">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
           </div>
+
           {postComments.map((comment, index) => (
-            <>
-              {console.log("comment", comment)}
-              <div className="comment" key={index}>
-                <div className="comment-author">
-                  <div className="comment-user-info">
-                    <Avatar width={30} height={30} name={comment.user.name} />
-                    <div className="comment-name">{comment.user.name}</div>
-                    <div
-                      className="comment-user-role"
-                      style={{ fontWeight: "400" }}
+            <div className="comment" key={index}>
+              <div className="comment-author">
+                <div className="comment-user-info">
+                  <Avatar width={30} height={30} name={comment.user.name} />
+                  <div className="comment-name">{comment.user.name}</div>
+                  <div
+                    className="comment-user-role "
+                    style={{ fontWeight: "400" }}
+                  >
+                    {" "}
+                    ({" "}
+                    <span
+                      style={{
+                        color:
+                          userInfo.user.role === "farmer"
+                            ? "lightgreen"
+                            : userInfo.user.role === "agro-expert"
+                            ? "lightyellow"
+                            : userInfo.user.role === "student"
+                            ? "lightbrown"
+                            : "transparent",
+                      }}
                     >
-                      {" "}
-                      ({" "}
-                      <span
-                        style={{
-                          color:
-                            userInfo.user.role === "farmer"
-                              ? "lightgreen"
-                              : userInfo.user.role === "agro-expert"
-                              ? "lightyellow"
-                              : userInfo.user.role === "student"
-                              ? "lightbrown"
-                              : "transparent",
-                        }}
-                      >
-                        {userInfo.user.role}
-                      </span>
-                      )
-                    </div>
-                    <div className="solution-icon">
-                      {comment.isSolution ? (
-                        <i className="fa-regular fa-circle-check"></i>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                      {userInfo.user.role}
+                    </span>
+                    )
                   </div>
-                  <div className="comment-time">
-                    {timeAgo(comment.createdAt)}
+                  <div className="solution-icon">
+                    {comment.isSolution ? (
+                      <i className="fa-regular fa-circle-check"></i>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
-                <div className="comment-body">{comment.text}</div>
-
-                {/* Check if commentMedia exists */}
-                {comment.commentMedia && (
-                  <div className="comment-media">
-                    {comment.commentMedia.map((media, mediaIndex) => (
-                      <div key={mediaIndex} className="media-item">
-                        {console.log("media", media)}
-                        {media.includes("jpg") ? (
-                          <img
-                            src={media}
-                            alt={`comment-media-${mediaIndex}`}
-                            className="media-image"
-                          />
-                        ) : media.type === "video" ? (
-                          <video
-                            src={media.url}
-                            controls
-                            className="media-video"
-                          />
-                        ) : (
-                          <div>Unsupported media type</div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <div className="comment-time">{timeAgo(comment.createdAt)}</div>
               </div>
-            </>
+              <div className="comment-body">{comment.text}</div>
+            </div>
           ))}
         </div>
       )}
@@ -400,37 +311,42 @@ const Post = ({
   );
 };
 
-const Posts = () => {
+const SavedPosts = () => {
   const [posts, setPosts] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
-
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchSavedPosts = async () => {
       try {
-        const response = await axios.get(
-          `  http://localhost:3000/api/v1/user/${token}/posts`
+        // Assume `userInfo.user.savedPosts` is an array of post IDs
+        const savedPosts = userInfo.user.savedPosts;
+
+        // Construct an array of promises without awaiting each individual request
+        const postDetailsPromises = savedPosts.map((postId) =>
+          axios.get(`http://localhost:3000/api/v1/post/${postId}`)
         );
 
-        setPosts(response.data);
+        // Await all requests to complete
+        const postDetailsResponses = await Promise.all(postDetailsPromises);
+
+        // Extract and store the `post` data from each response
+        const postDetails = postDetailsResponses.map((res) => res.data.post);
+        console.log(postDetails);
+        setPosts(postDetails);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching saved posts:", error);
       }
     };
 
-    fetchPosts();
-  }, [token]);
-
-  const addPost = (post) => {
-    setPosts([post, ...posts]);
-  };
+    fetchSavedPosts();
+  }, [token, userInfo]);
 
   return (
     <div className="posts-page-container">
-      <div className="posts-container" style={{ position: "relative" }}>
+      <div className="posts-container">
         {posts.map((post, index) => (
-          <Post
-            postId={post._id || index}
+          <SavedPost
+            key={post._id || index}
+            postId={post._id}
             description={post.description}
             media={post.media}
             crop={post.crop}
@@ -443,22 +359,9 @@ const Posts = () => {
             comments={post.comments || []}
           />
         ))}
-
-        <PostModal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          onCreatePost={addPost}
-        />
-      </div>
-      <div className="sticky-bar">
-        <input
-          placeholder="Create a post..."
-          className="sticky-input"
-          onClick={() => setShowModal(true)}
-        />
       </div>
     </div>
   );
 };
 
-export default Posts;
+export default SavedPosts;

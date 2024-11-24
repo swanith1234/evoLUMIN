@@ -553,16 +553,3 @@ video {
 [hidden] {
   display: none;
 }
-
-.h-32 {
-  height: 8rem;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}

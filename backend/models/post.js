@@ -20,6 +20,11 @@ const commentSchema = new mongoose.Schema({
     required: true, // The content of the comment
     trim: true,
   },
+  commentMedia: [
+    {
+      type: String, // Each item in the array is a URL string for an image or video
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now, // Automatically sets the comment time to the current date
@@ -43,9 +48,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: [true, "Description is required"],
   },
-  media: {
-    type: String, // You can change this to the appropriate type for media (e.g., URL)
-  },
+  media: [
+    {
+      type: String, // Each item in the array is a URL string for an image or video
+    },
+  ],
   tag: {
     type: String,
     enum: ["problem", "normal"],
