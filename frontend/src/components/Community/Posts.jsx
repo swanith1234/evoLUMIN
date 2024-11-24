@@ -8,6 +8,7 @@ import { uploadFile } from "../../upload";
 import CommentTypeModal from "./commentModal";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
+import Loader from "../Loader";
 const Post = ({
   postId,
   description,
@@ -20,6 +21,7 @@ const Post = ({
   author,
   likes,
   comments,
+  authorRole,
   tag,
 }) => {
   const { userInfo } = useContext(AuthContext);
@@ -30,7 +32,7 @@ const Post = ({
   const [currentLikes, setCurrentLikes] = useState(numberOfLikes || 0);
   const [showCommentTypeModal, setShowCommentTypeModal] = useState(false);
   const [commentMedia, setCommentMedia] = useState("");
-
+  console.log("author: ", author);
   function timeAgo(dateString) {
     const postDate = new Date(dateString);
     const now = new Date();
@@ -203,29 +205,34 @@ const Post = ({
     <div
       className="post"
       style={{
-        backgroundColor: tag === "normal" ? "#B0EBB4" : "#FA7070",
+        border: `5px solid ${tag === "normal" ? "#B0EBB4" : "#FA7070"}`,
       }}
     >
-      <div className="post-author">
+      <div
+        className="post-author"
+        style={{
+          backgroundColor: tag === "normal" ? "#B0EBB4" : "#FA7070",
+        }}
+      >
         <div className="avtar">
-          <Avatar width={50} height={50} name={userInfo.user.name} />
+          <Avatar width={50} height={50} name={author} />
         </div>
         <div className="user-info">
-          <div className="name">{userInfo.user.name}</div>
+          <div className="name">{author}</div>
           <div className="role">
             <span
               style={{
                 color:
-                  userInfo.user.role === "farmer"
+                  authorRole === "farmer"
                     ? "lightgreen"
-                    : userInfo.user.role === "agro-expert"
+                    : authorRole === "agro-expert"
                     ? "lightyellow"
-                    : userInfo.user.role === "student"
+                    : authorRole === "student"
                     ? "lightbrown"
                     : "transparent",
               }}
             >
-              {userInfo.user.role}
+              {authorRole}
             </span>
           </div>
           <div className="time">{timeAgo(createdAt)}</div>
@@ -328,16 +335,16 @@ const Post = ({
                       <span
                         style={{
                           color:
-                            userInfo.user.role === "farmer"
+                            authorRole === "farmer"
                               ? "lightgreen"
-                              : userInfo.user.role === "agro-expert"
+                              : authorRole === "agro-expert"
                               ? "lightyellow"
-                              : userInfo.user.role === "student"
+                              : authorRole === "student"
                               ? "lightbrown"
                               : "transparent",
                         }}
                       >
-                        {userInfo.user.role}
+                        {authorRole}
                       </span>
                       )
                     </div>
@@ -398,18 +405,22 @@ const Post = ({
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const { token, userInfo } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false); // State to manage loading indicator.
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true); // Start loader
       try {
         const response = await axios.get(
-          `  http://localhost:3000/api/v1/user/${token}/posts`
+          `http://localhost:3000/api/v1/user/${token}/posts`
         );
         console.log("res", response.data);
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false); // Stop loader
       }
     };
 
@@ -422,30 +433,41 @@ const Posts = () => {
 
   return (
     <div className="posts-page-container">
-      <div className="posts-container" style={{ position: "relative" }}>
-        {posts.map((post, index) => (
-          <Post
-            postId={post._id || index}
-            description={post.description}
-            media={post.media}
-            crop={post.crop}
-            cropType={post.cropType}
-            createdAt={post.createdAt}
-            numberOfLikes={post.numberOfLikes}
-            numberOfComments={post.numberOfComments}
-            author={post.userId}
-            likes={post.likes || []}
-            comments={post.comments || []}
-            tag={post.tag || ""}
-          />
-        ))}
+      {/* Display Loader while loading */}
+      {loading && <Loader show={loading} />}
 
-        <PostModal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          onCreatePost={addPost}
-        />
-      </div>
+      {/* Main Content */}
+      {!loading && (
+        <div className="posts-container" style={{ position: "relative" }}>
+          {posts.map((post, index) => (
+            <Post
+              key={post._id || index} // Added key to prevent React warnings
+              postId={post._id || index}
+              description={post.description}
+              media={post.media}
+              crop={post.crop}
+              cropType={post.cropType}
+              createdAt={post.createdAt}
+              numberOfLikes={post.numberOfLikes}
+              numberOfComments={post.numberOfComments}
+              author={post.userId.name}
+              likes={post.likes || []}
+              comments={post.comments || []}
+              tag={post.tag || ""}
+              authorRole={post.userId.role}
+            />
+          ))}
+
+          {/* Post Modal */}
+          <PostModal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            onCreatePost={addPost}
+          />
+        </div>
+      )}
+
+      {/* Sticky Bar */}
       <div className="sticky-bar">
         <input
           placeholder="Create a post..."

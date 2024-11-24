@@ -473,39 +473,44 @@ const AuthCard = () => {
                   <option value="">Select Role</option>
                   <option value="farmer">Farmer</option>
                   <option value="expert">Expert</option>
-                  <option value="Retailer">Retailer</option>
+                  <option value="student">Student</option>
+                  <option value="mediator">Retailer</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="signup-crop">Crop</label>
-                <input
-                  type="text"
-                  id="signup-crop"
-                  name="crop"
-                  placeholder="Enter the crop you work on"
-                  value={signupDetails.crop}
-                  onChange={handleSignupChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="signup-production-stage">
-                  Production Stage
-                </label>
-                <select
-                  id="signup-production-stage"
-                  name="productionStage"
-                  value={signupDetails.productionStage}
-                  onChange={handleSignupChange}
-                  required
-                >
-                  <option value="">Select Stage</option>
-                  <option value="Sowing">Sowing</option>
-                  <option value="Growing">Growing</option>
-                  <option value="Harvesting">Harvesting</option>
-                  <option value="Post-Harvest">Post-Harvest</option>
-                </select>
-              </div>
+              {signupDetails.role == "farmer" && (
+                <>
+                  <div className="form-group">
+                    <label htmlFor="signup-crop">Crop</label>
+                    <input
+                      type="text"
+                      id="signup-crop"
+                      name="crop"
+                      placeholder="Enter the crop you work on"
+                      value={signupDetails.crop}
+                      onChange={handleSignupChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="signup-production-stage">
+                      Production Stage
+                    </label>
+                    <select
+                      id="signup-production-stage"
+                      name="productionStage"
+                      value={signupDetails.productionStage}
+                      onChange={handleSignupChange}
+                      required
+                    >
+                      <option value="">Select Stage</option>
+                      <option value="Sowing">Sowing</option>
+                      <option value="Growing">Growing</option>
+                      <option value="Harvesting">Harvesting</option>
+                      <option value="Post-Harvest">Post-Harvest</option>
+                    </select>
+                  </div>{" "}
+                </>
+              )}
               <div className="form-group">
                 <label htmlFor="signup-password">Password</label>
                 <input
