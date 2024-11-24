@@ -70,6 +70,9 @@ const Navbar = () => {
   // Dropdown and mobile menu functions
   const handleDropdownToggle = () => setIsOpen(!isOpen);
   const handleMobileMenuToggle = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const isFarmer = userInfo?.user?.role === "farmer";
+  const isMediator = userInfo?.user?.role === "mediator";
+ 
 const handleUserLogout=async()=>{
 try{
   const res=axios.get('http://localhost:3000/api/v1/users/logout');
@@ -93,15 +96,21 @@ catch(err){
         <li>
           <Link to="/agro-connect">Agro Connect</Link>
         </li>
-        <li>
-          <Link to="/agro-market">Agro Market</Link>
-        </li>
-        <li>
-          <Link to="/browse-websites">Digital Tools</Link>
-        </li>
-        <li>
-          <Link to="/agro-tools">Agro Tools</Link>
-        </li>
+        {(isFarmer || isMediator  ) && (
+          <li>
+            <Link to="/agro-market">Agro Market</Link>
+          </li>
+        )}
+        {isFarmer && (
+          <>
+            <li>
+              <Link to="/agro-tools">Agro Tools</Link>
+            </li>
+            <li>
+              <Link to="/browse-websites">Digital Tools</Link>
+            </li>
+          </>
+        )}
       </ul>
       <div className="navbar-right">
         {token ? (

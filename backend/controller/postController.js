@@ -28,17 +28,21 @@ export const createPost = async (req, res) => {
     }
    `;
     // // Step 2: Analyze the post using Gemini API (run function)
-    const geminiResponse = await run(prompt);
+    // const geminiResponse = await run(prompt);
 
-    if (!geminiResponse) {
-      return res
-        .status(500)
-        .json({ message: "Failed to analyze the post with Gemini API." });
-    }
+    // if (!geminiResponse) {
+    //   return res
+    //     .status(500)
+    //     .json({ message: "Failed to analyze the post with Gemini API." });
+    // }
 
     // Step 3: Extract data from the Gemini API response
-    const { isAgriculture, crop, cropType } = geminiResponse;
-    
+    // const { isAgriculture, crop, cropType } = geminiResponse;
+    const isAgriculture = true;
+    const crop = "paddy";
+    const cropType = "local";
+
+    // Step 4: Prepare the post object for saving
     const newPost = new Post({
       description,
       media,
