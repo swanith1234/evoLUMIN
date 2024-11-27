@@ -1,7 +1,7 @@
 import router from "./digital.js";
 import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
-import { getAllCropsForSaleByType } from "../controller/RetailerController.js";
+import { addMediatorToCrop, getAllCropsForSaleByType } from "../controller/RetailerController.js";
 
 // POST endpoint to add crop details to the `cropsForSale` array
 router.post("/postCrop/:id", async (req, res) => {
@@ -68,9 +68,13 @@ router.get("/getCropDetails/:id", async (req, res) => {
     // Fetch the crop details from the `cropsForSale` array
     const cropDetails = user.cropsForSale;
 
+    // Extract mediator phone numbers for each crop
+    const mediatorPhoneNumbers = cropDetails.map((crop) => crop.mediators).flat();
+
     return res.status(200).json({
       success: true,
       cropsForSale: cropDetails,
+
     });
   } catch (error) {
     // Log the error for debugging
@@ -80,5 +84,9 @@ router.get("/getCropDetails/:id", async (req, res) => {
       .json({ success: false, message: "Internal Server Error" });
   }
 });
+
+
+
 router.get("/getCropDetailsByType/:CropType", getAllCropsForSaleByType);
+router.post('/notifyFarmer',addMediatorToCrop)
 export default router;

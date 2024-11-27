@@ -107,7 +107,8 @@ function App() {
         {role==='Retailer' && <Route path="/retailer" element={<Retailer/>} /> }
         <Route path="/auth" element={<AuthCard />} />
         <Route path="/agro-connect/*" element={<AgroConnect />} />
-        <Route path="/agro-market" element={<Retailer />} />
+        <Route path="/agro-market" element={<AgroMarkets />} />
+        <Route path="/mediator" element={<Retailer />} />
         <Route path="/agro-market1" element={<AgroMarkets />} />
         <Route path="/agro-tools" element={<AgroTools />} />
         <Route path="/sendOtp" element={<SendOtp />} />

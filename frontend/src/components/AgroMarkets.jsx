@@ -14,9 +14,25 @@ const AgroMarkets = () => {
   });
 
   const [posts, setPosts] = useState([]);
-
+  const [mediatorDialog, setMediatorDialog] = useState({
+    visible: false,
+    phoneNumbers: [],
+  });
   const toggleForm = () => setShowForm(!showForm);
+  const handleMediatorClick = (phoneNumbers) => {
+    console.log("phone",phoneNumbers);
+    setMediatorDialog({
+      visible: true,
+      phoneNumbers,
+    });
+  };
 
+  const closeMediatorDialog = () => {
+    setMediatorDialog({
+      visible: false,
+      phoneNumbers: [],
+    });
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -231,9 +247,39 @@ const AgroMarkets = () => {
                 </div>
               </div>
             </div>
+   {   post.mediators.length>0&&    (  <button
+              className="mediators-btn"
+              onClick={() =>
+                handleMediatorClick(post.mediators || [])
+              }
+            >
+              Interested Mediators
+            </button>)}
           </div>
         ))}
       </div>
+      {mediatorDialog.visible && (
+        <div className="dialog-overlay" onClick={closeMediatorDialog}>
+          <div
+            className="dialog-box"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Mediator Phone Numbers</h2>
+            {mediatorDialog.phoneNumbers.length > 0 ? (
+              mediatorDialog.phoneNumbers.map((phone, idx) => (
+                <p key={idx}>
+                  <a href={`tel:${phone}`} className="phone-link">
+                    {phone}
+                  </a>
+                </p>
+              ))
+            ) : (
+              <p>No mediators available.</p>
+            )}
+            <button onClick={closeMediatorDialog}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
