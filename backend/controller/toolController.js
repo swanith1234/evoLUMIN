@@ -17,14 +17,14 @@ export const getToolsByUserCrop = async (req, res, next) => {
     }
 
     const { crop } = user; // Extract the crop from the user's details
-    console.log(crop);
+    console.log("crop",crop);
 
     // Fetch the agriculture document associated with the user's crop
     const agriculture = await Tools.findOne(
       { "crops.cropName": crop }, // Filter to find the crop
       { "crops.$": 1 } // Limit to just the matching crop
     );
-
+console.log("agriculture", agriculture);
     // If no agriculture found for the crop
     if (!agriculture || agriculture.crops.length === 0) {
       res.status(404).json({

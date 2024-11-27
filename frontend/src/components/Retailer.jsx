@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Retail.css";
+import { AuthContext } from "./authContext";
 
 const Retailer = () => {
+  const { token, userInfo } = useContext(AuthContext);
   const [cropType, setCropType] = useState("Paddy"); // Default crop type
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,24 +35,34 @@ const Retailer = () => {
   }, [cropType]);
 
   // Handle "Interested" button click
-  const handleInterest = async (cropId) => {
+  const handleInterest = async (cropTitle, userId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/notifyFarmer/${cropId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/v1/notifyFarmer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cropTitle,
+          userId,
+          id: userInfo.user.phone,
+        }),
+      });
+
       const data = await response.json();
+
       if (data.success) {
-        alert(
-          `The farmer has been notified of your interest in their crop!`
+        alert("The farmer has been notified of your interest in their crop!");
+        // Update the crop state to reflect the notification
+        setCrops((prevCrops) =>
+          prevCrops.map((crop) =>
+            crop.title === cropTitle
+              ? { ...crop, mediator: [...crop.mediator, userInfo.user.phone] }
+              : crop
+          )
         );
       } else {
-        alert("Failed to notify the farmer. Please try again.");
+        alert(data.message || "Failed to notify the farmer. Please try again.");
       }
     } catch (error) {
       console.error("Error notifying farmer:", error);
@@ -83,18 +95,18 @@ const Retailer = () => {
             {crops.map((crop, index) => (
               <div className="crop-card" key={index}>
                 <div className="crop-img-box">
-                {crop.images && crop.images.length > 0 ? (
-                  crop.images.map((img, imgIndex) => (
-                    <img
-                      key={imgIndex}
-                      src={img}
-                      alt={`${crop.title} image ${imgIndex + 1}`}
-                      className="crop-image"
-                    />
-                  ))
-                ) : (
-                  <p>No images available</p>
-                )}
+                  {crop.images && crop.images.length > 0 ? (
+                    crop.images.map((img, imgIndex) => (
+                      <img
+                        key={imgIndex}
+                        src={img}
+                        alt={`${crop.title} image ${imgIndex + 1}`}
+                        className="crop-image"
+                      />
+                    ))
+                  ) : (
+                    <p>No images available</p>
+                  )}
                 </div>
                 <h3>{crop.title}</h3>
                 <p>{crop.description}</p>
@@ -104,11 +116,19 @@ const Retailer = () => {
                 <p>Location: {crop.userLocation}</p>
                 <div className="interested">
                 <button
-                  className="interested-btn"
-                  onClick={() => handleInterest(crop._id)}
-                >
-                  Interested
-                </button>
+  className="interested-btn"
+  onClick={() => handleInterest(crop.title, crop.userId)}
+  disabled={
+    crop.mediators &&
+    crop.mediators.some((mediator) => mediator.includes(userInfo.user.phone))
+  }
+>
+  {crop.mediators &&
+  crop.mediators.some((mediator) => mediator.includes(userInfo.user.phone))
+    ? "Notified"
+    : "Notify"}
+</button>
+
                 </div>
               </div>
             ))}

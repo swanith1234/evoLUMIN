@@ -124,9 +124,16 @@ const userSchema = new mongoose.Schema({
           type: String, // URL or file path to the image
         },
       ],
+
       video: {
         type: String, // URL or file path to the video
       },
+      mediators: [
+        {
+         type:[Number],
+         default:[]
+        },
+      ],
     },
   ],
 });
