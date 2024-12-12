@@ -30,6 +30,19 @@
 }
 
 
+
+.tool-name {
+    font-size: larger;    
+}
+
+.tool-card h3{
+    font-size:larger; 
+}
+.tool-card p{
+    font-size:larger;
+
+}
+
 .tool-image {
     width: 100%;
     height: 200px;

@@ -89,7 +89,8 @@ const AgroTools = () => {
       <h2>Agro Tools by Production Stages</h2>
       {stages.map((stage) => (
         <div key={stage._id} className="production-stage">
-          <h3>{stage.stageName}</h3>
+          <h3 style={{ marginTop: "22px", fontWeight: "bold",fontSize: "24px", textAlign: "center", padding: "19px" }} >{stage.stageName}</h3>
+      
           <div className="agro-tools-grid">
             {stage.tools.map((tool) => (
               <div key={tool._id} className="tool-card">
@@ -114,7 +115,7 @@ const AgroTools = () => {
                     }
                     className="call-button text-center"
                   >
-                    Call
+                    Book 
                   </button>
                   <button
                     className="view-details-button"

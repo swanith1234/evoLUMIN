@@ -9,7 +9,7 @@ export const getAllCropsForSaleByType = async (req, res) => {
     const { CropType } = req.params; // Extract cropType from request parameters
 console.log("crp",req.params)
     // Fetch all users and extract the cropsForSale field along with name and location
-    const users = await User.find({}, { cropsForSale: 1, name: 1, location: 1 });
+    const users = await User.find({}, { cropsForSale: 1, name: 1, district: 1 });
 
     // Filter crops based on the provided cropType and include user information
     const filteredCrops = users.reduce((acc, user) => {
@@ -20,7 +20,7 @@ console.log("crp",req.params)
             ...crop._doc, // Include crop details
             userName: user.name, 
             userId:user.id,// Add user's name
-            userLocation: user.location, // Add user's location
+            userLocation: user.district, // Add user's location
           }));
         return acc.concat(userCrops);
       }
