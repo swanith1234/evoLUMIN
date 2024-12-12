@@ -224,11 +224,11 @@ const Post = ({
               style={{
                 color:
                   authorRole === "farmer"
-                    ? "lightgreen"
+                    ? "white"
                     : authorRole === "agro-expert"
-                    ? "lightyellow"
+                    ? "white"
                     : authorRole === "student"
-                    ? "lightbrown"
+                    ? "White"
                     : "transparent",
               }}
             >
