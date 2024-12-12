@@ -3,7 +3,7 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100vh;
-  overflow: hidden;
+ 
 }
 
 .agro-market-container {
@@ -11,10 +11,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   padding: 20px;
   text-align: center;
   box-sizing: border-box;
+  margin-top: 80px;
 }
 
 .new-post-btn,
@@ -64,21 +64,23 @@ body {
   gap: 20px; /* Add spacing between post cards */
 }
 
-.set-1 {
-  width: 60%;
+.cropDetails {
+  width: 40%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.set-2 {
-  width: 35%;
+.crop-info {
+  width: 40%;
   display: flex;
   flex-direction: column;
   position: relative;
+  padding: 30px;
+  gap: 20px;
 }
 
-.set-2 p {
+.crop-info p {
   font-family: "Times New Roman", Times, serif;
   font-weight: 800;
   font-size: 1.5 rem;
@@ -91,106 +93,81 @@ body {
   margin-top: 2rem;
 }
 
-/* .crops{
- position: absolute ;
- bottom: 80px;
- gap:80px;
-
- 
-}
-.crop-detail{
- 
-}
-
-.crop-quatity{
-  
-} */
-.crops {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 80px; /* Spacing between crop-detail and crop-quantity */
-  position: absolute;
-  bottom: 80px;
-}
-
-.crop-detail,
-.crop-quantity {
+.mediator-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 25px;
-  border: 2px solid #4caf50; /* Green border for emphasis */
-  border-radius: 10px; /* Rounded edges */
-  background-color: #e8f5e9; /* Light green background for subtlety */
-  font-size: 18px; /* Clear, readable font size */
-  font-family: "Roboto", sans-serif; /* Modern font */
-  font-weight: bold; /* Emphasize the text */
-  color: #2e7d32; /* Dark green text for clarity */
-  transition: all 0.3s ease; /* Smooth hover transition */
-  cursor: pointer; /* Pointer cursor for interactivity */
+  width: 20%;
 }
 
-.crop-detail:hover,
-.crop-quantity:hover {
-  background-color: #4caf50; /* Darker green on hover */
-  color: #ffffff; /* White text for contrast */
-  transform: scale(1.05); /* Slight enlargement for feedback */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
-}
-
-.crop-detail p,
-.crop-quantity p {
-  margin: 0; /* Remove default margins */
-  text-align: center; /* Center-align text */
-  font-size: 1.5rem;
-}
-
-.user-info {
+.mediators-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+
+  background-color: #28a745;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
-.user-info img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%; /* Circular avatar */
-  object-fit: cover; /* Crop images neatly */
-  border: 1px solid #ccc; /* Add subtle border */
+.mediators-btn:hover {
+  background-color: #218838;
 }
 
-.user-info p {
-  margin: 0;
-  font-size: 26px;
-  color: #333;
-  font-family: "Times New Roman", Times, serif;
-  font-weight: 600;
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.dialog-box {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  max-width: 90%;
+}
+
+.phone-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.phone-link:hover {
+  text-decoration: underline;
+}
+
 
 .media-upload {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Spacing between media items */
+  gap: 10px;  
+  height:300px;
+  width: 100%;
 }
+
+.media-upload img{
+  height:200px;
+  
+}
+ 
+ 
 
 .image-wrapper {
-  max-width: 300px; /* Set a fixed width for the image wrapper */
-  overflow: hidden; /* Ensures overflow is hidden if the image is too large */
+  max-width: 300px; /* Set a fixed width for the image wrapper */ 
   margin: 0 auto; /* Centers the image wrapper */
-}
-.crop-image {
-  max-width: 50%;
-  height: auto;
-  border-radius: 5px;
-  object-fit: cover;
-  max-height: 200px; /* Limit height */
-}
-
-.video-player {
-  max-width: 100%;
-  border-radius: 5px;
-  object-fit: contain; /* Ensure video is proportionate */
 }
 
 .Description {
@@ -201,17 +178,6 @@ body {
   border-radius: 5px;
 }
 
-.flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.flex p {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0;
-}
 
 .LocationOn {
   font-size: 16px;
@@ -222,11 +188,11 @@ body {
   margin: 10px 0;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  
 }
 
 .post-card {
-  width: 90%; /* Set a fixed percentage width */
+  width: 70%; /* Set a fixed percentage width */
   background-color: #f9f9f9; /* Add a light background */
   border: 1px solid #e0e0e0; /* Subtle border */
   border-radius: 8px; /* Rounded corners */
@@ -235,6 +201,7 @@ body {
   justify-content: space-between;
   padding: 20px; /* Add internal spacing */
   gap: 10px; /* Space between sections */
+  height:350px;
 }
 
 textarea {
@@ -293,14 +260,6 @@ textarea:focus {
   margin-bottom: 15px; /* Added spacing below the title */
   width: fit-content;
   text-align: center;
-  overflow: scroll;
+  
 }
-/* @media (max-width: 768px) {
-  .post-form {
-    padding: 15px;   
-  }
-
-  .post-card {
-    width: 180px;  
-  }
-} */
+ 

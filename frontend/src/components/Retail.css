@@ -1,145 +1,209 @@
-
-.crop-page {
-    display: flex;
-    height: 100vh;
-    font-family: "Arial", sans-serif;
-  }
-  
-  /* Sidebar styles */
-  .sidebar {
-    width: 25%;
-    background: #3f51b5;
-    color: white;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .sidebar h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    padding: 10px;
-    margin: 10px 0;
-    background: #5c6bc0;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .sidebar li:hover {
-    background: #7986cb;
-    transform: translateX(5px);
-  }
-  
-  .sidebar li.active {
-    background: #303f9f;
-    font-weight: bold;
-  }
-  
-  /* Main content styles */
-  .crop-display {
-    width: 75%;
-    padding: 20px;
-    overflow-y: auto;
-    background: #f5f5f5;
-  }
-  
-  .crop-display h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  
-  }
-  
-  .crop-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: fit-content !important;
-  }
-  
-  .crop-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .crop-card h3 {
-    margin: 0 0 10px;
-    color: #3f51b5;
-  }
-  
-  .crop-card p {
-    margin: 5px 0;
-    color: #555;
-  }
-  .crop-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .crop-card .slick-slider {
-    margin-bottom: 10px;
-  }
-  
-  .crop-card img.crop-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  
-  .interested-btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
  
-   .interested{
-    display: flex;
-    justify-content: center;
-   }
+/* Retail.css */
+.crop-page {
+  display: flex;
   
-  .interested-btn:hover {
-    background-color: #218838;
-  }
-  .crop-img-box{
-    width:100%;
-    overflow-x:scroll ;
-    height:50%;
-img{
-    max-width: 100%;
-    width: 100%;
-    height: 100% !important;
+  min-height: 100vh;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
-    &::-webkit-scrollbar{
-        display: none !important;
-    }
-  }
+
+.sidebar {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  width:22%!important;
+  color: #fff;
+  height:100vh
+
+}
+.sidebar h2 {
+  text-align: center; /* Centers the heading */
+  margin-top: 60px; /* Keeps the top spacing */
+  font-family: 'Poppins', sans-serif; /* Modern, clean font */
+  font-size: 2rem; /* Adjust size for prominence */
+  font-weight: 600; /* Semi-bold for better visibility */
+  color: #fff; /* Darker color for contrast */
+  letter-spacing: 1.5px; /* Adds spacing between letters */
+  text-transform: uppercase; /* Makes the text all caps */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  
+  padding-bottom: 10px; /* Spacing between text and border */
+  width: fit-content; /* Makes border size dynamic */
+  margin-left: auto; /* Centers border horizontally */
+  margin-right: auto; /* Centers border horizontally */
+}
+
+/* .sidebar h2 {
+  text-align: center;
+
+  margin-top: 60px;
+} */
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #009688;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background-color: #00796b;
+}
+
+.crop-display {
+  flex: 1;
+  padding: 20px;
+  background: url('/path/to/bg-hero.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.crop-display h2 {
+  text-align: center;
+  margin-top: 60px;
+  color: #333;  
+  font-family: 'Roboto', sans-serif;  
+  font-size: 2.5rem;  
+  font-weight: 700; /* Make it bold */
+  text-transform: uppercase; /* Capitalize all letters for emphasis */
+  letter-spacing: 1px; /* Add spacing between letters */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+.crop-display h4 {
+  font-size: 1.25rem; /* Slightly larger font */
+  margin-top: 20px;
+  text-align: center;
+  color: #444; /* Slightly darker for better contrast */
+  font-family: 'Open Sans', sans-serif; /* Clean, modern font */
+  font-weight: 500; /* Medium weight for better readability */
+  letter-spacing: 0.5px; /* Subtle letter spacing */
+  line-height: 1.5; /* Improve text readability */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Light shadow */
+}
+
+
+/* .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.crop-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  color: #333;
+}
+
+.crop-card:hover {
+  transform: translateY(-5px);
+}
+
+.crop-img-box img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.crop-card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #2c3e50;
+}
+
+.crop-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+*/
+.interested-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.interested-btn:hover {
+  background-color: #1e8449;
+}
+
+.interested-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+ 
+
+ .crop-card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #2c3e50;
+}
+ .card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Individual crop card styling */
+.crop-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.crop-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Crop image styling */
+.crop-img-box {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 10px;align-items: baseline
+  
+  
+}
+ 
+ .style-p {
+  font-weight: bold;
+  color: #454141;
+
+}
+
+.crop-image{
+ 
+    border-radius: 5px !important;
+    object-fit: cover !important;
+    height: 180px !important;
+    width : 100% !important;
+}

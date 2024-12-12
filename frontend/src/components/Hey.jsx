@@ -14,31 +14,26 @@ const AgroMarkets = () => {
     video: "",
   });
 
-
-  const closeMediatorDialog = () => {
-    setMediatorDialog({ visible: false, phoneNumbers: [] });
-  };
-
   const [posts, setPosts] = useState([]);
   const [mediatorDialog, setMediatorDialog] = useState({
     visible: false,
     phoneNumbers: [],
   });
   const toggleForm = () => setShowForm(!showForm);
-  const handleMediatorClick = (mediators) => {
+  const handleMediatorClick = (phoneNumbers) => {
+    console.log("phone",phoneNumbers);
     setMediatorDialog({
-      visible: !mediatorDialog.visible,
-      phoneNumbers: mediators,
+      visible: true,
+      phoneNumbers,
     });
   };
 
-  const CropCard = ({ posts }) => {
-  const [mediatorDialog, setMediatorDialog] = useState({
-    visible: false,
-    phoneNumbers: [],
-  });
-}
-
+  const closeMediatorDialog = () => {
+    setMediatorDialog({
+      visible: false,
+      phoneNumbers: [],
+    });
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -66,6 +61,8 @@ const AgroMarkets = () => {
         return;
       }
 
+      // const uploadedVideo = await uploadFile(file);  
+      // setFormData((prevData) => ({ ...prevData, video: uploadedVideo.url }));
     }
   };
 
@@ -93,7 +90,7 @@ const AgroMarkets = () => {
           `http://localhost:3000/api/v1/getCropDetails/${token}`
         );
         console.log("res",response)
-         
+        // setPosts(response.data.cropsForSale ? [response.data.cropsForSale] : []);
         setPosts(response.data.cropsForSale || []); 
       } catch (error) {
         console.error("Error fetching crop details:", error.response?.data || error.message);
@@ -108,7 +105,6 @@ const AgroMarkets = () => {
       <h1>Agro Market</h1>
       <p>
         A farmer can list crop details such as type, quantity, and price.
-        <br/>
         Interested retailers can view listings and directly contact the farmer
         to discuss purchasing options.
       </p>
@@ -243,22 +239,18 @@ const AgroMarkets = () => {
                 </div>
             
             </div>
-   
-          <div className="mediator-section"  >
-            <button
+   { post.mediators.length>0&&    (  <button
               className="mediators-btn"
-              onClick={() => handleMediatorClick(post.mediators || [])}
+              onClick={() =>
+                handleMediatorClick(post.mediators || [])
+              }
             >
-              <FaPhoneAlt style={{ marginRight: "8px" }} />
-              Know Interested Mediators
-            </button>
-          </div>
-
+              Interested Mediators
+            </button>)}
           </div>
         ))}
       </div>
- 
-          {mediatorDialog.visible && (
+      {mediatorDialog.visible && (
         <div className="dialog-overlay" onClick={closeMediatorDialog}>
           <div
             className="dialog-box"
@@ -266,15 +258,13 @@ const AgroMarkets = () => {
           >
             <h2>Mediator Phone Numbers</h2>
             {mediatorDialog.phoneNumbers.length > 0 ? (
-              <ul>
-                {mediatorDialog.phoneNumbers.map((phone, idx) => (
-                  <li key={idx}>
-                    <a href={`tel:${phone}`} className="phone-link">
-                      {phone}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              mediatorDialog.phoneNumbers.map((phone, idx) => (
+                <p key={idx}>
+                  <a href={`tel:${phone}`} className="phone-link">
+                    {phone}
+                  </a>
+                </p>
+              ))
             ) : (
               <p>No mediators available.</p>
             )}

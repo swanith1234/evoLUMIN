@@ -124,6 +124,10 @@ const userSchema = new mongoose.Schema({
           type: String, // URL or file path to the image
         },
       ],
+      price: {
+        type: Number,
+        required : true// URL or file path to the video
+      },
 
       video: {
         type: String, // URL or file path to the video

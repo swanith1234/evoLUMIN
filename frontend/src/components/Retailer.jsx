@@ -8,7 +8,7 @@ const Retailer = () => {
   const [crops, setCrops] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const cropTypes = ["Paddy", "Brinjal", "Wheat", "Maize", "Tomato"]; // Sidebar links
+  const cropTypes = ["Paddy", "Brinjal", "Wheat", "Maize", "Tomato"]; 
 
   // Fetch crops for sale based on selected crop type
   useEffect(() => {
@@ -71,8 +71,10 @@ const Retailer = () => {
   };
 
   return (
-    <div className="crop-page">
-      <aside className="sidebar">
+ <>
+ 
+<div className="crop-page">
+ <aside className="sidebar">
         <h2>Crop Types</h2>
         <ul>
           {cropTypes.map((type) => (
@@ -87,57 +89,68 @@ const Retailer = () => {
         </ul>
       </aside>
       <main className="crop-display">
-        <h2>{cropType} Crops for Sale</h2>
-        {loading ? (
-          <p>Loading...</p>
-        ) : crops.length > 0 ? (
-          <div className="card-container">
-            {crops.map((crop, index) => (
-              <div className="crop-card" key={index}>
-                <div className="crop-img-box">
-                  {crop.images && crop.images.length > 0 ? (
-                    crop.images.map((img, imgIndex) => (
-                      <img
-                        key={imgIndex}
-                        src={img}
-                        alt={`${crop.title} image ${imgIndex + 1}`}
-                        className="crop-image"
-                      />
-                    ))
-                  ) : (
-                    <p>No images available</p>
-                  )}
-                </div>
-                <h3>{crop.title}</h3>
-                <p>{crop.description}</p>
-                <p>Quantity: {crop.quantity}</p>
-                <p>Price: ₹{crop.price}</p>
-                <p>Seller: {crop.userName}</p>
-                <p>Location: {crop.userLocation}</p>
-                <div className="interested">
-                <button
-  className="interested-btn"
-  onClick={() => handleInterest(crop.title, crop.userId)}
-  disabled={
-    crop.mediators &&
-    crop.mediators.some((mediator) => mediator.includes(userInfo.user.phone))
-  }
->
-  {crop.mediators &&
-  crop.mediators.some((mediator) => mediator.includes(userInfo.user.phone))
-    ? "Notified"
-    : "Notify"}
-</button>
-
-                </div>
-              </div>
-            ))}
+  <h2>{cropType} Crops for Sale</h2>
+  <h4>
+    Agro Market is a one-stop where you can find the best prices for crops in a
+    nearby location, where you can purchase directly from the farmer.
+  </h4>
+  {loading ? (
+    <p>Loading...</p>
+  ) : crops.length > 0 ? (
+    <div className="card-container">
+      {crops.map((crop, index) => (
+        <div className="crop-card" key={index}>
+          <div className="crop-img-box">
+            {crop.images && crop.images.length > 0 ? (
+              crop.images.map((img, imgIndex) => (
+                <img
+                  key={imgIndex}
+                  src={img}
+                  alt={`${crop.title} image ${imgIndex + 1}`}
+                  className="crop-image"
+                  style={{"min-width":"100%"}}
+                />
+              ))
+            ) : (
+              <p>No images available</p>
+            )}
           </div>
-        ) : (
-          <p>No crops available for {cropType}.</p>
-        )}
-      </main>
+          <h3>{crop.title}</h3>
+          <p>{crop.description}</p>
+          <p> <span className="style-p">Quantity:</span> {crop.quantity}</p>
+          <p> <span className="style-p">Price:</span> ₹{crop.price}</p>
+          <p> <span className="style-p">Seller:</span> {crop.userName}</p>
+            
+          <p>  <span className="style-p">Location:</span> {crop.userLocation}</p>
+          <div className="interested">
+            <button
+              className="interested-btn"
+              onClick={() => handleInterest(crop.title, crop.userId)}
+              disabled={
+                crop.mediators &&
+                crop.mediators.some((mediator) =>
+                  mediator.includes(userInfo.user.phone)
+                )
+              }
+            >
+              {crop.mediators &&
+              crop.mediators.some((mediator) =>
+                mediator.includes(userInfo.user.phone)
+              )
+                ? "Notified"
+                : "Notify"}
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
+  ) : (
+    <p>No crops available for {cropType} .</p>
+  )}
+</main>
+</div>
+ 
+ </>
   );
 };
 

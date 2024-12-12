@@ -6,12 +6,12 @@ main {
 }
 .agroConnect-body {
   height: 100vh;
-  overflow: hidden; /* Prevent scrolling for the whole body */
+  overflow: hidden;  
   display: flex;
   flex-direction: column;
 }
 
-/* Fixed heights for the main layout sections */
+ 
 .agroConnect-container {
   display: flex;
   gap: 1rem;
@@ -19,9 +19,17 @@ main {
   overflow: hidden;
 }
 
+ 
 .sidebar {
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  color: #fff;
+  /* width: 22% !important; */
+
 }
+
+
 .suggestion-profiles {
   height: 100%;
   overflow: scroll;
