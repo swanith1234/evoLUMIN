@@ -6,12 +6,11 @@ main {
 }
 .agroConnect-body {
   height: 100vh;
-  overflow: hidden;  
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
- 
 .agroConnect-container {
   display: flex;
   gap: 1rem;
@@ -19,16 +18,13 @@ main {
   overflow: hidden;
 }
 
- 
-.sidebar {
+.agroConnect-sidebar {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 20px;
   color: #fff;
   /* width: 22% !important; */
-
 }
-
 
 .suggestion-profiles {
   height: 100%;
@@ -84,7 +80,7 @@ main {
 
   .side-bar-close {
     transform: translateX(-500px);
-    z-index: 5; /* Keeps the sidebar above posts even when closed */
+    z-index: 5; /* Keeps the agroConnect-sidebar above posts even when closed */
     position: relative;
     transition: transform 0.3s ease-in-out; /* Smooth slide-out effect */
   }

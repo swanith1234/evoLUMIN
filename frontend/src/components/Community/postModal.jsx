@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "./PostModal.css";
 import { uploadFile } from "../../upload";
 import { AuthContext } from "../authContext";
-const PostModal = ({ show, onClose }) => {
+const PostModal = ({ show, onClose, onCreatePost }) => {
   const [content, setContent] = useState("");
   const [postType, setPostType] = useState("normal");
   const [media, setMedia] = useState("");
@@ -25,41 +25,26 @@ const PostModal = ({ show, onClose }) => {
   const handlePost = async () => {
     if (!content && !media) return;
 
-    // Replace this with the actual user ID or get it from context
-    const userId = userInfo.user._id;
-
-    // Define the post data
     const postData = {
       description: content,
-      media, // This should ideally be handled with a file upload API or converted to a base64 string
+      media,
       tag: postType,
-      userId,
+      userId: userInfo.user._id,
     };
 
     try {
       const response = await fetch("http://localhost:3000/api/v1/post", {
-        // Adjust URL to your backend endpoint
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Post created:", data);
-
-        // Reset form fields and close the modal
-        setContent("");
-        setPostType("normal");
-        setMedia("");
-        setShowTypeModal(false);
-
-        // Notify parent component of the new post
-        onClose(data.post);
-      } else {
-        console.error("Failed to create post:", response.statusText);
+        if (data && data.post) {
+          // Assuming `data.post` contains the newly created post
+          onClose(data.post); // Passing the correct post object
+        }
       }
     } catch (error) {
       console.error("Error creating post:", error);
@@ -109,7 +94,7 @@ const PostModal = ({ show, onClose }) => {
               onChange={(e) => setPostType(e.target.value)}
             >
               <option value="normal">General</option>
-              <option value="Problem">Problem</option>
+              <option value="problem">Problem</option>
             </select>
             <button className="submodal-confirm-button" onClick={handlePost}>
               Confirm

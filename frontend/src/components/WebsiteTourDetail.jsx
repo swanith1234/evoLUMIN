@@ -3,20 +3,24 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./WebsiteTourDetail.css";
 import { AuthContext } from "./authContext";
-
+import Loader from "./Loader";
 const WebsiteTourDetail = () => {
   const { token, userInfo } = useContext(AuthContext);
   const { name } = useParams();
   const [tour, setTour] = useState(null);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchTourDetail = async () => {
       try {
+        setLoading(true);
+        console.log("loading");
         const response = await axios.get(
           `http://localhost:3000/api/v1/problem/${name}/${userInfo.user.language}`
         );
+
         setTour(response.data);
+        setLoading(false);
       } catch (error) {
         setError(`Error fetching tour details: ${error.message}`);
         console.error("Error fetching tour details:", error);
@@ -29,10 +33,12 @@ const WebsiteTourDetail = () => {
   if (error) {
     return <div className="error">{error}</div>;
   }
-
-  if (!tour) {
-    return <div className="loading">Loading...</div>;
+  if (loading) {
+    return <Loader show={loading} />;
   }
+  // if (!tour) {
+  //   return  {loading && <Loader show={loading} />};
+  // }
 
   // Choose a random screenshot for the thumbnail
   const thumbnailImage = tour.screenshots[0] || "";
@@ -106,7 +112,7 @@ const WebsiteTourDetail = () => {
         {tour.instructions.map((step, index) => (
           <div key={index} className="step-instructions">
             <h3>Step {index + 1}</h3>
-            <p>{step || "No additional details provided."}</p>
+            <p>{step.instruction || "No additional details provided."}</p>
           </div>
         ))}
       </div>

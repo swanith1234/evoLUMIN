@@ -28,11 +28,11 @@ h1 {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  
 }
 
 .product-rating {
   margin-top: 20px;
+  flex-direction: column;
 }
 
 .product-rating h2 {

@@ -28,19 +28,19 @@ export const createPost = async (req, res) => {
     }
    `;
     // // Step 2: Analyze the post using Gemini API (run function)
-    // const geminiResponse = await run(prompt);
+    const geminiResponse = await run(prompt);
 
-    // if (!geminiResponse) {
-    //   return res
-    //     .status(500)
-    //     .json({ message: "Failed to analyze the post with Gemini API." });
-    // }
+    if (!geminiResponse) {
+      return res
+        .status(500)
+        .json({ message: "Failed to analyze the post with Gemini API." });
+    }
 
     // Step 3: Extract data from the Gemini API response
-    // const { isAgriculture, crop, cropType } = geminiResponse;
-    const isAgriculture = true;
-    const crop = "paddy";
-    const cropType = "local";
+    const { isAgriculture, crop, cropType } = geminiResponse;
+    // const isAgriculture = true;
+    // const crop = "paddy";
+    // const cropType = "local";
 
     // Step 4: Prepare the post object for saving
     const newPost = new Post({
@@ -148,8 +148,12 @@ export const addComment = async (req, res) => {
     // Save changes to the Post and User models
     await post.save();
     await user.save();
+    console.log("success");
 
-    return { success: true, message: "Comment added successfully." };
+    res.status(200).json({
+      success: true,
+      message: "Comment added successfully.",
+    });
   } catch (error) {
     console.error("Error adding comment:", error.message);
     return { success: false, message: error.message };
@@ -438,7 +442,7 @@ export async function loadUserPostsByCropType(userId) {
       cropType: { $ne: mostInteractedCropType }, // Exclude most interacted crop type
     }).populate("userId");
 
-    // Step 9: Sort interacted posts based on interaction counts
+    // Step 9: Sort interacted posts based on interaction counts, and then by creation date
     const sortedInteractedPosts = interactedPosts.sort((a, b) => {
       const aCropType = a.cropType || "unknown";
       const bCropType = b.cropType || "unknown";
@@ -453,13 +457,26 @@ export async function loadUserPostsByCropType(userId) {
         (interactionCount[bCropType]?.saved || 0) * 2 +
         (interactionCount[bCropType]?.commented || 0);
 
-      return bScore - aScore; // Higher score comes first
+      // First sort by interaction score, then by creation date (most recent first)
+      if (bScore !== aScore) {
+        return bScore - aScore;
+      }
+      return new Date(b.createdAt) - new Date(a.createdAt); // Sort by createdAt (desc)
     });
 
-    // Step 10: Combine the posts in order of priority
+    // Step 10: Sort non-interacted and remaining posts by creation date (most recent first)
+    const sortedNonInteractedPosts = nonInteractedPosts.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    const sortedRemainingPosts = remainingPosts.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    // Step 11: Combine the posts in order of priority
     const allPosts = [
-      ...nonInteractedPosts,
-      ...remainingPosts,
+      ...sortedNonInteractedPosts,
+      ...sortedRemainingPosts,
       ...sortedInteractedPosts,
     ];
 
@@ -469,6 +486,7 @@ export async function loadUserPostsByCropType(userId) {
     throw new Error("Could not load posts");
   }
 }
+
 export async function getPostById(req, res) {
   try {
     const { postId } = req.params;

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import "./LeftProfile.css";
@@ -28,15 +27,11 @@ const LeftProfile = () => {
           <div className="Myposts">My Posts</div>
           <Link to="/agro-connect/savedPosts">
             {" "}
-            <div className="Saved-Posts">
-              Saved Posts {userInfo.user.savedPosts.length}
-            </div>
+            <div className="Saved-Posts">Saved Posts</div>
           </Link>
           <Link to="/agro-connect/likedPosts">
             {" "}
-            <div className="Liked-Posts">
-              Liked Posts {userInfo.user.likedPosts.length}
-            </div>
+            <div className="Liked-Posts">Liked Posts</div>
           </Link>
           <button className="join">Join Rooms</button>
         </div>

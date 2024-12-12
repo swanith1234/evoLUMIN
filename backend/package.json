@@ -32,7 +32,7 @@
     "nodemailer": "^6.9.15",
     "nodemon": "^3.1.7",
     "openai": "^4.67.3",
-    "puppeteer": "^23.6.0",
+    "puppeteer": "^23.10.4",
     "react-dom": "^18.3.1",
     "socket.io": "^4.8.0",
     "socketio": "^1.0.0",
