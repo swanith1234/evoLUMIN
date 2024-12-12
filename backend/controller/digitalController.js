@@ -177,7 +177,7 @@ export const fetchPlayStoreMedia = async (appLink, appName) => {
     mediaData.featuresText = featuresText;
 
     // Now, search YouTube for a video explaining the app features
-    const youtubeVideoLink = await fetchYouTubeVideo(page, appName); // Assuming this is defined elsewhere
+    const youtubeVideoLink = await fetchYouTubeVideo(appName); // Assuming this is defined elsewhere
     mediaData.youtubeVideo = youtubeVideoLink;
 
     return mediaData;
@@ -190,37 +190,39 @@ export const fetchPlayStoreMedia = async (appLink, appName) => {
 };
 
 // Function to fetch a YouTube video explaining the app
-const fetchYouTubeVideo = async (page, appName) => {
+const fetchYouTubeVideo = async (appName) => {
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+
   try {
-    // Open YouTube and search for the app features video
     await page.goto("https://www.youtube.com", { waitUntil: "networkidle2" });
-console.log("typing in the youtube search")
-    // Search for app feature explanation video
-    await page.type("input#search", `${appName} app features`, { delay: 100 });
+
+    console.log("Typing in YouTube search...");
+    const searchSelector = 'input[name="search_query"]';
+    await page.waitForSelector(searchSelector, { timeout: 10000 });
+    await page.type(searchSelector, `${appName} app features`, { delay: 100 });
     await page.keyboard.press("Enter");
-    await page.waitForSelector("#video-title", { timeout: 100000 });
 
-    // Convert appName to lowercase for comparison
-    const lowerCaseAppName = appName.toLowerCase();
-    console.log("extracting youtube video");
-    // Extract the first video link where the title includes the app name
-    const videoLink = await page.evaluate((lowerCaseAppName) => {
+    console.log("Waiting for search results...");
+    await page.waitForSelector("#video-title", { timeout: 30000 });
+
+    console.log("Extracting YouTube video link...");
+    const videoLink = await page.evaluate(() => {
       const videos = document.querySelectorAll("#video-title");
-
-      for (let video of videos) {
-        const videoTitle = video.innerText.toLowerCase(); // Convert title to lowercase
-        if (videoTitle.includes(lowerCaseAppName)) {
-          return `https://www.youtube.com${video.getAttribute("href")}`;
-        }
+      if (videos.length > 0) {
+        return `https://www.youtube.com${videos[0].getAttribute("href")}`;
       }
-      return null; // Return null if no video is found
-    }, lowerCaseAppName); // Pass lowerCaseAppName into evaluate
+      return null;
+    });
 
-    console.log("YouTube video link found:", videoLink);
+    console.log("YouTube video link:", videoLink);
     return videoLink;
   } catch (error) {
     console.error("Error fetching YouTube video:", error);
     return null;
+  } finally {
+    await page.close();
+    await browser.close();
   }
 };
 

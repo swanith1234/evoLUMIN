@@ -50,7 +50,7 @@ const AgroConnect = () => {
           )}
 
           <div
-            className={`sidebar ${
+            className={`agroConnect-sidebar ${
               isNavOpen ? "side-bar-open" : "side-bar-close"
             }`}
           >

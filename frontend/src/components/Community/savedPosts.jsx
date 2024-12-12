@@ -330,7 +330,7 @@ const SavedPosts = () => {
 
         // Extract and store the `post` data from each response
         const postDetails = postDetailsResponses.map((res) => res.data.post);
-        console.log(postDetails);
+        console.log("posts", postDetails);
         setPosts(postDetails);
       } catch (error) {
         console.error("Error fetching saved posts:", error);

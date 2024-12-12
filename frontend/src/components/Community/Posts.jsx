@@ -99,6 +99,7 @@ const Post = ({
 
   // Handle comment submission with selected type
   const submitComment = async (isSolution) => {
+    console.log("isSolution", isSolution);
     setShowCommentTypeModal(false);
     try {
       const response = await fetch(
@@ -117,7 +118,9 @@ const Post = ({
           }),
         }
       );
+      console.log("response", response);
       const result = await response.json();
+      console.log("result", result);
       if (result.success) {
         // Create a new comment object
         const newCommentObj = {
@@ -130,7 +133,7 @@ const Post = ({
 
         // Update the postComments state with the new comment
         setPostComments((prevComments) => [newCommentObj, ...prevComments]);
-        setNewComment(""); // Clear the input field
+        setNewComment(" "); // Clear the input field
       } else {
         console.error("Failed to add comment:", result.message);
       }
@@ -229,7 +232,7 @@ const Post = ({
                     ? "white"
                     : authorRole === "student"
                     ? "White"
-                    : "transparent",
+                    : "black",
               }}
             >
               {authorRole}
@@ -239,7 +242,7 @@ const Post = ({
         </div>
       </div>
       <p>{description}</p>
-      {media && media.length > 0 && (
+      {media != "" && media.length > 0 && (
         <div className="post-media">
           {media.map((url, index) =>
             url.endsWith(".mp4") || url.endsWith(".webm") ? (
@@ -341,7 +344,7 @@ const Post = ({
                               ? "lightyellow"
                               : authorRole === "student"
                               ? "lightbrown"
-                              : "transparent",
+                              : "black",
                         }}
                       >
                         {authorRole}
@@ -363,7 +366,7 @@ const Post = ({
                 <div className="comment-body">{comment.text}</div>
 
                 {/* Check if commentMedia exists */}
-                {comment.commentMedia && (
+                {comment.commentMedia != "" && (
                   <div className="comment-media">
                     {comment.commentMedia.map((media, mediaIndex) => (
                       <div key={mediaIndex} className="media-item">
@@ -394,7 +397,9 @@ const Post = ({
       )}
       {showCommentTypeModal && (
         <CommentTypeModal
-          onClose={() => setShowCommentTypeModal(false)}
+          onClose={() => {
+            setShowCommentTypeModal(false);
+          }}
           onSelectType={submitComment}
         />
       )}
@@ -408,27 +413,27 @@ const Posts = () => {
   const { token } = useContext(AuthContext);
   const [loading, setLoading] = useState(false); // State to manage loading indicator.
 
+  const fetchPosts = async () => {
+    setLoading(true); // Start loader
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/${token}/posts`
+      );
+      console.log("res", response.data);
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false); // Stop loader
+    }
+  };
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true); // Start loader
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/user/${token}/posts`
-        );
-        console.log("res", response.data);
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false); // Stop loader
-      }
-    };
-
     fetchPosts();
   }, [token]);
 
-  const addPost = (post) => {
-    setPosts([post, ...posts]);
+  const addPost = async (post) => {
+    setPosts((prevPosts) => [post, ...prevPosts]);
+    await fetchPosts(); // Correct way to update state
   };
 
   return (
@@ -461,7 +466,10 @@ const Posts = () => {
           {/* Post Modal */}
           <PostModal
             show={showModal}
-            onClose={() => setShowModal(false)}
+            onClose={(post) => {
+              setShowModal(false);
+              addPost(post);
+            }}
             onCreatePost={addPost}
           />
         </div>

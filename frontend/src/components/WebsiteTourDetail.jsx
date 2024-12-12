@@ -106,7 +106,7 @@ const WebsiteTourDetail = () => {
         {tour.instructions.map((step, index) => (
           <div key={index} className="step-instructions">
             <h3>Step {index + 1}</h3>
-            <p>{step || "No additional details provided."}</p>
+            <p>{step.instruction || "No additional details provided."}</p>
           </div>
         ))}
       </div>
