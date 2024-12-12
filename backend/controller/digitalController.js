@@ -194,7 +194,7 @@ const fetchYouTubeVideo = async (page, appName) => {
   try {
     // Open YouTube and search for the app features video
     await page.goto("https://www.youtube.com", { waitUntil: "networkidle2" });
-
+console.log("typing in the youtube search")
     // Search for app feature explanation video
     await page.type("input#search", `${appName} app features`, { delay: 100 });
     await page.keyboard.press("Enter");
