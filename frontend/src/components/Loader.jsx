@@ -53,6 +53,7 @@ const RotatingCube = () => {
 };
 
 const Loader = ({ show }) => {
+  console.log(show);
   if (!show) return null; // If not showing, render nothing.
 
   return (

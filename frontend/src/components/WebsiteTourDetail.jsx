@@ -3,20 +3,23 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./WebsiteTourDetail.css";
 import { AuthContext } from "./authContext";
-
+import Loader from "./Loader";
 const WebsiteTourDetail = () => {
   const { token, userInfo } = useContext(AuthContext);
   const { name } = useParams();
   const [tour, setTour] = useState(null);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchTourDetail = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:3000/api/v1/problem/${name}/${userInfo.user.language}`
         );
+
         setTour(response.data);
+        setLoading(false);
       } catch (error) {
         setError(`Error fetching tour details: ${error.message}`);
         console.error("Error fetching tour details:", error);
@@ -39,6 +42,7 @@ const WebsiteTourDetail = () => {
 
   return (
     <div className="container">
+      {loading && <Loader show={loading} />}
       <h1>{tour.name}</h1>
 
       {/* Thumbnail Section with Play Icon */}
