@@ -3,7 +3,7 @@ import Avatar from "../Avatar";
 import { AuthContext } from "../authContext";
 import "./Posts.css";
 import axios from "axios";
-
+import Loader from "../Loader";
 import CommentTypeModal from "./commentModal";
 const LikedPost = ({
   postId,
@@ -314,9 +314,10 @@ const LikedPosts = () => {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { token, userInfo } = useContext(AuthContext);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `http://localhost:3000/api/v1/user/${token}/posts`
@@ -331,6 +332,7 @@ const LikedPosts = () => {
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
+      setLoading(false);
     };
 
     fetchPosts();
@@ -345,6 +347,7 @@ const LikedPosts = () => {
 
   return (
     <div className="posts-page-container">
+      {loading && <Loader show={loading} />}
       <div className="posts-container" style={{ position: "relative" }}>
         {posts.map((post, index) => (
           <LikedPost

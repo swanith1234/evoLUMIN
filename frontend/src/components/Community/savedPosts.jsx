@@ -3,7 +3,7 @@ import Avatar from "../Avatar";
 import { AuthContext } from "../authContext";
 import "./Posts.css";
 import axios from "axios";
-
+import Loader from "../Loader";
 import CommentTypeModal from "./commentModal";
 const SavedPost = ({
   postId,
@@ -314,8 +314,10 @@ const SavedPost = ({
 const SavedPosts = () => {
   const [posts, setPosts] = useState([]);
   const { token, userInfo } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchSavedPosts = async () => {
+      setLoading(true);
       try {
         // Assume `userInfo.user.savedPosts` is an array of post IDs
         const savedPosts = userInfo.user.savedPosts;
@@ -335,6 +337,7 @@ const SavedPosts = () => {
       } catch (error) {
         console.error("Error fetching saved posts:", error);
       }
+      setLoading(false);
     };
 
     fetchSavedPosts();
@@ -342,6 +345,7 @@ const SavedPosts = () => {
 
   return (
     <div className="posts-page-container">
+      {loading && <Loader show={loading} />}
       <div className="posts-container">
         {posts.map((post, index) => (
           <SavedPost

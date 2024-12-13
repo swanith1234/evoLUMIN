@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "./authContext"; // Import the AuthContext to get the userInfo
 import "./Profile.css";
-
+import Avatar from "./Avatar";
 const Profile = () => {
   const { userInfo } = useContext(AuthContext); // Access userInfo from the context
 
@@ -28,20 +28,21 @@ const Profile = () => {
       {/* Cover Photo */}
       <div className="cover-photo">
         <img
-          src="https://via.placeholder.com/1200x400" // Placeholder cover photo
+          src="https://ideogram.ai/assets/image/lossless/response/tfAJIYc3QRqhjfdokdR0pg" // Placeholder cover photo
           alt="Cover"
           className="cover-photo-img"
         />
       </div>
 
       {/* Profile Information */}
-      <div className="profile-info">
+      <div className="profile-info ">
         <div className="profile-left">
-          <img
+          {/* <img
             src={cropImage || "https://via.placeholder.com/150"} // Default image if no crop image is available
             alt="Profile"
             className="profile-picture"
-          />
+          /> */}
+          <Avatar name={name} width={150} height={150}></Avatar>
         </div>
         <div className="profile-details">
           <h2>{name || "Name Not Available"}</h2>

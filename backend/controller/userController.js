@@ -69,6 +69,7 @@ export const userlogin = catchAsyncError(async (req, res, next) => {
 });
 
 export const userlogout = catchAsyncError(async (req, res, next) => {
+  console.log("req");
   res
     .status(201)
     .cookie("token", "", {
@@ -79,7 +80,6 @@ export const userlogout = catchAsyncError(async (req, res, next) => {
       sucess: true,
       message: "user loggedout successfully",
     });
- 
 });
 
 export const getOneUser = async (req, res) => {
