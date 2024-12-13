@@ -8,6 +8,7 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { io } from "socket.io-client";
 import socket from "./socket";
+import Loader from "./Loader";
 import "./ToolDetails.css";
 
 const ToolDetails = () => {
@@ -15,10 +16,12 @@ const ToolDetails = () => {
   const [locations, setLocations] = useState({});
   const [locationDetails, setLocationDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { crop, productionStage, title } = useParams();
 
   useEffect(() => {
     const fetchToolDetails = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `http://localhost:3000/api/v1/tools/${crop}/${productionStage}/${title}`
@@ -28,6 +31,7 @@ const ToolDetails = () => {
       } catch (error) {
         setError(error.message);
       }
+      setLoading(false);
     };
     fetchToolDetails();
   }, [crop, productionStage, title]);
@@ -93,6 +97,7 @@ const ToolDetails = () => {
   return (
     <>
       {console.log("body", locations)}
+      {loading && <Loader show={loading} />}
       <div className="tool-details">
         <div className="product-image">
           {toolDetails.images ? (

@@ -4,15 +4,45 @@ import "./Navbar.css";
 import "./ProfileDropdown.css";
 import { AuthContext } from "../components/authContext";
 import logo from "../assets/logo.png";
-
+import axios from "axios";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // For dropdown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // For mobile menu
-  const { token, userInfo } = useContext(AuthContext);
+  const { token, userInfo, clearContext } = useContext(AuthContext);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   const avatarLetter = userInfo?.user?.email?.charAt(0).toUpperCase() || "";
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/v1/users/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`, // Include the token in the Authorization header
+          },
+        }
+      );
+
+      console.log(response);
+      if (response.data.sucess) {
+        // Clear token and user info (if managed in context or localStorage)
+        // Example: context-specific clear method
+        // clearUserInfo();
+        clearContext();
+        localStorage.removeItem("token");
+        localStorage.removeItem("token");
+        setAuthState({ token: null, userInfo: null });
+        navigate("/auth"); // Redirect to login page
+      } else {
+        console.error("Failed to log out:", response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred during logout:", error);
+    }
+  };
 
   // Voice navigation setup
   useEffect(() => {
@@ -72,7 +102,6 @@ const Navbar = () => {
   const handleMobileMenuToggle = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const isFarmer = userInfo?.user?.role === "farmer";
   const isMediator = userInfo?.user?.role === "mediator";
- 
 
   return (
     <nav className="navbar">
@@ -85,12 +114,12 @@ const Navbar = () => {
         <li>
           <Link to="/agro-connect">Agro Connect</Link>
         </li>
-        {(isFarmer   ) && (
+        {isFarmer && (
           <li>
             <Link to="/agro-market">Agro Market</Link>
           </li>
         )}
-        {(isMediator   ) && (
+        {isMediator && (
           <li>
             <Link to="/mediator">Agro Market</Link>
           </li>
@@ -130,7 +159,7 @@ const Navbar = () => {
                   </Link>
                   <button
                     className="dropdown-item logout-button"
-                    onClick={() => console.log("Logout")}
+                    onClick={handleLogout}
                   >
                     Logout
                   </button>

@@ -7,7 +7,10 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-
+  const clearContext = () => {
+    setToken(null);
+    setUserInfo(null);
+  };
   // Function to retrieve token and user info
   const fetchToken = () => {
     const localToken = localStorage.getItem("token") || Cookies.get("token");
@@ -41,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, userInfo }}>
+    <AuthContext.Provider value={{ token, setToken, userInfo, clearContext }}>
       {children}
     </AuthContext.Provider>
   );
