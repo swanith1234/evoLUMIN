@@ -1,4 +1,6 @@
-[Watch the video](<iframe src="https://drive.google.com/file/d/FILE_ID/preview" width="640" height="360" allow="autoplay"></iframe>)
+[Watch the video](https://drive.google.com/file/d/1xoya_PbMw69qIZY8w1ZpTq9bK5uHc4GF/view?usp=sharing)
+
+
 AgroNexus 🌱
 Project Overview
 AgroNexus is a web platform designed to bridge the gap between farmers and consumers by enabling direct transactions, thus ensuring fair pricing for farmers and fresh produce for consumers. This platform also provides farmers with expert agricultural guidance, weather updates, access to modern tools, and a unique solution-sharing forum. AgroNexus aims to empower the farming community, enhance sustainable agriculture, and bring joy to farmers globally.
