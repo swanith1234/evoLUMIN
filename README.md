@@ -1,115 +1,155 @@
-[Watch the video](https://drive.google.com/file/d/1xoya_PbMw69qIZY8w1ZpTq9bK5uHc4GF/view?usp=sharing)
+# AgroNexus 🌱
 
+**Project Overview**
 
-AgroNexus 🌱
-Project Overview
-AgroNexus is a web platform designed to bridge the gap between farmers and consumers by enabling direct transactions, thus ensuring fair pricing for farmers and fresh produce for consumers. This platform also provides farmers with expert agricultural guidance, weather updates, access to modern tools, and a unique solution-sharing forum. AgroNexus aims to empower the farming community, enhance sustainable agriculture, and bring joy to farmers globally.
+AgroNexus is an innovative web platform designed to bridge the gap between farmers and consumers by enabling direct transactions, ensuring fair pricing for farmers, and delivering fresh produce to consumers. The platform provides farmers with expert agricultural guidance, real-time weather updates, access to modern farming tools, and a collaborative space for sharing solutions. AgroNexus aims to empower the global farming community, promote sustainable agricultural practices, and create positive change in the agricultural industry.
 
-Technologies Used
-Frontend: React.js, CSS, HTML
-Backend: Node.js, Express.js
-Database: MongoDB
-Authentication: JWT (JSON Web Token)
-File Storage: Cloudinary (for image and video uploads)
-Messaging: Twilio API (for SMS notifications)
-Weather API: OpenWeather API (for daily weather updates)
-Translation: Google Translate API (for multi-language support)
-Data Analysis: Gemini API (for farming tools and recommendations)
-Deployment: Vercel (Frontend), Heroku (Backend)
-Project Description
-Agriculture remains the backbone of many economies but faces challenges like middlemen exploitation, crop diseases, and limited access to advanced technology. AgroNexus addresses these by connecting farmers directly with consumers, providing an advisory network with agricultural scientists, and offering tools and resources to improve productivity and sustainability. Consumers benefit by accessing fresh, farm-direct products, while farmers gain a fair marketplace and reliable expert support.
+---
 
-API References
-OpenWeather API
+**Technologies Used**
 
-Used for providing weather updates.
-OpenWeather API Documentation
-API Key Setup: Register at OpenWeather to obtain an API key.
-Google Translate API
+- **Frontend:** React.js
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** JWT (JSON Web Token)
+- **File Storage:** Cloudinary (for image and video uploads)
+- **Messaging:** Twilio API (for SMS notifications)
+- **Data Analysis:** Gemini API (for farming tools and recommendations)
+- **Geolocation:** Geolocation API (for determining user's location)
+- **Voice Navigation:** Web Speech API (for voice-based navigation)
+- **Deployment:** Vercel (Frontend), Heroku (Backend)
 
-Powers multi-language support.
-Google Translate API Documentation
-API Key Setup: Sign up for the Google Cloud Console, activate the Translate API, and generate an API key.
-Cloudinary API
+---
 
-Handles image and video uploads for crop and yield pictures.
-Cloudinary API Documentation
-API Key Setup: Sign up at Cloudinary to get your API keys.
-Twilio API
+**Project Description**
 
-Sends SMS notifications to farmers for weather alerts and important updates.
-Twilio API Documentation
-API Key Setup: Sign up at Twilio and obtain an API key and phone number.
-Gemini API
+Agriculture is a vital component of many global economies but faces numerous challenges, including middlemen exploitation, crop diseases, and limited access to advanced technology. AgroNexus addresses these issues by directly connecting farmers to consumers, offering expert advice from agricultural scientists, and providing modern tools and resources to enhance productivity and sustainability. Consumers benefit from fresh, farm-direct products, while farmers enjoy a fair marketplace, enhanced profitability, and reliable expert support.
 
-Used for providing access to modern farming tools and advice.
-Gemini API Documentation
-API Key Setup: Sign up at Gemini to obtain an API key.
-Demo Video
-AgroNexus Demo Video on YouTube:https://youtu.be/l_KwCjEBcVg
+---
 
-Installation and Setup
+**API References**
+
+1. **Cloudinary API**
+   - Handles image and video uploads for crop and yield images.
+   - [Cloudinary API Documentation](https://cloudinary.com/documentation)
+   - **API Key Setup:** Register at Cloudinary to obtain API keys.
+
+2. **Twilio API**
+   - Sends SMS notifications to farmers for weather alerts, updates, and other important communications.
+   - [Twilio API Documentation](https://www.twilio.com/docs)
+   - **API Key Setup:** Register at Twilio to get your API keys and a phone number.
+
+3. **Gemini API**
+   - Provides farming tools and expert advice to improve agricultural practices.
+   - [Gemini API Documentation](https://geminiapi.com/docs)
+   - **API Key Setup:** Register at Gemini to obtain an API key.
+
+4. **Geolocation API**
+   - Used to determine the user's location and provide location-specific services.
+   - **API Key Setup:** No API key is required; it works directly with browser geolocation features.
+
+5. **Web Speech API (Voice Navigation)**
+   - Enables voice-based navigation within the platform for ease of use, especially for farmers who may prefer hands-free operation.
+   - [Web Speech API Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
+   - **Setup:** Works out-of-the-box in most modern browsers without needing external APIs.
+
+---
+
+**Demo Video**
+
+🌟 **Watch the AgroNexus Demo** 🌟  
+Experience the full capabilities of AgroNexus through this engaging demo video:  
+[**AgroNexus Demo Video**](https://drive.google.com/file/d/1UktVNOUjKxVGH6vOWdJp4g8JUDwbCAdG/view?usp=sharing)  
+Don't miss out—see how AgroNexus is transforming agriculture!
+
+---
+
+**Installation and Setup**
+
 To set up AgroNexus locally, follow these steps:
 
-Clone the Repository
+### 1. Clone the Repository
 
-bash
-Copy code
-git clone (https://github.com/swanith1234/evoLUMIN)
+```bash
+git clone https://github.com/swanith1234/evoLUMIN
 cd agro-nexus
-Install Dependencies
+```
 
-Backend
-bash
-Copy code
+### 2. Install Dependencies
+
+- **Backend:**
+
+```bash
 cd backend
 npm install
-Frontend
-bash
-Copy code
+```
+
+- **Frontend:**
+
+```bash
 cd frontend
 npm install
-Set Up Environment Variables
+```
 
-Create a .env file in both the backend and frontend directories.
-Backend .env file should include:
-plaintext
-Copy code
+### 3. Set Up Environment Variables
+
+Create a `.env` file in both the **backend** and **frontend** directories.
+
+- **Backend .env File:**
+
+```plaintext
 MONGODB_URI=your_mongo_uri
 JWT_SECRET=your_jwt_secret
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-WEATHER_API_KEY=your_openweather_api_key
 TWILIO_ACCOUNT_SID=your_twilio_account_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 GEMINI_API_KEY=your_gemini_api_key
-Frontend .env file should include:
-plaintext
-Copy code
-REACT_APP_WEATHER_API_KEY=your_openweather_api_key
-REACT_APP_TRANSLATE_API_KEY=your_google_translate_api_key
-Run the Backend Server
+```
 
-bash
-Copy code
+- **Frontend .env File:**
+
+```plaintext
+REACT_APP_CLOUDINARY_API_KEY=your_cloudinary_api_key
+REACT_APP_TWILIO_ACCOUNT_SID=your_twilio_account_sid
+REACT_APP_TWILIO_AUTH_TOKEN=your_twilio_auth_token
+REACT_APP_GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 4. Run the Backend Server
+
+```bash
 cd backend
 npm start
-Run the Frontend Server
+```
 
-bash
-Copy code
+### 5. Run the Frontend Server
+
+```bash
 cd frontend
 npm start
-Access the Application
+```
 
-Open your browser and go to http://localhost:3000 to see the application.
-Deployment Link
-Access the live application here: AgroNexus
+### 6. Access the Application
 
-Future Scope
-Enhanced Image Recognition: Incorporate AI-based disease diagnosis by analyzing crop images.
-Advanced Analytics: Provide farmers with data analytics on crop yield trends, weather patterns, and market prices.
-Expanded Marketplace: Include support for organic certification and promote sustainable farming practices.
-Mobile App: Develop a mobile version for better accessibility for farmers.
-Community Support Forum: Add a forum for farmers to discuss issues and share insights.
+Open your browser and visit [http://localhost:3000](http://localhost:3000) to view the application.
+
+---
+
+**Future Scope**
+
+- **Enhanced Image Recognition:** Leverage AI-based disease detection by analyzing crop images.
+- **Advanced Analytics:** Provide farmers with data analytics on crop yield trends, weather patterns, and market prices.
+- **Expanded Marketplace:** Support organic certification and promote sustainable farming practices.
+- **Mobile Application:** Develop a mobile version to increase accessibility for farmers.
+- **Community Support Forum:** Add a discussion forum where farmers can share insights, ask questions, and collaborate.
+
+---
+
+AgroNexus is more than just a platform—it's a movement toward smarter, connected agriculture. By empowering farmers with technology, we aim to drive positive change in the agriculture sector and ensure sustainable farming practices for future generations.
+
+**Empowering farmers. Transforming agriculture. One connection at a time.**
+
+---
+
