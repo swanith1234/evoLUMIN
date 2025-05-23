@@ -1,5 +1,10 @@
 # AgroNexus 🌱
+**Demo Video**
 
+🌟 **Watch the AgroNexus Demo** 🌟  
+Experience the full capabilities of AgroNexus through this engaging demo video:  
+[**AgroNexus Demo Video**](https://drive.google.com/file/d/1UktVNOUjKxVGH6vOWdJp4g8JUDwbCAdG/view?usp=sharing)  
+Don't miss out—see how AgroNexus is transforming agriculture!
 **Project Overview** 
 
 AgroNexus is an innovative web platform designed to bridge the gap between farmers and consumers by enabling direct transactions, ensuring fair pricing for farmers, and delivering fresh produce to consumers. The platform provides farmers with expert agricultural guidance, real-time weather updates, access to modern farming tools, and a collaborative space for sharing solutions. AgroNexus aims to empower the global farming community, promote sustainable agricultural practices, and create positive change in the agricultural industry.
@@ -55,12 +60,7 @@ Agriculture is a vital component of many global economies but faces numerous cha
 
 ---
 
-**Demo Video**
 
-🌟 **Watch the AgroNexus Demo** 🌟  
-Experience the full capabilities of AgroNexus through this engaging demo video:  
-[**AgroNexus Demo Video**](https://drive.google.com/file/d/1UktVNOUjKxVGH6vOWdJp4g8JUDwbCAdG/view?usp=sharing)  
-Don't miss out—see how AgroNexus is transforming agriculture!
 
 ---
 
